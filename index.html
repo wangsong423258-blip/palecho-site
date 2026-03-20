@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PalEcho - 让每一次心跳都成为对话</title>
+<!-- 引入 Tailwind CSS -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/0915/3.4.17.js"></script>
+<!-- 引入 Font Awesome 图标库 -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/js/all.min.js"></script>
+<link href="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/css/fontawesome.min.css" rel="stylesheet"/>
+<!-- 引入 Google Fonts (Quicksand 用于圆润字体) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Quicksand:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- 引入 Three.js -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/cdn-staticfile-net/three.js/0.160.0/three.min.js"></script>
+<style>
+        /* 全局字体设置 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fbfbfd; /* Apple 风格的浅灰背景 */
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* 品牌名称圆润字体 */
+        .brand-font {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* 玻璃拟态导航栏 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* 导航栏下拉菜单动画 */
+        .group:hover .group-hover\:block {
+            display: block;
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 滚动显现动画类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Three.js 容器 */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #ffffff, #f5f5f7);
+        }
+
+        /* 文本阴影增强可读性 */
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .flow-step::after {
+            content: '';
+            position: absolute;
+            right: -28px;
+            top: 50%;
+            width: 24px;
+            height: 2px;
+            background: #d1d5db;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .chat-bubble {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+
+        .tab-active {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .nav-section {
+            display: none;
+        }
+
+        .nav-section.visible {
+            display: block;
+            animation: sectionFadeUp 0.45s ease-out;
+        }
+
+        .pop-in {
+            animation: popIn 0.35s ease-out;
+        }
+
+        @keyframes sectionFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+<!-- 导航栏 -->
+<header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+<div class="max-w-[1024px] mx-auto px-6 h-14 flex items-center justify-between">
+<!-- 左上角品牌信息 -->
+<div class="flex items-center space-x-2 cursor-pointer group">
+<span class="text-2xl font-bold brand-font tracking-tight text-gray-900 group-hover:opacity-80 transition-opacity">PalEcho</span>
+<span class="hidden md:inline-block text-xs text-gray-500 border-l border-gray-300 pl-2 h-4 leading-4">让每一次心跳都成为对话</span>
+</div>
+<!-- 中间主导航栏 -->
+<nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
+<!-- 主页 -->
+<a class="hover:text-black transition-colors py-4" href="#">主页</a>
+<!-- 产品与服务 (带子菜单) -->
+<div class="relative group py-4">
+<button class="hover:text-black transition-colors flex items-center">
+                        产品与服务 <i class="fa-solid fa-chevron-down text-[10px] ml-1 opacity-50"></i>
+</button>
+<!-- 子导航 -->
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#digital-pet">数字宠物</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#ai-health">AI健康管理</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#pet-data">宠物数据平台</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#hardware">智能硬件</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#pet-shop">宠物商城</a>
+</div>
+</div>
+<!-- 社区与支持 (带子菜单) -->
+<div class="relative group py-4">
+<button class="hover:text-black transition-colors flex items-center">
+                        社区与支持 <i class="fa-solid fa-chevron-down text-[10px] ml-1 opacity-50"></i>
+</button>
+<!-- 子导航 -->
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#support">官方技术支持</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#community">用户社区互动</a>
+</div>
+</div>
+<!-- 关于我们 (带子菜单) -->
+<div class="relative group py-4">
+<button class="hover:text-black transition-colors flex items-center">
+                        关于我们 <i class="fa-solid fa-chevron-down text-[10px] ml-1 opacity-50"></i>
+</button>
+<!-- 子导航 -->
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#about-us">我们是谁</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#vision">我们的愿景</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#what-we-do">我们在做什么</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#tech">技术与能力</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#trust">数据与信任</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#milestones">发展里程碑</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#join-us">加入我们</a>
+</div>
+</div>
+<!-- 社会责任 (带子菜单) -->
+<div class="relative group py-4">
+<button class="hover:text-black transition-colors flex items-center">
+                        社会责任 <i class="fa-solid fa-chevron-down text-[10px] ml-1 opacity-50"></i>
+</button>
+<!-- 子导航 -->
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#care">动物关怀</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#sustain">可持续发展</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#progress">行业进步</a>
+<a class="block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" href="#tech-good">科技向善</a>
+</div>
+</div>
+</nav>
+<!-- 右上角按钮 -->
+<div class="flex items-center space-x-4 text-sm">
+<button class="text-gray-600 hover:text-black transition-colors">登录</button>
+<button class="bg-blue-600 text-white px-4 py-1.5 rounded-full hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform active:scale-95">
+                    立即创建宠物
+                </button>
+</div>
+</div>
+</header>
+<!-- 主体内容 -->
+<main>
+<!-- 首屏 Hero Section -->
+<section class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+<!-- Three.js 背景容器 -->
+<div id="canvas-container"></div>
+<div class="relative z-10 max-w-4xl mx-auto space-y-6 pt-16">
+<h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-tight reveal text-shadow-sm">
+                      构建宠物的"数字生命体"<br/>
+                    实现从虚拟陪伴到真实健康的<br/>
+                    全生命周期智能管理
+                </h1>
+<p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;">
+                PalEcho 将 AI 与 Web4 技术完美融合，为您和爱宠打造前所未有的数字连接体验。
+                </p>
+<div class="pt-8 reveal" style="transition-delay: 200ms;">
+<a class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors group" href="#meta-claw">
+                        了解更多 <i class="fa-solid fa-arrow-down ml-2 group-hover:translate-y-1 transition-transform"></i>
+</a>
+</div>
+</div>
+</section>
+<!-- 数字宠物 -->
+<section class="py-32 px-4 bg-white nav-section" id="digital-pet">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">现在，让宠物数字化</h2>
+<p class="text-lg md:text-xl text-gray-600">将真实宠物转化为3D数字形象，实时同步健康与状态变化</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 items-center reveal">
+<div class="space-y-6">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="relative bg-white border border-gray-200 rounded-2xl p-5 flex-1 shadow-sm">
+<div class="text-sm text-gray-500 mb-2">如何操作</div>
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400">步骤 1</div>
+<div class="font-semibold text-gray-800">上传宠物信息</div>
+</div>
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400">步骤 2</div>
+<div class="font-semibold text-gray-800">生成3D数字宠物</div>
+</div>
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400">步骤 3</div>
+<div class="font-semibold text-gray-800">连接设备，实时同步</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-start gap-4">
+<button class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition-all" id="generate-pet-btn">立即生成数字宠物</button>
+<p class="text-sm text-gray-500">生成后即可在当前页面查看 3D 分身与健康状态。</p>
+</div>
+</div>
+<div class="hidden-section" id="digital-pet-result">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start reveal">
+<div class="bg-gray-50 rounded-3xl p-6 shadow-inner">
+<div class="h-64 rounded-2xl bg-white border border-gray-200 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-blue-100 via-white to-amber-100 opacity-70"></div>
+<div class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-tr from-blue-400 to-teal-300 animate-pulse"></div>
+<div class="absolute bottom-4 right-4 text-xs text-gray-400 font-mono">PET-3D-V1</div>
+</div>
+<div class="mt-5 grid grid-cols-2 gap-4">
+<div class="bg-white border border-gray-200 rounded-xl p-4">
+<div class="text-xs text-gray-400">身体状况</div>
+<div class="text-lg font-semibold text-gray-900">状态良好</div>
+<div class="text-sm text-gray-500 mt-1">心率 92 | 活动 68%</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-xl p-4">
+<div class="text-xs text-gray-400">虚拟互动</div>
+<div class="text-lg font-semibold text-gray-900">陪伴中</div>
+<div class="text-sm text-gray-500 mt-1">今日互动 3 次</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-2xl font-semibold text-gray-900">数字宠物使用场景</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900">外出也能随时了解宠物状态</div>
+<p class="text-sm text-gray-600 mt-2">实时查看宠物活动与健康数据，即使不在家也能安心</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900">宠物健康，一目了然</div>
+<p class="text-sm text-gray-600 mt-2">通过数据可视化，及时掌握饮食、运动与身体变化</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900">异常变化，提前发现</div>
+<p class="text-sm text-gray-600 mt-2">系统自动识别异常状态，帮助你更早发现潜在健康问题</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900">记录宠物的每一个成长瞬间</div>
+<p class="text-sm text-gray-600 mt-2">保存宠物的行为轨迹与变化，见证陪伴的每一刻</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm sm:col-span-2">
+<div class="font-semibold text-gray-900">不在身边，也能陪伴</div>
+<p class="text-sm text-gray-600 mt-2">通过数字宠物，随时查看状态，拉近与宠物的距离</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI健康管理 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="ai-health">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start reveal">
+<div class="space-y-4">
+<div class="chat-bubble p-5">
+<div class="text-sm text-gray-500 mb-3">AI健康管理</div>
+<div class="space-y-3">
+<div class="bg-white border border-gray-200 rounded-xl p-3 text-sm text-gray-700">你好，我可以帮你分析宠物的健康状态。</div>
+<div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-sm text-gray-700">请上传照片或描述症状。</div>
+</div>
+<div class="mt-4 space-y-2">
+<label class="text-xs uppercase tracking-wide text-gray-400">健康问题描述</label>
+<textarea id="ai-health-question" class="w-full rounded-xl border border-gray-200 p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-200" rows="4" placeholder="例如：近两天食欲下降，精神不佳，偶尔打喷嚏。"></textarea>
+<div id="ai-health-status" class="text-xs text-gray-400">点击深度分析后，将由 AI 返回健康建议。</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<input type="file" id="ai-health-upload-input" class="hidden" accept="image/*" />
+<button class="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-600 hover:border-gray-400 transition" id="ai-health-upload-btn">上传图片</button>
+<button class="px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 transition" id="deep-analysis-btn">深度分析</button>
+</div>
+</div>
+<div class="hidden-section space-y-4" id="analysis-panel">
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="font-semibold text-gray-900">健康分析结果</div>
+<p class="text-sm text-gray-600 mt-2" id="ai-health-reply">体征整体正常，建议关注近期饮食与运动节奏。</p>
+<div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-1">心率区间：正常</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-2">活动趋势：轻微下降</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-3">饮食评估：可优化</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-4">睡眠状态：稳定</div>
+</div>
+</div>
+<div class="chat-bubble p-5">
+<div class="text-sm text-gray-500 mb-3">继续向 AI 询问</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3 text-sm text-gray-700">可以给我定制宠物饮食建议吗？</div>
+</div>
+<div class="grid grid-cols-2 gap-3 text-sm">
+<div class="bg-white border border-gray-200 rounded-xl p-3">健康评估</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3">风险预警</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3">AI建议</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3">趋势分析</div>
+</div>
+<button class="w-full bg-blue-600 text-white py-3 rounded-full shadow hover:bg-blue-700 transition" id="ai-feed-btn">AI定制宠粮</button>
+</div>
+</div>
+<div class="space-y-6">
+<div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold tracking-wide uppercase">健康场景</div>
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">AI守护宠物健康</h2>
+<p class="text-lg text-gray-600">基于数据分析与智能算法，为宠物提供实时健康评估与科学建议</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+<div class="bg-white rounded-2xl p-4 border border-gray-200">宠物精神不好，不知道原因</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200">饮食是否合理</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200">是否需要看医生</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200">日常健康管理</div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-8 reveal">
+<h3 class="text-2xl font-semibold text-gray-900 mb-4">让用户信任大模型的方式</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
+<div class="bg-gray-50 rounded-xl p-4">基于数据模型分析</div>
+<div class="bg-gray-50 rounded-xl p-4">结合宠物健康知识库</div>
+<div class="bg-gray-50 rounded-xl p-4">持续优化算法</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 宠物数据平台 -->
+<section class="py-32 px-4 bg-white nav-section" id="pet-data">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
+<div class="space-y-4">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">数据上链，安全可靠</h2>
+<p class="text-lg text-gray-600">宠物数据全程加密传输与存储，确保每一次记录都可信。</p>
+</div>
+<div class="bg-gray-50 rounded-3xl p-8 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-amber-50"></div>
+<div class="relative z-10 flex flex-col items-center">
+<i class="fa-solid fa-lock text-5xl text-gray-700"></i>
+<div class="text-sm text-gray-500 mt-3">Encrypted Data Vault</div>
+</div>
+</div>
+</div>
+<div class="space-y-6 reveal">
+<h3 class="text-2xl font-semibold text-gray-900">宠物数据一览</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3">基础信息</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700">年龄 / 体重 / 疫苗</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-blue-500 w-3/4"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3">健康数据</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700">心率 / 饮食 / 活动</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-green-500 w-2/3"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3">医疗记录</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700">报告 / 诊断</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-amber-500 w-1/2"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3">行为数据</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700">作息 / 异常</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-purple-500 w-2/5"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start reveal">
+<div class="bg-gray-50 rounded-2xl p-6">
+<h4 class="text-xl font-semibold text-gray-900">去中心化上传与回报</h4>
+<p class="text-sm text-gray-600 mt-3">将宠物数据上传到去中心化数据中心，获得数据回报与更强的模型服务能力。</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-6">
+<h4 class="text-xl font-semibold text-gray-900">数据安全与隐私</h4>
+<ul class="text-sm text-gray-600 mt-3 space-y-2">
+<li>加密存储，确保数据不可篡改</li>
+<li>用户数据控制权，授权可随时管理</li>
+<li>去中心化存储，降低单点风险</li>
+<li>加密货币、代币化等需法规合规后适时上线</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 智能硬件 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="hardware">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-4xl font-bold text-gray-900">即将上线</h2>
+<p class="text-lg text-gray-600">我们同样期待产品与您见面</p>
+</div>
+</section>
+<!-- 宠物商城 -->
+<section class="py-32 px-4 bg-white nav-section" id="pet-shop">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-12 items-start">
+<div class="space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">宠物商城</h2>
+<div class="flex flex-col gap-2" id="shop-tabs">
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left tab-active" data-target="shop-feed">AI定制宠粮</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="shop-snack">健康宠物零食</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="shop-supplies">甄好宠物用品</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="shop-standard">标准宠物系列</button>
+</div>
+</div>
+<div class="space-y-4 reveal">
+<div class="border border-gray-200 rounded-3xl p-8 hidden-section" id="shop-feed">
+<h3 class="text-2xl font-semibold text-gray-900">即将上线</h3>
+<p class="text-gray-600 mt-2">我们的产品，期待与您见面</p>
+</div>
+<div class="border border-gray-200 rounded-3xl p-8 hidden-section" id="shop-snack">
+<h3 class="text-2xl font-semibold text-gray-900">即将上线</h3>
+<p class="text-gray-600 mt-2">我们的产品，期待与您见面</p>
+</div>
+<div class="border border-gray-200 rounded-3xl p-8 hidden-section" id="shop-supplies">
+<h3 class="text-2xl font-semibold text-gray-900">即将上线</h3>
+<p class="text-gray-600 mt-2">我们的产品，期待与您见面</p>
+</div>
+<div class="border border-gray-200 rounded-3xl p-8 hidden-section" id="shop-standard">
+<h3 class="text-2xl font-semibold text-gray-900">即将上线</h3>
+<p class="text-gray-600 mt-2">我们的产品，期待与您见面</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 官方技术支持 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="support">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-[0.7fr_1.3fr] gap-12">
+<div class="space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">官方技术支持</h2>
+<div class="flex flex-col gap-2" id="support-tabs">
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left tab-active" data-target="support-scope">支持范围</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-faq">常见问题</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-guide">操作指南</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-ticket">在线支持</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-upgrade">升级与维护公告</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-security">数据安全</button>
+</div>
+</div>
+<div class="space-y-4 reveal">
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-scope">
+<h3 class="text-xl font-semibold text-gray-900">支持范围</h3>
+<p class="text-sm text-gray-600 mt-3">我们提供全方位官方支持，涵盖数字宠物、AI 健康管理、智能硬件及宠物数据平台的使用、故障排查与咨询服务。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>数字宠物 3D 分身</li>
+<li>AI 健康管理功能</li>
+<li>智能硬件（传感器、设备）</li>
+<li>宠物数据平台</li>
+<li>宠物商城产品</li>
+<li>支持类型：功能使用、故障排查、数据问题、账户问题</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-faq">
+<h3 class="text-xl font-semibold text-gray-900">常见问题（FAQ）</h3>
+<p class="text-sm text-gray-600 mt-3">查看最常见的问题和解决方案，快速解决使用中遇到的困难。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>如何创建数字宠物？</li>
+<li>AI 健康分析结果如何查看？</li>
+<li>智能硬件连接不上怎么办？</li>
+<li>宠物数据如何上传或同步？</li>
+<li>如何修改宠物信息或账号设置？</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-guide">
+<h3 class="text-xl font-semibold text-gray-900">操作指南 / 教程</h3>
+<p class="text-sm text-gray-600 mt-3">提供详细操作教程和指南，让您轻松上手数字宠物和智能设备。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>使用说明文档（PDF / 网页版）</li>
+<li>视频操作教程</li>
+<li>功能示意图或步骤截图</li>
+<li>新手入门与高级功能指南</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-ticket">
+<h3 class="text-xl font-semibold text-gray-900">在线支持 / 工单系统</h3>
+<p class="text-sm text-gray-600 mt-3">遇到问题？提交工单或在线咨询，我们的官方技术团队将快速为您解决。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>在线客服入口（聊天或消息系统）</li>
+<li>工单提交系统</li>
+<li>用户问题反馈入口</li>
+<li>处理时效说明（如 24 小时内响应）</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-upgrade">
+<h3 class="text-xl font-semibold text-gray-900">升级与维护公告</h3>
+<p class="text-sm text-gray-600 mt-3">官方定期发布产品升级和维护公告，确保您的数字宠物和智能设备稳定可靠。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>产品更新或功能升级说明</li>
+<li>系统维护或停机公告</li>
+<li>新版本上线提醒</li>
+<li>注意事项或操作指南</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-security">
+<h3 class="text-xl font-semibold text-gray-900">数据安全与隐私</h3>
+<p class="text-sm text-gray-600 mt-3">我们全程保障用户和宠物数据安全，提供数据备份、恢复及隐私保护咨询。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li>数据加密存储说明</li>
+<li>用户数据控制权</li>
+<li>数据备份与恢复方法</li>
+<li>隐私保护政策链接</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 用户社区互动 -->
+<section class="py-32 px-4 bg-white nav-section" id="community">
+<div class="max-w-[1024px] mx-auto space-y-8 reveal">
+<div class="text-center space-y-3">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">用户社区互动</h2>
+<p class="text-lg text-gray-600">分享宠物日常、交流养护经验、发现更多好内容。</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-200"></div>
+<div class="text-sm">
+<div class="font-semibold text-gray-900">小布丁</div>
+<div class="text-gray-500">2 分钟前</div>
+</div>
+</div>
+<p class="text-sm text-gray-700 mt-4">今天用数字宠物记录了小猫的新动作，真的太可爱了。</p>
+<div class="mt-4 h-40 rounded-xl bg-gray-100"></div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-200"></div>
+<div class="text-sm">
+<div class="font-semibold text-gray-900">阿福</div>
+<div class="text-gray-500">10 分钟前</div>
+</div>
+</div>
+<p class="text-sm text-gray-700 mt-4">AI 健康管理给了饮食建议，感觉比我自己更懂它。</p>
+<div class="mt-4 h-40 rounded-xl bg-gray-100"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 我们是谁 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="about-us">
+<div class="max-w-[1024px] mx-auto text-center space-y-6 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">我们是谁</h2>
+<p class="text-lg text-gray-600">PalEcho 是一家致力于科技与宠物生活融合的创新品牌。<br/>我们通过 AI 和智能硬件，将现实宠物数字化为 3D 分身，并实时监测健康与行为数据。<br/>我们相信，每一只宠物都值得被更好地关怀，而每一位主人都值得获得科学、贴心的养宠体验。</p>
+</div>
+</section>
+<!-- 我们的愿景 -->
+<section class="py-32 px-4 bg-white nav-section" id="vision">
+<div class="max-w-[1024px] mx-auto text-center space-y-6 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">我们的愿景</h2>
+<p class="text-lg text-gray-600">我们希望打造一个宠物数字生态，让宠物生活更智能、健康与可持续。<br/>我们的愿景是让科技不仅服务宠物，更服务主人，让每一次陪伴都更智慧、更安心。</p>
+</div>
+</section>
+<!-- 我们在做什么 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="what-we-do">
+<div class="max-w-[1024px] mx-auto space-y-6 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900 text-center">我们在做什么</h2>
+<p class="text-lg text-gray-600 text-center">我们正在构建一整套智能宠物生态：</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+<div class="bg-white rounded-2xl p-4">数字宠物：将现实宠物数字化，建立专属 3D 分身</div>
+<div class="bg-white rounded-2xl p-4">AI 健康管理：通过数据分析，为宠物提供科学养护建议</div>
+<div class="bg-white rounded-2xl p-4">宠物数据平台：安全存储、分析和管理宠物全生命周期数据</div>
+<div class="bg-white rounded-2xl p-4">智能硬件：提供实时数据采集与互动体验</div>
+<div class="bg-white rounded-2xl p-4 md:col-span-2">宠物产品：智能定制宠粮、健康零食与精选用品</div>
+</div>
+<p class="text-sm text-gray-600 text-center">我们的每一项工作都围绕着“科技让宠物生活更好、让主人更安心”展开。</p>
+</div>
+</section>
+<!-- 技术与能力 -->
+<section class="py-32 px-4 bg-white nav-section" id="tech">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">技术与能力</h2>
+<p class="text-lg text-gray-600">结合多模态 AI、3D 渲染与智能硬件，为宠物建立可信的数字分身。</p>
+</div>
+</section>
+<!-- 数据与信任 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="trust">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">数据与信任</h2>
+<p class="text-lg text-gray-600">透明、安全、可控的数据体系，让用户放心把每一次记录交给 PalEcho。</p>
+</div>
+</section>
+<!-- 发展里程碑 -->
+<section class="py-32 px-4 bg-white nav-section" id="milestones">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">发展里程碑</h2>
+<p class="text-lg text-gray-600">从数字宠物到全场景智能生态，我们持续推进每一步。</p>
+</div>
+</section>
+<!-- 加入我们 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="join-us">
+<div class="max-w-[1024px] mx-auto space-y-8 reveal">
+<div class="text-center space-y-4">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">加入 PalEcho，让科技与宠物生活同行</h2>
+<p class="text-lg text-gray-600">在 PalEcho，我们相信科技的力量可以让宠物生活更健康、更安全，也让主人体验更贴心的陪伴。<br/>我们正在寻找热爱宠物、热爱科技、有创新精神的朋友，一起推动数字宠物、AI 健康管理和宠物数据平台的发展。<br/>这里有自由、开放的创新空间，有充满挑战的项目，也有成就感满满的使命——让每一次科技应用都向善而行，为宠物和主人创造真正的价值。</p>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="px-6 py-3 rounded-full bg-black text-white" id="job-btn">查看岗位</button>
+<a class="px-6 py-3 rounded-full border border-gray-300" href="/resume.html">投递简历</a>
+</div>
+<div class="grid grid-cols-1 gap-6 hidden-section" id="job-panel">
+<div class="bg-white rounded-2xl p-6 border border-gray-200">
+<h3 class="text-xl font-semibold text-gray-900">AI系统架构师</h3>
+<div class="text-sm text-gray-600 mt-3">
+<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">工作内容</div>
+<ul class="space-y-2">
+<li>设计并实现宠物健康分析的大模型和数据处理系统</li>
+<li>搭建后端数据平台，管理用户、宠物和健康数据</li>
+<li>实现实时/准实时健康状态分析和异常预警</li>
+<li>解析体检报告并生成健康建议</li>
+<li>与平台和硬件负责人协作，保证数据流畅传输与分析</li>
+</ul>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-gray-200">
+<h3 class="text-xl font-semibold text-gray-900">产品与体验设计师</h3>
+<div class="text-sm text-gray-600 mt-3">
+<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">工作内容</div>
+<ul class="space-y-2">
+<li>负责 PalEcho 平台前端界面与用户交互设计</li>
+<li>实现健康数据可视化和异常提醒功能</li>
+<li>设计数据上传和查看流程（体检报告、健康分析）</li>
+<li>与 AI 和硬件负责人协作，实现功能对接与优化</li>
+<li>优化用户体验，确保产品易用</li>
+</ul>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-gray-200">
+<h3 class="text-xl font-semibold text-gray-900">智能硬件集成师</h3>
+<div class="text-sm text-gray-600 mt-3">
+<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">工作内容</div>
+<ul class="space-y-2">
+<li>对接现成智能宠物设备，完成数据采集和传输</li>
+<li>设计数据传输流程（蓝牙/WiFi → 平台）</li>
+<li>保证数据采集稳定性与准确性</li>
+<li>协助硬件选型和方案优化，实现高效集成</li>
+<li>与 AI 和前端负责人协作，确保数据可用</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 动物关怀 -->
+<section class="py-32 px-4 bg-white nav-section" id="care">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">动物关怀</h2>
+<p class="text-lg text-gray-600">与宠物救助机构合作，支持流浪动物的领养与照护。<br/>提供科学营养和健康管理，守护每一只宠物的生命与活力。</p>
+</div>
+</section>
+<!-- 可持续发展 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="sustain">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">可持续发展</h2>
+<p class="text-lg text-gray-600">采用环保、可降解原材料，减少对环境的影响。<br/>工厂生产过程节能减排，降低碳足迹。<br/>推动产品包装回收与循环使用，倡导绿色生活。<br/>支持野生动物保护项目，维护生态平衡。<br/>持续优化产品设计与研发，实现健康与环保双赢。</p>
+</div>
+</section>
+<!-- 行业进步 -->
+<section class="py-32 px-4 bg-white nav-section" id="progress">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">行业进步</h2>
+<p class="text-lg text-gray-600">元爪大模型以多模态理解与高精度健康分析能力，推动 AI 宠物行业从经验驱动走向数据驱动，提升服务的科学性与可解释性。</p>
+</div>
+</section>
+<!-- 科技向善 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="tech-good">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900">科技向善</h2>
+<p class="text-lg text-gray-600">利用 AI 技术实时分析宠物健康数据，为每一只宠物提供科学养护建议。<br/>所有宠物数据均加密存储，用户完全掌控，安全可靠。<br/>通过数字宠物和智能硬件，让更多流浪动物获得科学照护和关注。<br/>科技优化生产和供应链，减少碳足迹，实现宠物健康与环境保护双赢。<br/>投入宠物健康与行为研究，将科技成果反馈到社会与公益项目中。</p>
+</div>
+</section>
+<!-- 元爪大模型介绍 -->
+<section class="py-32 px-4 bg-white" id="meta-claw">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<!-- 左侧：文本内容 -->
+<div class="space-y-8 reveal">
+<div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold tracking-wide uppercase">
+                        核心技术
+                    </div>
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+                        元爪大模型
+                    </h2>
+<p class="text-lg text-gray-600 leading-relaxed">
+                        通过整合各个大模型以及自研模型将现实中的宠物真实呈现在3D虚拟上，并不断提高在不同场景中的3D虚拟宠物的真实性以及宠物声音，其次发挥AI诊断作用，为宠物健康保驾护航。
+                    </p>
+<ul class="space-y-4 pt-4">
+<li class="flex items-start">
+<i class="fa-solid fa-cube text-blue-500 mt-1 mr-3"></i>
+<span class="text-gray-700">高保真 3D 虚拟化呈现</span>
+</li>
+<li class="flex items-start">
+<i class="fa-solid fa-wave-square text-blue-500 mt-1 mr-3"></i>
+<span class="text-gray-700">拟真宠物声音合成</span>
+</li>
+<li class="flex items-start">
+<i class="fa-solid fa-stethoscope text-blue-500 mt-1 mr-3"></i>
+<span class="text-gray-700">专业级 AI 健康诊断</span>
+</li>
+</ul>
+</div>
+<!-- 右侧：视觉展示 (CSS 构建的抽象展示) -->
+<div class="relative h-[400px] w-full bg-gray-50 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center reveal group">
+<!-- 装饰性背景圆 -->
+<div class="absolute w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+<!-- 模拟 3D 宠物界面 -->
+<div class="relative z-10 w-64 h-80 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 flex flex-col items-center transform group-hover:-translate-y-2 transition-transform duration-500">
+<div class="w-full h-48 bg-gray-100 rounded-xl mb-4 overflow-hidden relative">
+<!-- 使用 CSS 绘制简单的抽象宠物轮廓 -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-20 h-20 bg-gradient-to-tr from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
+</div>
+<div class="absolute bottom-2 left-2 text-[10px] text-gray-400 font-mono">MODEL: META-CLAW-V2</div>
+</div>
+<div class="w-full space-y-2">
+<div class="h-2 bg-gray-100 rounded w-3/4"></div>
+<div class="h-2 bg-gray-100 rounded w-1/2"></div>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-xs font-bold text-green-500">状态: 健康</span>
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
+<i class="fa-solid fa-paw"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 数据上链介绍 -->
+<section class="py-32 px-4 bg-[#f5f5f7]" id="data-chain">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<!-- 左侧：视觉展示 (Web4 概念) -->
+<div class="relative h-[400px] w-full bg-white rounded-3xl overflow-hidden shadow-lg flex items-center justify-center reveal order-2 md:order-1">
+<!-- 模拟数据流动效果 -->
+<div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+<div class="relative w-48 h-48">
+<div class="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
+<div class="absolute inset-0 border-t-4 border-blue-500 rounded-full animate-spin"></div>
+<div class="absolute inset-4 border-4 border-gray-100 rounded-full"></div>
+<div class="absolute inset-4 border-r-4 border-purple-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 3s;"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<i class="fa-solid fa-link text-3xl text-gray-300"></i>
+</div>
+</div>
+</div>
+<!-- 悬浮数据卡片 -->
+<div class="absolute top-10 right-10 bg-white/90 backdrop-blur p-3 rounded-lg shadow-md border border-gray-100 text-xs text-gray-600 animate-bounce" style="animation-duration: 3s;">
+<i class="fa-solid fa-shield-halved text-green-500 mr-1"></i> 数据已加密上链
+                    </div>
+<div class="absolute bottom-10 left-10 bg-white/90 backdrop-blur p-3 rounded-lg shadow-md border border-gray-100 text-xs text-gray-600 animate-bounce" style="animation-duration: 4s;">
+<i class="fa-solid fa-chart-line text-blue-500 mr-1"></i> 自主强化分析中
+                    </div>
+</div>
+<!-- 右侧：文本内容 -->
+<div class="space-y-8 reveal order-1 md:order-2">
+<div class="inline-block px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-xs font-semibold tracking-wide uppercase">
+                        Web4 生态
+                    </div>
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
+                        数据上链与价值共享
+                    </h2>
+<p class="text-lg text-gray-600 leading-relaxed">
+                        通过Web4将每个宠物身体状况的数据发送到去中心化的数据中心，并不断的自主强化分析来提高宠物身体状况的准确判断能力，数据不仅可以提高公司的大模型能力，又可以为宠物主人带来一份收益。
+                    </p>
+<div class="grid grid-cols-2 gap-4 pt-4">
+<div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+<div class="text-2xl font-bold text-gray-900 mb-1">Web4</div>
+<div class="text-sm text-gray-500">去中心化存储</div>
+</div>
+<div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+<div class="text-2xl font-bold text-gray-900 mb-1">AI+</div>
+<div class="text-sm text-gray-500">自主强化分析</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 简单页脚 -->
+<footer class="bg-white border-t border-gray-200 py-12">
+<div class="max-w-[1024px] mx-auto px-6 text-center">
+<p class="text-gray-400 text-sm">© 2026 PalEcho. All rights reserved.</p>
+<p class="text-gray-300 text-xs mt-2">让每一次心跳都成为对话</p>
+</div>
+</footer>
+<!-- JavaScript 逻辑 -->
+<script>
+        // --- 1. Three.js 背景动画 (数字生命体粒子效果) ---
+        const initThreeJS = () => {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            
+            // 相机设置
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            // 渲染器设置
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // 粒子系统
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1200;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                // 在球体范围内随机分布
+                posArray[i] = (Math.random() - 0.5) * 50; 
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            // 材质
+            const material = new THREE.PointsMaterial({
+                size: 0.15,
+                color: 0x3b82f6, // Tailwind blue-500
+                transparent: true,
+                opacity: 0.8,
+            });
+
+            // 网格
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
+
+            // 鼠标交互
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            });
+
+            // 动画循环
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
+
+                // 粒子旋转
+                particlesMesh.rotation.y += 0.002;
+                particlesMesh.rotation.x += 0.001;
+
+                // 鼠标跟随缓动
+                particlesMesh.rotation.y += 0.05 * (targetX - particlesMesh.rotation.y);
+                particlesMesh.rotation.x += 0.05 * (targetY - particlesMesh.rotation.x);
+
+                // 呼吸效果
+                const time = Date.now() * 0.001;
+                const scale = 1 + Math.sin(time) * 0.05;
+                particlesMesh.scale.set(scale, scale, scale);
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // 窗口大小调整
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // --- 2. 滚动显现动画 ---
+        const initScrollReveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach((element) => {
+                observer.observe(element);
+            });
+        };
+
+        const initTabs = (tabsContainerId, defaultTargetId) => {
+            const container = document.getElementById(tabsContainerId);
+            if (!container) return;
+            const buttons = Array.from(container.querySelectorAll('button[data-target]'));
+            const panels = buttons.map((btn) => document.getElementById(btn.dataset.target)).filter(Boolean);
+
+            const activate = (btn) => {
+                buttons.forEach((b) => b.classList.remove('tab-active'));
+                btn.classList.add('tab-active');
+                panels.forEach((panel) => panel.classList.add('hidden-section'));
+                const target = document.getElementById(btn.dataset.target);
+                if (target) target.classList.remove('hidden-section');
+            };
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => activate(btn));
+            });
+
+            const defaultBtn = buttons.find((btn) => btn.dataset.target === defaultTargetId) || buttons[0];
+            if (defaultBtn) activate(defaultBtn);
+        };
+
+        const initNavRouting = () => {
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            const navSections = Array.from(document.querySelectorAll('.nav-section'));
+
+            const showSection = (target) => {
+                navSections.forEach((section) => section.classList.remove('visible'));
+                target.classList.add('visible');
+                target.classList.add('pop-in');
+                setTimeout(() => target.classList.remove('pop-in'), 400);
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            navLinks.forEach((link) => {
+                link.addEventListener('click', (event) => {
+                    const targetId = link.getAttribute('href')?.slice(1);
+                    if (!targetId) return;
+                    const target = document.getElementById(targetId);
+                    if (target && target.classList.contains('nav-section')) {
+                        event.preventDefault();
+                        showSection(target);
+                    }
+                });
+            });
+        };
+
+        const initSimpleToggles = () => {
+            const petBtn = document.getElementById('generate-pet-btn');
+            const petResult = document.getElementById('digital-pet-result');
+            if (petBtn && petResult) {
+                petBtn.addEventListener('click', () => {
+                    petResult.classList.remove('hidden-section');
+                    petResult.classList.add('pop-in');
+                    setTimeout(() => petResult.classList.remove('pop-in'), 400);
+                });
+            }
+
+            const analysisBtn = document.getElementById('deep-analysis-btn');
+            const analysisPanel = document.getElementById('analysis-panel');
+            if (analysisBtn && analysisPanel) {
+                const questionInput = document.getElementById('ai-health-question');
+                const statusEl = document.getElementById('ai-health-status');
+                const replyEl = document.getElementById('ai-health-reply');
+                const metric1 = document.getElementById('ai-health-metric-1');
+                const metric2 = document.getElementById('ai-health-metric-2');
+                const metric3 = document.getElementById('ai-health-metric-3');
+                const metric4 = document.getElementById('ai-health-metric-4');
+                const uploadBtn = document.getElementById('ai-health-upload-btn');
+                const uploadInput = document.getElementById('ai-health-upload-input');
+                const normalizeApiBase = (value) => {
+                    if (!value) return '';
+                    let base = String(value).trim();
+                    if (!base) return '';
+                    if (base.startsWith('//')) {
+                        base = `${window.location.protocol}${base}`;
+                    } else if (!/^https?:\/\//i.test(base)) {
+                        base = `http://${base}`;
+                    }
+                    return base.replace(/\/+$/, '');
+                };
+                const isLocalHost =
+                    window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1';
+                const defaultLocalBase =
+                    isLocalHost && window.location.port === '5173'
+                        ? 'http://localhost:3001'
+                        : '';
+                const apiBase = normalizeApiBase(window.PALECHO_API_BASE) || defaultLocalBase;
+                let uploadedImageUrl = '';
+
+                if (uploadBtn && uploadInput) {
+                    uploadBtn.addEventListener('click', () => {
+                        uploadInput.click();
+                    });
+                    uploadInput.addEventListener('change', async () => {
+                        const file = uploadInput.files?.[0];
+                        if (!file) return;
+                        if (statusEl) statusEl.textContent = '图片上传中...';
+                        uploadBtn.disabled = true;
+                        uploadBtn.classList.add('opacity-70');
+                        try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            const resp = await fetch(`${apiBase}/api/public/ai-health/upload`, {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const data = await resp.json();
+                            if (!resp.ok) {
+                                throw new Error(data?.error || '上传失败');
+                            }
+                            uploadedImageUrl = data?.url || '';
+                            if (statusEl) statusEl.textContent = uploadedImageUrl ? '图片上传成功。' : '图片上传完成。';
+                        } catch (err) {
+                            if (statusEl) statusEl.textContent = `上传失败：${err?.message || err}`;
+                        } finally {
+                            uploadBtn.disabled = false;
+                            uploadBtn.classList.remove('opacity-70');
+                            uploadInput.value = '';
+                        }
+                    });
+                }
+
+                analysisBtn.addEventListener('click', async () => {
+                    const question = questionInput ? questionInput.value.trim() : '';
+                    if (!question) {
+                        if (statusEl) statusEl.textContent = '请先输入健康问题描述。';
+                        return;
+                    }
+                    if (statusEl) statusEl.textContent = 'AI 正在分析，请稍候...';
+                    analysisBtn.disabled = true;
+                    analysisBtn.classList.add('opacity-70');
+
+                    try {
+                        const resp = await fetch(`${apiBase}/api/ai-health`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                question,
+                                context: uploadedImageUrl ? `image_url: ${uploadedImageUrl}` : undefined
+                            })
+                        });
+                        const data = await resp.json();
+                        if (!resp.ok) {
+                            throw new Error(data?.error || '请求失败');
+                        }
+                        if (replyEl) replyEl.textContent = data?.reply || '暂无回复。';
+                        if (metric1) metric1.textContent = '心率区间：待评估';
+                        if (metric2) metric2.textContent = '活动趋势：待评估';
+                        if (metric3) metric3.textContent = '饮食评估：待评估';
+                        if (metric4) metric4.textContent = '睡眠状态：待评估';
+                        if (statusEl) statusEl.textContent = '分析完成。';
+                    } catch (err) {
+                        if (statusEl) statusEl.textContent = `分析失败：${err?.message || err}`;
+                    } finally {
+                        analysisBtn.disabled = false;
+                        analysisBtn.classList.remove('opacity-70');
+                    }
+
+                    analysisPanel.classList.remove('hidden-section');
+                    analysisPanel.classList.add('pop-in');
+                    setTimeout(() => analysisPanel.classList.remove('pop-in'), 400);
+                });
+            }
+
+            const aiFeedBtn = document.getElementById('ai-feed-btn');
+            if (aiFeedBtn) {
+                aiFeedBtn.addEventListener('click', () => {
+                    const shopSection = document.getElementById('pet-shop');
+                    if (shopSection) shopSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            const jobBtn = document.getElementById('job-btn');
+            const jobPanel = document.getElementById('job-panel');
+            if (jobBtn && jobPanel) {
+                jobBtn.addEventListener('click', () => {
+                    jobPanel.classList.remove('hidden-section');
+                    jobPanel.classList.add('pop-in');
+                    setTimeout(() => jobPanel.classList.remove('pop-in'), 400);
+                });
+            }
+
+            // Resume link now opens a dedicated page.
+        };
+
+        // --- 初始化执行 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            initScrollReveal();
+            initTabs('shop-tabs', 'shop-feed');
+            initTabs('support-tabs', 'support-scope');
+            initNavRouting();
+            initSimpleToggles();
+        });
+
+    </script>
+</body>
+</html>
