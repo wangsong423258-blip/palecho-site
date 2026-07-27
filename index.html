@@ -26,6 +26,10 @@
 <!-- 引入 Three.js -->
 <script src="https://image.uc.cn/s/uae/g/3n/mos-production/cdn-staticfile-net/three.js/0.160.0/three.min.js"></script>
 <style>
+        :root {
+            --site-header-height: 3.5rem;
+        }
+
         /* 全局字体设置 */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -118,11 +122,31 @@
 
         .nav-section {
             display: none;
+            min-height: calc(100vh - var(--site-header-height));
+            min-height: calc(100dvh - var(--site-header-height));
+            scroll-margin-top: var(--site-header-height);
         }
 
         .nav-section.visible {
             display: block;
             animation: sectionFadeUp 0.45s ease-out;
+        }
+
+        .hero-section {
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        #mobile-menu {
+            max-height: calc(100vh - var(--site-header-height));
+            max-height: calc(100dvh - var(--site-header-height));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body.mobile-menu-open {
+            overflow: hidden;
         }
 
         .pop-in {
@@ -138,19 +162,44 @@
             from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        @media (max-width: 767px) {
+            .nav-section {
+                padding-top: 4.5rem !important;
+                padding-bottom: 4.5rem !important;
+            }
+
+            .nav-section .space-y-16 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 2.5rem;
+            }
+
+            .flow-step::after {
+                display: none;
+            }
+
+            #meta-claw article,
+            #data-chain article {
+                min-height: auto;
+            }
+
+            #pet-data .w-24 {
+                width: 4.5rem;
+                flex-shrink: 0;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
 <!-- 导航栏 -->
 <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
-<div class="max-w-[1024px] mx-auto px-6 h-14 flex items-center justify-between flex-nowrap">
+<div class="max-w-[1024px] mx-auto px-4 md:px-6 h-14 flex items-center justify-between flex-nowrap">
 <!-- 左上角品牌信息 -->
 <div class="flex items-center space-x-2 cursor-pointer group">
-<span class="text-2xl font-bold brand-font tracking-tight text-gray-900 group-hover:opacity-80 transition-opacity">PalEcho</span>
-<span class="hidden md:inline-block text-xs text-gray-500 border-l border-gray-300 pl-2 h-4 leading-4" data-i18n="brand.tagline">让每一次心跳都成为对话</span>
+<span class="text-xl sm:text-2xl font-bold brand-font tracking-tight text-gray-900 group-hover:opacity-80 transition-opacity">PalEcho</span>
+<span class="hidden lg:inline-block text-xs text-gray-500 border-l border-gray-300 pl-2 h-4 leading-4" data-i18n="brand.tagline">让每一次心跳都成为对话</span>
 </div>
 <!-- 中间主导航栏 -->
-<nav class="hidden md:flex space-x-5 text-sm font-medium text-gray-600 whitespace-nowrap">
+<nav class="hidden lg:flex space-x-5 text-sm font-medium text-gray-600 whitespace-nowrap">
 <!-- 主页 -->
 <a class="hover:text-black transition-colors py-4 whitespace-nowrap" href="#" data-i18n="nav.home">主页</a>
 <!-- 产品与服务 (带子菜单) -->
@@ -210,11 +259,11 @@
 </nav>
 <!-- 右上角按钮 -->
 <div class="flex items-center space-x-3 text-sm whitespace-nowrap">
-<button class="text-gray-600 hover:text-black transition-colors" data-i18n="nav.login">登录</button>
+<button class="hidden lg:inline-flex text-gray-600 hover:text-black transition-colors" data-i18n="nav.login">登录</button>
 <div class="relative" id="lang-switcher">
-<button class="flex items-center gap-2 text-gray-600 hover:text-black transition-colors border border-gray-200 px-3 py-1.5 rounded-full bg-white/80 whitespace-nowrap" id="lang-btn">
+<button aria-label="切换语言" class="flex items-center gap-2 text-gray-600 hover:text-black transition-colors border border-gray-200 px-2.5 sm:px-3 py-2 lg:py-1.5 rounded-full bg-white/80 whitespace-nowrap" id="lang-btn">
 <i class="fa-solid fa-globe text-xs"></i>
-<span id="lang-label">语言</span>
+<span class="hidden sm:inline" id="lang-label">语言</span>
 <i class="fa-solid fa-chevron-down text-[10px] opacity-60"></i>
 </button>
 <div class="absolute right-0 mt-2 min-w-[180px] bg-white border border-gray-200 rounded-xl shadow-lg py-2 hidden z-50 flex flex-col" id="lang-menu">
@@ -225,53 +274,86 @@
 <button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="ko">한국어</button>
 </div>
 </div>
-<button class="bg-blue-600 text-white px-4 py-1.5 rounded-full hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform active:scale-95" data-i18n="nav.cta">
+<button class="hidden lg:inline-flex bg-blue-600 text-white px-4 py-1.5 rounded-full hover:bg-blue-700 transition-all shadow-md hover:shadow-lg transform active:scale-95" data-i18n="nav.cta">
                     立即创建宠物
                 </button>
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="打开导航菜单" class="lg:hidden w-10 h-10 inline-flex items-center justify-center rounded-full border border-gray-200 bg-white/80 text-gray-700 active:scale-95 transition-transform" id="mobile-menu-btn" type="button">
+<i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+</button>
 </div>
+</div>
+<div aria-hidden="true" class="lg:hidden hidden absolute top-full inset-x-0 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-xl" id="mobile-menu">
+<nav class="max-w-[1024px] mx-auto px-4 py-5 space-y-5 text-sm text-gray-700">
+<a class="block rounded-xl bg-gray-50 px-4 py-3 font-medium text-gray-900" href="#" data-i18n="nav.home">主页</a>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.products">产品与服务</div>
+<div class="grid grid-cols-2 gap-2">
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#digital-pet" data-i18n="nav.digitalPet">数字宠物</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#ai-health" data-i18n="nav.aiHealth">AI健康管理</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#pet-data" data-i18n="nav.petData">宠物数据平台</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#hardware" data-i18n="nav.hardware">智能硬件</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3 col-span-2" href="#pet-shop" data-i18n="nav.petShop">宠物商城</a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.communitySupport">社区与支持</div>
+<div class="grid grid-cols-2 gap-2">
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#support" data-i18n="nav.support">官方技术支持</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#community" data-i18n="nav.community">用户社区互动</a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.about">关于我们</div>
+<div class="grid grid-cols-2 gap-2">
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#about-us" data-i18n="nav.aboutUs">我们是谁</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#vision" data-i18n="nav.vision">我们的愿景</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#what-we-do" data-i18n="nav.whatWeDo">我们在做什么</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#tech" data-i18n="nav.tech">技术与能力</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#trust" data-i18n="nav.trust">数据与信任</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#milestones" data-i18n="nav.milestones">发展里程碑</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3 col-span-2" href="#join-us" data-i18n="nav.joinUs">加入我们</a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.responsibility">社会责任</div>
+<div class="grid grid-cols-2 gap-2">
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#care">动物关怀</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#sustain">可持续发展</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#progress">行业进步</a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#tech-good">科技向善</a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 border-t border-gray-100 pt-5">
+<button class="rounded-full border border-gray-200 px-4 py-3 text-gray-700" data-i18n="nav.login">登录</button>
+<button class="rounded-full bg-blue-600 px-4 py-3 text-white shadow-md" data-i18n="nav.cta">立即创建宠物</button>
+</div>
+</nav>
 </div>
 </header>
 <!-- 主体内容 -->
 <main>
 <!-- 首屏 Hero Section -->
-<section class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+<section class="hero-section relative flex flex-col justify-center items-center text-center px-5 overflow-hidden">
 <!-- Three.js 背景容器 -->
 <div id="canvas-container"></div>
-<div class="relative z-10 max-w-4xl mx-auto space-y-6 pt-16">
-<h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-tight reveal text-shadow-sm" data-i18n-html="hero.title">
-                      构建宠物的"数字生命体"<br/>
-                    实现从虚拟陪伴到真实健康的<br/>
-                    全生命周期智能管理
+<div class="relative z-10 w-full h-full max-w-[1100px] mx-auto pt-14">
+<div class="absolute inset-x-0 top-[31%] sm:top-[33%] -translate-y-1/2 px-1">
+<h1 class="text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4.75rem] font-bold tracking-[-0.04em] text-gray-900 leading-[1.08] reveal text-shadow-sm" data-i18n="hero.title">
+                    重新定义宠物健康
                 </h1>
-<p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto reveal" style="transition-delay: 100ms;" data-i18n="hero.subtitle">
-                PalEcho 以 AI 健康分析、智能硬件与数据平台为核心，连接宠物与主人，建立全生命周期的健康管理闭环。
+</div>
+<div class="absolute inset-x-0 top-[54%] sm:top-[55%] -translate-y-1/2 px-1">
+<p class="text-base sm:text-lg md:text-xl leading-relaxed text-gray-500 max-w-3xl mx-auto reveal" style="transition-delay: 100ms;" data-i18n="hero.subtitle">
+                    PalEcho 正在构建数字生命生态，连接 AI、智能硬件与生命数据，让健康管理从被动响应，走向持续理解与主动守护。
                 </p>
-<div class="flex flex-wrap justify-center gap-3 text-sm text-gray-600 reveal" style="transition-delay: 150ms;">
-<span class="px-4 py-2 rounded-full bg-white/80 border border-gray-200 shadow-sm">AI 健康分析</span>
-<span class="px-4 py-2 rounded-full bg-white/80 border border-gray-200 shadow-sm">智能硬件连接</span>
-<span class="px-4 py-2 rounded-full bg-white/80 border border-gray-200 shadow-sm">数据平台与隐私</span>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto reveal" style="transition-delay: 200ms;">
-<div class="bg-white/90 border border-gray-200 rounded-2xl p-4 shadow-sm">
-<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">能力 1</div>
-<div class="font-semibold text-gray-900">健康评估与预警</div>
-<div class="text-xs text-gray-500 mt-1">多维指标融合分析</div>
-</div>
-<div class="bg-white/90 border border-gray-200 rounded-2xl p-4 shadow-sm">
-<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">能力 2</div>
-<div class="font-semibold text-gray-900">行为与体征追踪</div>
-<div class="text-xs text-gray-500 mt-1">实时/准实时监测</div>
-</div>
-<div class="bg-white/90 border border-gray-200 rounded-2xl p-4 shadow-sm">
-<div class="text-xs uppercase tracking-wide text-gray-400 mb-2">能力 3</div>
-<div class="font-semibold text-gray-900">数据可信与可控</div>
-<div class="text-xs text-gray-500 mt-1">加密存储与授权</div>
-</div>
-</div>
-<div class="pt-8 reveal" style="transition-delay: 200ms;">
-<a class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors group" href="#meta-claw" data-i18n="hero.more">
-                        了解更多 <i class="fa-solid fa-arrow-down ml-2 group-hover:translate-y-1 transition-transform"></i>
-</a>
+<div class="absolute inset-x-0 bottom-[12%] sm:bottom-[14%] flex flex-row items-center justify-center gap-4 sm:gap-12 reveal" style="transition-delay: 180ms;">
+<a class="inline-flex w-[128px] sm:w-[156px] items-center justify-center py-3 sm:py-3.5 rounded-full border border-gray-300 bg-white/80 text-sm sm:text-base font-medium text-gray-800 shadow-sm backdrop-blur-sm hover:bg-white hover:border-gray-400 hover:shadow-md transition-all active:scale-95 whitespace-nowrap" href="#about-us" data-i18n="hero.primary">
+                        了解 PalEcho
+                    </a>
+<a class="inline-flex w-[128px] sm:w-[156px] items-center justify-center py-3 sm:py-3.5 rounded-full border border-blue-600 bg-blue-600 text-sm sm:text-base font-medium text-white shadow-md hover:bg-blue-700 hover:border-blue-700 hover:shadow-lg transition-all active:scale-95 whitespace-nowrap" href="#digital-pet" data-i18n="hero.secondary">
+                        开始体验
+                    </a>
 </div>
 </div>
 </section>
@@ -776,7 +858,7 @@
 <section class="py-32 px-4 bg-white nav-section" id="progress">
 <div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
 <h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="progress.title">行业进步</h2>
-<p class="text-lg text-gray-600" data-i18n="progress.desc">元爪大模型以多模态理解与高精度健康分析能力，推动 AI 宠物行业从经验驱动走向数据驱动，提升服务的科学性与可解释性。</p>
+<p class="text-lg text-gray-600" data-i18n="progress.desc">Mira大模型以多模态理解与高精度健康分析能力，推动 AI 宠物行业从经验驱动走向数据驱动，提升服务的科学性与可解释性。</p>
 </div>
 </section>
 <!-- 科技向善 -->
@@ -786,108 +868,80 @@
 <p class="text-lg text-gray-600" data-i18n-html="good.desc">利用 AI 技术实时分析宠物健康数据，为每一只宠物提供科学养护建议。<br/>所有宠物数据均加密存储，用户完全掌控，安全可靠。<br/>通过数字宠物和智能硬件，让更多流浪动物获得科学照护和关注。<br/>科技优化生产和供应链，减少碳足迹，实现宠物健康与环境保护双赢。<br/>投入宠物健康与行为研究，将科技成果反馈到社会与公益项目中。</p>
 </div>
 </section>
-<!-- 元爪大模型介绍 -->
-<section class="py-32 px-4 bg-white" id="meta-claw">
-<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-<!-- 左侧：文本内容 -->
-<div class="space-y-8 reveal">
-<div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold tracking-wide uppercase" data-i18n="meta.badge">
-                        核心技术
-                    </div>
-<h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight" data-i18n="meta.title">
-                        元爪大模型
+<!-- Mira 大模型介绍 -->
+<section class="py-24 md:py-28 px-5 bg-white" id="meta-claw">
+<div class="max-w-[1120px] mx-auto">
+<div class="max-w-4xl reveal">
+<h2 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight" data-i18n="meta.title">
+                        Mira大模型
                     </h2>
-<p class="text-lg text-gray-600 leading-relaxed" data-i18n="meta.desc">
-                        通过整合各个大模型以及自研模型将现实中的宠物真实呈现在3D虚拟上，并不断提高在不同场景中的3D虚拟宠物的真实性以及宠物声音，其次发挥AI诊断作用，为宠物健康保驾护航。
+<p class="mt-7 text-xl md:text-2xl font-semibold leading-relaxed text-gray-900" data-i18n="meta.lead">
+                        Mira 是 PalEcho 全新打造的新一代 AI 模型，专为理解生命而生。
                     </p>
-<ul class="space-y-4 pt-4">
-<li class="flex items-start">
-<i class="fa-solid fa-cube text-blue-500 mt-1 mr-3"></i>
-<span class="text-gray-700" data-i18n="meta.item1">高保真 3D 虚拟化呈现</span>
-</li>
-<li class="flex items-start">
-<i class="fa-solid fa-wave-square text-blue-500 mt-1 mr-3"></i>
-<span class="text-gray-700" data-i18n="meta.item2">拟真宠物声音合成</span>
-</li>
-<li class="flex items-start">
-<i class="fa-solid fa-stethoscope text-blue-500 mt-1 mr-3"></i>
-<span class="text-gray-700" data-i18n="meta.item3">专业级 AI 健康诊断</span>
-</li>
-</ul>
+<p class="mt-4 text-base md:text-lg leading-8 text-gray-600 max-w-3xl" data-i18n="meta.desc">
+                        它不只是回答问题，而是通过智能推理、数字生命建模与生命知识体系，持续理解每一只宠物的健康、行为与成长，让科技真正成为生命的长期守护者。
+                    </p>
 </div>
-<!-- 右侧：视觉展示 (CSS 构建的抽象展示) -->
-<div class="relative h-[400px] w-full bg-gray-50 rounded-3xl overflow-hidden shadow-inner flex items-center justify-center reveal group">
-<!-- 装饰性背景圆 -->
-<div class="absolute w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
-<!-- 模拟 3D 宠物界面 -->
-<div class="relative z-10 w-64 h-80 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 flex flex-col items-center transform group-hover:-translate-y-2 transition-transform duration-500">
-<div class="w-full h-48 bg-gray-100 rounded-xl mb-4 overflow-hidden relative">
-<!-- 使用 CSS 绘制简单的抽象宠物轮廓 -->
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="w-20 h-20 bg-gradient-to-tr from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-</div>
-<div class="absolute bottom-2 left-2 text-[10px] text-gray-400 font-mono">MODEL: META-CLAW-V2</div>
-</div>
-<div class="w-full space-y-2">
-<div class="h-2 bg-gray-100 rounded w-3/4"></div>
-<div class="h-2 bg-gray-100 rounded w-1/2"></div>
-<div class="mt-4 flex justify-between items-center">
-<span class="text-xs font-bold text-green-500" data-i18n="meta.status">状态: 健康</span>
-<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
-<i class="fa-solid fa-paw"></i>
-</div>
-</div>
-</div>
-</div>
+<div class="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+<article class="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-b from-blue-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 80ms;">
+<div class="w-10 h-1 rounded-full bg-blue-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.core.title">Mira Core</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.core.tagline">让智能真正理解生命。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.core.desc">Mira Core 负责推理、分析与判断，融合多模态信息，理解复杂的健康与行为场景，为每一次交互提供更自然、更可靠的回应。</p>
+</article>
+<article class="relative overflow-hidden rounded-3xl border border-violet-100 bg-gradient-to-b from-violet-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 140ms;">
+<div class="w-10 h-1 rounded-full bg-violet-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.life.title">Mira Life</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.life.tagline">让每一个生命，都拥有数字表达。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.life.desc">Mira Life 为每一只宠物构建持续成长的数字生命模型，记录外观、行为、健康与成长变化，让陪伴不只是被记住，也能够被理解。</p>
+</article>
+<article class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-b from-emerald-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 200ms;">
+<div class="w-10 h-1 rounded-full bg-emerald-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.atlas.title">Mira Atlas</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.atlas.tagline">让知识成为长期守护的基础。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.atlas.desc">Mira Atlas 汇聚宠物医学、生命科学与长期健康数据，持续沉淀专业知识与个体记忆，为 Mira 提供可靠、持续进化的认知基础。</p>
+</article>
 </div>
 </div>
 </section>
-<!-- 数据上链介绍 -->
-<section class="py-32 px-4 bg-[#f5f5f7]" id="data-chain">
-<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-<!-- 左侧：视觉展示 (Web4 概念) -->
-<div class="relative h-[400px] w-full bg-white rounded-3xl overflow-hidden shadow-lg flex items-center justify-center reveal order-2 md:order-1">
-<!-- 模拟数据流动效果 -->
-<div class="absolute inset-0 flex items-center justify-center overflow-hidden">
-<div class="relative w-48 h-48">
-<div class="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
-<div class="absolute inset-0 border-t-4 border-blue-500 rounded-full animate-spin"></div>
-<div class="absolute inset-4 border-4 border-gray-100 rounded-full"></div>
-<div class="absolute inset-4 border-r-4 border-purple-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 3s;"></div>
-<div class="absolute inset-0 flex items-center justify-center">
-<i class="fa-solid fa-link text-3xl text-gray-300"></i>
+<!-- Life Data -->
+<section class="py-24 md:py-28 px-5 bg-[#f5f5f7]" id="data-chain">
+<div class="max-w-[1280px] mx-auto">
+<div class="max-w-[1120px] mx-auto reveal">
+<h2 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight" data-i18n="chain.title">Life Data</h2>
+<p class="mt-7 text-xl md:text-2xl font-semibold leading-relaxed text-gray-900" data-i18n="chain.tagline">生命，会留下数据。数据，会理解生命。</p>
+<div class="mt-5 max-w-none space-y-3 text-base md:text-lg leading-8 text-gray-600">
+<p data-i18n="chain.intro1">每一次心跳、每一次活动、每一次成长，都会留下属于生命的独特轨迹。</p>
+<p class="lg:whitespace-nowrap" data-i18n="chain.intro2">PalEcho 持续构建真实、长期、高质量的生命数据体系，让 AI 从理解一只宠物，到理解更多生命。</p>
+<p data-i18n="chain.intro3">这些数据不仅构成每一只宠物的个体健康基线，也将在用户授权、匿名化与安全保护的前提下，持续推动 AI 能力演进、生命科学研究，以及未来人与宠物更加自然的交流。</p>
 </div>
 </div>
+<div class="mt-14 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal">
+<div class="text-sm font-semibold tracking-wide text-blue-600" data-i18n="chain.baseline.title">Personal Baseline</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.baseline.subtitle">个体健康基线</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.baseline.desc">每一只宠物都有独特的健康特征与生活习惯。持续积累的生命数据，将帮助 Mira 建立专属健康基线，实现更加精准、个性化的健康理解。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 70ms;">
+<div class="text-sm font-semibold tracking-wide text-violet-600" data-i18n="chain.evolution.title">AI Evolution</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.evolution.subtitle">驱动 AI 持续进化</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.evolution.desc">高质量、长期积累的生命数据，将不断提升 Mira 对健康、行为与情绪的理解能力，让 AI 随着每一次陪伴持续学习、持续成长。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 120ms;">
+<div class="text-sm font-semibold tracking-wide text-emerald-600" data-i18n="chain.research.title">Scientific Research</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.research.subtitle">推动生命科学发展</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.research.desc">在用户授权、匿名化与安全处理的前提下，生命数据将持续推动疾病研究、健康预测及生命科学的发展，让每一份数据创造更广泛的社会价值。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 170ms;">
+<div class="text-sm font-semibold tracking-wide text-amber-600" data-i18n="chain.privacy.title">Privacy First</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.privacy.subtitle">隐私始终优先</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.privacy.desc">每一份生命数据都将在用户授权下进行匿名化、脱敏与安全处理，仅用于提升 AI 能力、生命科学研究及用户授权的服务。</p>
+<p class="mt-5 text-base font-semibold leading-7 text-gray-900" data-i18n="chain.privacy.trust">我们珍视每一份生命数据，更珍视每一位用户的信任。</p>
+</article>
 </div>
-<!-- 悬浮数据卡片 -->
-<div class="absolute top-10 right-10 bg-white/90 backdrop-blur p-3 rounded-lg shadow-md border border-gray-100 text-xs text-gray-600 animate-bounce" style="animation-duration: 3s;">
-<i class="fa-solid fa-shield-halved text-green-500 mr-1"></i> <span data-i18n="chain.card1">数据已加密上链</span>
-                    </div>
-<div class="absolute bottom-10 left-10 bg-white/90 backdrop-blur p-3 rounded-lg shadow-md border border-gray-100 text-xs text-gray-600 animate-bounce" style="animation-duration: 4s;">
-<i class="fa-solid fa-chart-line text-blue-500 mr-1"></i> <span data-i18n="chain.card2">自主强化分析中</span>
-                    </div>
-</div>
-<!-- 右侧：文本内容 -->
-<div class="space-y-8 reveal order-1 md:order-2">
-<div class="inline-block px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-xs font-semibold tracking-wide uppercase" data-i18n="chain.badge">
-                        Web4 生态
-                    </div>
-<h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight" data-i18n="chain.title">
-                        数据上链与价值共享
-                    </h2>
-<p class="text-lg text-gray-600 leading-relaxed" data-i18n="chain.desc">
-                        通过Web4将每个宠物身体状况的数据发送到去中心化的数据中心，并不断的自主强化分析来提高宠物身体状况的准确判断能力，数据不仅可以提高公司的大模型能力，又可以为宠物主人带来一份收益。
-                    </p>
-<div class="grid grid-cols-2 gap-4 pt-4">
-<div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-<div class="text-2xl font-bold text-gray-900 mb-1">Web4</div>
-<div class="text-sm text-gray-500" data-i18n="chain.grid1">去中心化存储</div>
-</div>
-<div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-<div class="text-2xl font-bold text-gray-900 mb-1">AI+</div>
-<div class="text-sm text-gray-500" data-i18n="chain.grid2">自主强化分析</div>
-</div>
-</div>
+<div class="mt-6 md:mt-8 rounded-3xl bg-gray-950 px-7 py-10 md:px-12 md:py-12 reveal">
+<div class="text-xs font-semibold uppercase tracking-[0.2em] text-blue-300" data-i18n="chain.principle.label">Brand Principle</div>
+<p class="mt-5 max-w-none text-xl md:text-2xl lg:text-[26px] font-semibold leading-relaxed tracking-tight text-white lg:whitespace-nowrap" data-i18n="chain.principle.title">真正的生命智能，不仅来自先进的模型，更来自真实、持续且值得信赖的生命数据。</p>
 </div>
 </div>
 </section>
@@ -925,8 +979,10 @@
                 "nav.responsibility": "社会责任",
                 "nav.login": "登录",
                 "nav.cta": "立即创建宠物",
-                "hero.title": "构建宠物的\"数字生命体\"<br/>实现从虚拟陪伴到真实健康的<br/>全生命周期智能管理",
-                "hero.subtitle": "PalEcho 以 AI 健康分析、智能硬件与数据平台为核心，连接宠物与主人，建立全生命周期的健康管理闭环。",
+                "hero.title": "重新定义宠物健康",
+                "hero.subtitle": "PalEcho 正在构建数字生命生态，连接 AI、智能硬件与生命数据，让健康管理从被动响应，走向持续理解与主动守护。",
+                "hero.primary": "了解 PalEcho",
+                "hero.secondary": "开始体验",
                 "hero.more": "了解更多",
                 "lang.label": "语言",
                 "digital.title": "现在，让宠物数字化",
@@ -1008,8 +1064,10 @@
                 "nav.responsibility": "社會責任",
                 "nav.login": "登入",
                 "nav.cta": "立即建立寵物",
-                "hero.title": "構建寵物的\"數位生命體\"<br/>實現從虛擬陪伴到真實健康的<br/>全生命週期智慧管理",
-                "hero.subtitle": "PalEcho 以 AI 健康分析、智慧硬體與資料平台為核心，連結寵物與主人，建立全生命週期的健康管理閉環。",
+                "hero.title": "重新定義寵物健康",
+                "hero.subtitle": "PalEcho 正在構建數位生命生態，連結 AI、智慧硬體與生命數據，讓健康管理從被動回應，走向持續理解與主動守護。",
+                "hero.primary": "了解 PalEcho",
+                "hero.secondary": "開始體驗",
                 "hero.more": "了解更多",
                 "lang.label": "語言",
                 "digital.title": "現在，讓寵物數位化",
@@ -1091,8 +1149,10 @@
                 "nav.responsibility": "Social Impact",
                 "nav.login": "Sign in",
                 "nav.cta": "Create Pet Now",
-                "hero.title": "Build a Pet \"Digital Life\"<br/>From virtual companionship to real health<br/>Full-lifecycle intelligent care",
-                "hero.subtitle": "PalEcho connects pets and owners with AI health analysis, smart hardware, and a data platform to form a full-lifecycle care loop.",
+                "hero.title": "Redefining Pet Health",
+                "hero.subtitle": "PalEcho is building a digital life ecosystem that connects AI, smart hardware, and life data—moving health management from reactive response to continuous understanding and proactive care.",
+                "hero.primary": "Explore PalEcho",
+                "hero.secondary": "Get Started",
                 "hero.more": "Learn More",
                 "lang.label": "Language",
                 "digital.title": "Make pets digital, starting now",
@@ -1174,8 +1234,10 @@
                 "nav.responsibility": "社会的責任",
                 "nav.login": "ログイン",
                 "nav.cta": "今すぐペットを作成",
-                "hero.title": "ペットの\"デジタル生命体\"を構築<br/>仮想の伴走から実際の健康まで<br/>ライフサイクル全体のスマート管理",
-                "hero.subtitle": "PalEcho は AI 健康分析、スマートハードウェア、データ基盤でペットと飼い主をつなぎ、ライフサイクル全体のケアを実現します。",
+                "hero.title": "ペットヘルスを再定義する",
+                "hero.subtitle": "PalEcho は AI、スマートハードウェア、生命データをつなぐデジタル生命エコシステムを構築し、健康管理を受動的な対応から継続的な理解と先回りのケアへ進化させます。",
+                "hero.primary": "PalEcho を知る",
+                "hero.secondary": "体験を始める",
                 "hero.more": "もっと見る",
                 "lang.label": "言語",
                 "digital.title": "今こそ、ペットをデジタル化",
@@ -1257,8 +1319,10 @@
                 "nav.responsibility": "사회적 책임",
                 "nav.login": "로그인",
                 "nav.cta": "지금 반려동물 생성",
-                "hero.title": "반려동물의 \"디지털 생명체\" 구축<br/>가상 동행에서 실제 건강까지<br/>전 생애주기 지능형 관리",
-                "hero.subtitle": "PalEcho는 AI 건강 분석, 스마트 하드웨어, 데이터 플랫폼으로 반려동물과 보호자를 연결해 전 생애주기 건강 관리 루프를 만듭니다.",
+                "hero.title": "반려동물 건강을 새롭게 정의하다",
+                "hero.subtitle": "PalEcho는 AI, 스마트 하드웨어, 생명 데이터를 연결하는 디지털 생명 생태계를 구축해 건강 관리를 사후 대응에서 지속적인 이해와 능동적인 보호로 전환합니다.",
+                "hero.primary": "PalEcho 알아보기",
+                "hero.secondary": "체험 시작",
                 "hero.more": "더 알아보기",
                 "lang.label": "언어",
                 "digital.title": "지금, 반려동물을 디지털화",
@@ -1445,23 +1509,41 @@
                 "sustain.title": "可持续发展",
                 "sustain.desc": "采用环保、可降解原材料，减少对环境的影响。<br/>工厂生产过程节能减排，降低碳足迹。<br/>推动产品包装回收与循环使用，倡导绿色生活。<br/>支持野生动物保护项目，维护生态平衡。<br/>持续优化产品设计与研发，实现健康与环保双赢。",
                 "progress.title": "行业进步",
-                "progress.desc": "元爪大模型以多模态理解与高精度健康分析能力，推动 AI 宠物行业从经验驱动走向数据驱动，提升服务的科学性与可解释性。",
+                "progress.desc": "Mira大模型以多模态理解与高精度健康分析能力，推动 AI 宠物行业从经验驱动走向数据驱动，提升服务的科学性与可解释性。",
                 "good.title": "科技向善",
                 "good.desc": "利用 AI 技术实时分析宠物健康数据，为每一只宠物提供科学养护建议。<br/>所有宠物数据均加密存储，用户完全掌控，安全可靠。<br/>通过数字宠物和智能硬件，让更多流浪动物获得科学照护和关注。<br/>科技优化生产和供应链，减少碳足迹，实现宠物健康与环境保护双赢。<br/>投入宠物健康与行为研究，将科技成果反馈到社会与公益项目中。",
-                "meta.badge": "核心技术",
-                "meta.title": "元爪大模型",
-                "meta.desc": "通过整合各个大模型以及自研模型将现实中的宠物真实呈现在3D虚拟上，并不断提高在不同场景中的3D虚拟宠物的真实性以及宠物声音，其次发挥AI诊断作用，为宠物健康保驾护航。",
-                "meta.item1": "高保真 3D 虚拟化呈现",
-                "meta.item2": "拟真宠物声音合成",
-                "meta.item3": "专业级 AI 健康诊断",
-                "meta.status": "状态: 健康",
-                "chain.badge": "Web4 生态",
-                "chain.title": "数据上链与价值共享",
-                "chain.desc": "通过Web4将每个宠物身体状况的数据发送到去中心化的数据中心，并不断的自主强化分析来提高宠物身体状况的准确判断能力，数据不仅可以提高公司的大模型能力，又可以为宠物主人带来一份收益。",
-                "chain.card1": "数据已加密上链",
-                "chain.card2": "自主强化分析中",
-                "chain.grid1": "去中心化存储",
-                "chain.grid2": "自主强化分析",
+                "meta.title": "Mira大模型",
+                "meta.lead": "Mira 是 PalEcho 全新打造的新一代 AI 模型，专为理解生命而生。",
+                "meta.desc": "它不只是回答问题，而是通过智能推理、数字生命建模与生命知识体系，持续理解每一只宠物的健康、行为与成长，让科技真正成为生命的长期守护者。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "让智能真正理解生命。",
+                "meta.core.desc": "Mira Core 负责推理、分析与判断，融合多模态信息，理解复杂的健康与行为场景，为每一次交互提供更自然、更可靠的回应。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "让每一个生命，都拥有数字表达。",
+                "meta.life.desc": "Mira Life 为每一只宠物构建持续成长的数字生命模型，记录外观、行为、健康与成长变化，让陪伴不只是被记住，也能够被理解。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "让知识成为长期守护的基础。",
+                "meta.atlas.desc": "Mira Atlas 汇聚宠物医学、生命科学与长期健康数据，持续沉淀专业知识与个体记忆，为 Mira 提供可靠、持续进化的认知基础。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命，会留下数据。数据，会理解生命。",
+                "chain.intro1": "每一次心跳、每一次活动、每一次成长，都会留下属于生命的独特轨迹。",
+                "chain.intro2": "PalEcho 持续构建真实、长期、高质量的生命数据体系，让 AI 从理解一只宠物，到理解更多生命。",
+                "chain.intro3": "这些数据不仅构成每一只宠物的个体健康基线，也将在用户授权、匿名化与安全保护的前提下，持续推动 AI 能力演进、生命科学研究，以及未来人与宠物更加自然的交流。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "个体健康基线",
+                "chain.baseline.desc": "每一只宠物都有独特的健康特征与生活习惯。持续积累的生命数据，将帮助 Mira 建立专属健康基线，实现更加精准、个性化的健康理解。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "驱动 AI 持续进化",
+                "chain.evolution.desc": "高质量、长期积累的生命数据，将不断提升 Mira 对健康、行为与情绪的理解能力，让 AI 随着每一次陪伴持续学习、持续成长。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "推动生命科学发展",
+                "chain.research.desc": "在用户授权、匿名化与安全处理的前提下，生命数据将持续推动疾病研究、健康预测及生命科学的发展，让每一份数据创造更广泛的社会价值。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "隐私始终优先",
+                "chain.privacy.desc": "每一份生命数据都将在用户授权下进行匿名化、脱敏与安全处理，仅用于提升 AI 能力、生命科学研究及用户授权的服务。",
+                "chain.privacy.trust": "我们珍视每一份生命数据，更珍视每一位用户的信任。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真正的生命智能，不仅来自先进的模型，更来自真实、持续且值得信赖的生命数据。",
                 "footer.copy": "© 2026 PalEcho. All rights reserved.",
                 "footer.tagline": "让每一次心跳都成为对话"
             },
@@ -1590,23 +1672,41 @@
                 "sustain.title": "永續發展",
                 "sustain.desc": "採用環保可降解材料降低影響。<br/>工廠節能減排，降低碳足跡。<br/>推動包裝回收與循環使用。<br/>支持野生動物保護計畫。<br/>持續研發，實現健康與環保雙贏。",
                 "progress.title": "行業進步",
-                "progress.desc": "元爪大模型以多模態理解與高精度分析，推動 AI 寵物產業走向數據驅動。",
+                "progress.desc": "Mira 大模型以多模態理解與高精度分析，推動 AI 寵物產業走向數據驅動。",
                 "good.title": "科技向善",
                 "good.desc": "運用 AI 分析健康數據，為每一隻寵物提供科學建議。<br/>資料加密存儲，使用者可控。<br/>數位寵物與硬體讓更多流浪動物獲得照護。<br/>科技優化供應鏈、降低碳足跡。<br/>投入研究並回饋公益。",
-                "meta.badge": "核心技術",
-                "meta.title": "元爪大模型",
-                "meta.desc": "整合多模型與自研能力，讓寵物在 3D 虛擬中更真實，並以 AI 診斷守護健康。",
-                "meta.item1": "高保真 3D 虛擬呈現",
-                "meta.item2": "擬真寵物聲音合成",
-                "meta.item3": "專業級 AI 健康診斷",
-                "meta.status": "狀態: 健康",
-                "chain.badge": "Web4 生態",
-                "chain.title": "數據上鏈與價值共享",
-                "chain.desc": "以 Web4 將寵物健康數據送往去中心化資料中心，透過強化分析提升判斷精準度，並回饋給主人。",
-                "chain.card1": "數據已加密上鏈",
-                "chain.card2": "自主強化分析中",
-                "chain.grid1": "去中心化存儲",
-                "chain.grid2": "自主強化分析",
+                "meta.title": "Mira 大模型",
+                "meta.lead": "Mira 是 PalEcho 全新打造的新一代 AI 模型，專為理解生命而生。",
+                "meta.desc": "它不只回答問題，更透過智慧推理、數位生命建模與生命知識體系，持續理解每一隻寵物的健康、行為與成長，讓科技真正成為生命的長期守護者。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "讓智慧真正理解生命。",
+                "meta.core.desc": "Mira Core 負責推理、分析與判斷，融合多模態資訊，理解複雜的健康與行為情境，為每一次互動提供更自然、更可靠的回應。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "讓每一個生命，都擁有數位表達。",
+                "meta.life.desc": "Mira Life 為每一隻寵物建立持續成長的數位生命模型，記錄外觀、行為、健康與成長變化，讓陪伴不只被記住，也能被理解。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "讓知識成為長期守護的基礎。",
+                "meta.atlas.desc": "Mira Atlas 匯聚寵物醫學、生命科學與長期健康數據，持續沉澱專業知識與個體記憶，為 Mira 提供可靠、持續進化的認知基礎。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命，會留下數據。數據，會理解生命。",
+                "chain.intro1": "每一次心跳、每一次活動、每一次成長，都會留下屬於生命的獨特軌跡。",
+                "chain.intro2": "PalEcho 持續構建真實、長期、高品質的生命數據體系，讓 AI 從理解一隻寵物，到理解更多生命。",
+                "chain.intro3": "這些數據不僅構成每一隻寵物的個體健康基線，也將在使用者授權、匿名化與安全保護的前提下，持續推動 AI 能力演進、生命科學研究，以及未來人與寵物更自然的交流。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "個體健康基線",
+                "chain.baseline.desc": "每一隻寵物都有獨特的健康特徵與生活習慣。持續累積的生命數據，將協助 Mira 建立專屬健康基線，實現更精準、個人化的健康理解。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "驅動 AI 持續進化",
+                "chain.evolution.desc": "高品質、長期累積的生命數據，將不斷提升 Mira 對健康、行為與情緒的理解能力，讓 AI 隨著每一次陪伴持續學習、持續成長。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "推動生命科學發展",
+                "chain.research.desc": "在使用者授權、匿名化與安全處理的前提下，生命數據將持續推動疾病研究、健康預測及生命科學發展，讓每一份數據創造更廣泛的社會價值。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "隱私始終優先",
+                "chain.privacy.desc": "每一份生命數據都將在使用者授權下進行匿名化、去識別化與安全處理，僅用於提升 AI 能力、生命科學研究及使用者授權的服務。",
+                "chain.privacy.trust": "我們珍視每一份生命數據，更珍視每一位使用者的信任。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真正的生命智慧，不僅來自先進的模型，更來自真實、持續且值得信賴的生命數據。",
                 "footer.copy": "© 2026 PalEcho. All rights reserved.",
                 "footer.tagline": "讓每一次心跳都成為對話"
             },
@@ -1735,23 +1835,41 @@
                 "sustain.title": "Sustainability",
                 "sustain.desc": "Use eco-friendly, biodegradable materials. <br/>Reduce carbon in manufacturing. <br/>Promote recycling and circular packaging. <br/>Support wildlife protection. <br/>Optimize R&D for health and sustainability.",
                 "progress.title": "Industry Progress",
-                "progress.desc": "Meta-Claw drives AI pet care from experience-based to data-driven with stronger interpretability.",
+                "progress.desc": "The Mira model drives AI pet care from experience-based to data-driven with stronger interpretability.",
                 "good.title": "Tech for Good",
                 "good.desc": "Analyze health data with AI to provide scientific guidance. <br/>Encrypted storage with user control. <br/>Digital pets and hardware bring care to more rescued animals. <br/>Tech optimizes supply chains and reduces carbon. <br/>Research成果 feed back into公益.",
-                "meta.badge": "Core Technology",
-                "meta.title": "Meta-Claw Model",
-                "meta.desc": "Integrating multiple models and in-house tech, we render pets in high-fidelity 3D and use AI diagnosis to guard health.",
-                "meta.item1": "High-fidelity 3D visualization",
-                "meta.item2": "Realistic pet voice synthesis",
-                "meta.item3": "Professional AI health diagnostics",
-                "meta.status": "Status: Healthy",
-                "chain.badge": "Web4 Ecosystem",
-                "chain.title": "On-chain data & shared value",
-                "chain.desc": "Send pet health data to decentralized centers via Web4 to boost accuracy through reinforcement analysis and share value with owners.",
-                "chain.card1": "Data encrypted on-chain",
-                "chain.card2": "Reinforcement analysis running",
-                "chain.grid1": "Decentralized storage",
-                "chain.grid2": "Reinforcement analytics",
+                "meta.title": "Mira Model",
+                "meta.lead": "Mira is PalEcho’s next-generation AI model, created to understand life.",
+                "meta.desc": "It goes beyond answering questions. Through intelligent reasoning, digital-life modeling, and a life-science knowledge system, Mira continuously understands each pet’s health, behavior, and growth—so technology can become a lifelong guardian of life.",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "Intelligence that truly understands life.",
+                "meta.core.desc": "Mira Core handles reasoning, analysis, and judgment. It brings together multimodal information to understand complex health and behavior scenarios, delivering more natural and reliable responses in every interaction.",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "A digital expression for every life.",
+                "meta.life.desc": "Mira Life builds an evolving digital-life model for every pet, capturing appearance, behavior, health, and growth so companionship is not only remembered, but understood.",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "Knowledge as the foundation of lifelong care.",
+                "meta.atlas.desc": "Mira Atlas brings together veterinary medicine, life science, and long-term health data, building professional knowledge and individual memory into a reliable, continuously evolving cognitive foundation for Mira.",
+                "chain.title": "Life Data",
+                "chain.tagline": "Life leaves data. Data learns to understand life.",
+                "chain.intro1": "Every heartbeat, every activity, and every stage of growth leaves a unique trace of life.",
+                "chain.intro2": "PalEcho is building a real, long-term, high-quality life-data system that helps AI move from understanding one pet to understanding more forms of life.",
+                "chain.intro3": "This data forms each pet’s individual health baseline and, with user consent, anonymization, and strong safeguards, advances AI capabilities, life-science research, and more natural communication between people and pets.",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "An individual health baseline",
+                "chain.baseline.desc": "Every pet has unique health characteristics and daily habits. Accumulated life data helps Mira establish a dedicated health baseline for more precise, personalized understanding.",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "Driving continuous AI evolution",
+                "chain.evolution.desc": "High-quality, long-term life data continually improves Mira’s understanding of health, behavior, and emotion, allowing AI to keep learning and growing through every moment of companionship.",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "Advancing life science",
+                "chain.research.desc": "With user consent, anonymization, and secure processing, life data can advance disease research, health prediction, and the life sciences—giving every data point broader social value.",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "Privacy always comes first",
+                "chain.privacy.desc": "Every piece of life data is anonymized, de-identified, and securely processed with user authorization, and used only to improve AI, support life-science research, and provide authorized services.",
+                "chain.privacy.trust": "We value every piece of life data—and we value every user’s trust even more.",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "True life intelligence comes not only from advanced models, but from life data that is real, continuous, and worthy of trust.",
                 "footer.copy": "© 2026 PalEcho. All rights reserved.",
                 "footer.tagline": "Make every heartbeat a conversation"
             },
@@ -1880,23 +1998,41 @@
                 "sustain.title": "サステナビリティ",
                 "sustain.desc": "環境配慮素材を採用。<br/>製造の省エネで排出削減。<br/>包装の回収・循環を推進。<br/>野生動物保護を支援。<br/>研究開発で健康と環境の両立を実現。",
                 "progress.title": "業界の前進",
-                "progress.desc": "元爪大模型が AI ペット業界をデータ駆動へ進化させます。",
+                "progress.desc": "Mira モデルが AI ペット業界をデータ駆動へ進化させます。",
                 "good.title": "テック・フォー・グッド",
                 "good.desc": "AI で健康データを解析し科学的ケアを提供。<br/>暗号化とユーザー制御で安心。<br/>より多くの保護動物にケアを。<br/>サプライチェーン最適化で環境負荷を低減。<br/>研究成果を公益へ。",
-                "meta.badge": "コア技術",
-                "meta.title": "元爪大模型",
-                "meta.desc": "複数モデルと自社技術を統合し、3D 分身と AI 診断で健康を守る。",
-                "meta.item1": "高精細 3D 可視化",
-                "meta.item2": "リアルな音声合成",
-                "meta.item3": "専門的 AI 健康診断",
-                "meta.status": "状態: 健康",
-                "chain.badge": "Web4 エコシステム",
-                "chain.title": "オンチェーンデータと価値共有",
-                "chain.desc": "分散センターにデータを送り、強化分析で精度を高め、価値を共有します。",
-                "chain.card1": "データは暗号化してオンチェーン",
-                "chain.card2": "自律強化分析中",
-                "chain.grid1": "分散ストレージ",
-                "chain.grid2": "強化分析",
+                "meta.title": "Mira モデル",
+                "meta.lead": "Mira は、生命を理解するために PalEcho が新たに開発した次世代 AI モデルです。",
+                "meta.desc": "質問に答えるだけでなく、知的推論、デジタル生命モデリング、生命知識体系を通じて、一匹一匹の健康・行動・成長を継続的に理解し、テクノロジーを生命の長期的な守り手へと進化させます。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "知能が、本当に生命を理解する。",
+                "meta.core.desc": "Mira Core は推論・分析・判断を担い、マルチモーダル情報を統合して複雑な健康・行動シーンを理解し、より自然で信頼できる応答を提供します。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "すべての生命に、デジタルな表現を。",
+                "meta.life.desc": "Mira Life はペットごとに成長し続けるデジタル生命モデルを構築し、外見、行動、健康、成長の変化を記録。共に過ごした時間を、記憶するだけでなく理解します。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "知識を、長期的な見守りの基盤に。",
+                "meta.atlas.desc": "Mira Atlas は獣医学、生命科学、長期健康データを集約し、専門知識と個体の記憶を蓄積。Mira に信頼できる、進化し続ける認知基盤を提供します。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命はデータを残し、データは生命を理解する。",
+                "chain.intro1": "一つひとつの鼓動、活動、成長が、生命固有の軌跡を残します。",
+                "chain.intro2": "PalEcho は、リアルで長期的かつ高品質な生命データ基盤を構築し、AI が一匹のペットから、より多くの生命を理解できるようにします。",
+                "chain.intro3": "データは個体ごとの健康基準を形成し、利用者の同意、匿名化、安全保護のもとで、AI の進化、生命科学研究、そして人とペットのより自然な交流を支えます。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "個体別の健康基準",
+                "chain.baseline.desc": "すべてのペットには固有の健康特性と生活習慣があります。継続的な生命データにより、Mira は専用の健康基準を構築し、より精密で個別化された理解を実現します。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "AI の継続的な進化を促す",
+                "chain.evolution.desc": "高品質で長期的な生命データが、健康・行動・感情に対する Mira の理解を深め、AI が共に過ごすたびに学び、成長できるようにします。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "生命科学の発展を支える",
+                "chain.research.desc": "利用者の同意、匿名化、安全な処理を前提に、生命データは疾病研究、健康予測、生命科学を前進させ、より広い社会的価値を生み出します。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "プライバシーを常に最優先に",
+                "chain.privacy.desc": "すべての生命データは利用者の許可のもとで匿名化・識別情報除去・安全処理を行い、AI の向上、生命科学研究、許可されたサービスにのみ使用します。",
+                "chain.privacy.trust": "私たちは一つひとつの生命データを大切にし、それ以上に利用者の信頼を大切にします。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真の生命知能は、先進的なモデルだけでなく、リアルで継続的、そして信頼に値する生命データから生まれます。",
                 "footer.copy": "© 2026 PalEcho. All rights reserved.",
                 "footer.tagline": "心拍を、対話に"
             },
@@ -2025,23 +2161,41 @@
                 "sustain.title": "지속가능성",
                 "sustain.desc": "친환경 소재 사용. <br/>제조 과정의 탄소 감축. <br/>포장 회수·재활용. <br/>야생동물 보호 지원. <br/>R&D로 건강과 환경의 균형.",
                 "progress.title": "산업 발전",
-                "progress.desc": "元爪 대모델은 AI 펫 산업을 데이터 기반으로 진화시킵니다.",
+                "progress.desc": "Mira 모델은 AI 펫 산업을 데이터 기반으로 진화시킵니다.",
                 "good.title": "선한 기술",
                 "good.desc": "AI로 건강 데이터를 분석해 과학적 케어 제공. <br/>암호화 저장과 사용자 제어. <br/>더 많은 구조 동물에 케어 제공. <br/>공급망 최적화로 탄소 감소. <br/>연구 성과를 사회에 환원.",
-                "meta.badge": "핵심 기술",
-                "meta.title": "元爪 대모델",
-                "meta.desc": "다중 모델과 자사 기술을 통합해 3D 분신과 AI 진단으로 건강을 지킵니다.",
-                "meta.item1": "고충실 3D 시각화",
-                "meta.item2": "사실적인 음성 합성",
-                "meta.item3": "전문급 AI 건강 진단",
-                "meta.status": "상태: 건강",
-                "chain.badge": "Web4 생태계",
-                "chain.title": "온체인 데이터와 가치 공유",
-                "chain.desc": "분산 센터로 데이터를 보내 강화 분석으로 정확도를 높이고 가치를 공유합니다.",
-                "chain.card1": "데이터 암호화 온체인",
-                "chain.card2": "강화 분석 중",
-                "chain.grid1": "분산 저장",
-                "chain.grid2": "강화 분석",
+                "meta.title": "Mira 모델",
+                "meta.lead": "Mira는 생명을 이해하기 위해 PalEcho가 새롭게 만든 차세대 AI 모델입니다.",
+                "meta.desc": "단순히 질문에 답하는 것을 넘어 지능형 추론, 디지털 생명 모델링, 생명 지식 체계를 통해 반려동물 한 마리 한 마리의 건강과 행동, 성장을 지속적으로 이해하며 기술을 생명의 장기적인 보호자로 만듭니다.",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "지능이 진정으로 생명을 이해하도록.",
+                "meta.core.desc": "Mira Core는 추론, 분석, 판단을 담당합니다. 멀티모달 정보를 융합해 복잡한 건강 및 행동 상황을 이해하고 모든 상호작용에 더 자연스럽고 신뢰할 수 있는 응답을 제공합니다.",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "모든 생명에게 디지털 표현을.",
+                "meta.life.desc": "Mira Life는 반려동물마다 계속 성장하는 디지털 생명 모델을 구축하고 외형, 행동, 건강, 성장 변화를 기록해 동행이 기억되는 것을 넘어 이해되도록 합니다.",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "지식을 장기적인 보호의 기반으로.",
+                "meta.atlas.desc": "Mira Atlas는 수의학, 생명과학, 장기 건강 데이터를 모아 전문 지식과 개체 기억을 축적하고 Mira에 신뢰할 수 있으며 지속적으로 진화하는 인지 기반을 제공합니다.",
+                "chain.title": "Life Data",
+                "chain.tagline": "생명은 데이터를 남기고, 데이터는 생명을 이해합니다.",
+                "chain.intro1": "모든 심장 박동과 활동, 성장의 순간은 생명만의 고유한 궤적을 남깁니다.",
+                "chain.intro2": "PalEcho는 실제적이고 장기적이며 고품질인 생명 데이터 체계를 구축해 AI가 한 마리의 반려동물에서 더 많은 생명을 이해하도록 합니다.",
+                "chain.intro3": "이 데이터는 각 반려동물의 개별 건강 기준을 형성하며, 사용자 동의와 익명화, 안전 보호를 전제로 AI 역량의 진화, 생명과학 연구, 사람과 반려동물의 더 자연스러운 소통을 지원합니다.",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "개별 건강 기준",
+                "chain.baseline.desc": "모든 반려동물은 고유한 건강 특성과 생활 습관을 지닙니다. 지속적으로 축적된 생명 데이터는 Mira가 전용 건강 기준을 구축해 더 정밀하고 개인화된 이해를 제공하도록 합니다.",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "AI의 지속적인 진화를 이끌다",
+                "chain.evolution.desc": "고품질의 장기 생명 데이터는 건강, 행동, 감정에 대한 Mira의 이해를 높여 AI가 매 순간의 동행을 통해 계속 배우고 성장하도록 합니다.",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "생명과학의 발전을 촉진하다",
+                "chain.research.desc": "사용자 동의, 익명화, 안전한 처리를 전제로 생명 데이터는 질병 연구, 건강 예측, 생명과학 발전을 지원하며 모든 데이터에 더 넓은 사회적 가치를 부여합니다.",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "개인정보 보호를 항상 최우선으로",
+                "chain.privacy.desc": "모든 생명 데이터는 사용자 승인 아래 익명화, 비식별화, 안전 처리를 거치며 AI 향상, 생명과학 연구, 사용자가 승인한 서비스에만 활용됩니다.",
+                "chain.privacy.trust": "우리는 모든 생명 데이터를 소중히 여기며, 모든 사용자의 신뢰를 더욱 소중히 여깁니다.",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "진정한 생명 지능은 첨단 모델뿐 아니라 실제적이고 지속적이며 신뢰할 수 있는 생명 데이터에서 나옵니다.",
                 "footer.copy": "© 2026 PalEcho. All rights reserved.",
                 "footer.tagline": "심장을, 대화로"
             }
@@ -2089,7 +2243,7 @@
             // 渲染器设置
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
             // 粒子系统
@@ -2203,6 +2357,42 @@
 
             const defaultBtn = buttons.find((btn) => btn.dataset.target === defaultTargetId) || buttons[0];
             if (defaultBtn) activate(defaultBtn);
+        };
+
+        const initMobileMenu = () => {
+            const button = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!button || !menu || !icon) return;
+
+            const setMenuOpen = (open) => {
+                menu.classList.toggle('hidden', !open);
+                menu.setAttribute('aria-hidden', String(!open));
+                button.setAttribute('aria-expanded', String(open));
+                button.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+                icon.classList.toggle('fa-bars', !open);
+                icon.classList.toggle('fa-xmark', open);
+                document.body.classList.toggle('mobile-menu-open', open);
+            };
+
+            button.addEventListener('click', () => {
+                setMenuOpen(button.getAttribute('aria-expanded') !== 'true');
+            });
+
+            menu.querySelectorAll('a[href^="#"]').forEach((link) => {
+                link.addEventListener('click', () => setMenuOpen(false));
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+                    setMenuOpen(false);
+                    button.focus();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) setMenuOpen(false);
+            });
         };
 
         const initNavRouting = () => {
@@ -2397,6 +2587,7 @@
             initScrollReveal();
             initTabs('shop-tabs', 'shop-feed');
             initTabs('support-tabs', 'support-scope');
+            initMobileMenu();
             initNavRouting();
             initSimpleToggles();
         });
