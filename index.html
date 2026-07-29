@@ -960,6 +960,11 @@
 </footer>
 <!-- JavaScript 逻辑 -->
     <script>
+        // Normalize legacy empty fragments saved in browser history (e.g. /#).
+        if (window.location.hash === '#') {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+
         const I18N = {
             "zh-CN": {
                 "brand.tagline": "Designed to understand",
