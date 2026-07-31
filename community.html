@@ -111,7 +111,7 @@
                 visibility 0s;
         }
 
-        /* 二级导航只显示当前语言，避免切换语言后出现中英混排。 */
+        /* 二级导航在默认状态保持英文，仅在当前条目悬停时显示本地化标题。 */
         .product-name-switch,
         .nav-label-switch {
             display: inline-flex;
@@ -133,29 +133,39 @@
             line-height: 1.2;
         }
 
-        .product-name-switch > span,
-        .nav-label-switch > span {
-            transition: opacity 200ms ease-in-out;
+        /* 两个标题占用同一网格单元，以最长文本稳定下拉菜单的宽度与行高。 */
+        #desktop-nav [data-nav-hover] {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: center;
         }
 
-        /* 桌面端二级导航默认显示英文；指针进入具体条目后切换为当前语言。 */
-        .nav-hover-label-localized {
-            display: none;
+        #desktop-nav [data-nav-hover] .nav-hover-label-en,
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            grid-area: 1 / 1;
+            transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
         }
 
-        [data-nav-hover].is-localized .nav-hover-label-en {
-            display: none;
-        }
-
-        [data-nav-hover].is-localized .nav-hover-label-localized {
-            display: inline;
-        }
-
-        .product-name-switch .product-name-en,
-        .product-name-switch .product-name-cn,
-        .nav-label-switch .nav-label-en,
-        .nav-label-switch .nav-label-cn {
+        #desktop-nav [data-nav-hover] .nav-hover-label-en {
             opacity: 1;
+            visibility: visible;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-en {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-localized {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 180ms ease-in-out, visibility 0s;
         }
 
         .locale-fit,
@@ -332,6 +342,10 @@
         }
 
         @media (max-width: 767px) {
+            #mobile-menu > nav {
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+            }
+
             .nav-section {
                 padding-top: 4.5rem !important;
                 padding-bottom: 4.5rem !important;

@@ -111,7 +111,7 @@
                 visibility 0s;
         }
 
-        /* 二级导航只显示当前语言，避免切换语言后出现中英混排。 */
+        /* 二级导航在默认状态保持英文，仅在当前条目悬停时显示本地化标题。 */
         .product-name-switch,
         .nav-label-switch {
             display: inline-flex;
@@ -133,29 +133,39 @@
             line-height: 1.2;
         }
 
-        .product-name-switch > span,
-        .nav-label-switch > span {
-            transition: opacity 200ms ease-in-out;
+        /* 两个标题占用同一网格单元，以最长文本稳定下拉菜单的宽度与行高。 */
+        #desktop-nav [data-nav-hover] {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: center;
         }
 
-        /* 桌面端二级导航默认显示英文；指针进入具体条目后切换为当前语言。 */
-        .nav-hover-label-localized {
-            display: none;
+        #desktop-nav [data-nav-hover] .nav-hover-label-en,
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            grid-area: 1 / 1;
+            transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
         }
 
-        [data-nav-hover].is-localized .nav-hover-label-en {
-            display: none;
-        }
-
-        [data-nav-hover].is-localized .nav-hover-label-localized {
-            display: inline;
-        }
-
-        .product-name-switch .product-name-en,
-        .product-name-switch .product-name-cn,
-        .nav-label-switch .nav-label-en,
-        .nav-label-switch .nav-label-cn {
+        #desktop-nav [data-nav-hover] .nav-hover-label-en {
             opacity: 1;
+            visibility: visible;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-en {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-localized {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 180ms ease-in-out, visibility 0s;
         }
 
         .locale-fit,
@@ -332,6 +342,10 @@
         }
 
         @media (max-width: 767px) {
+            #mobile-menu > nav {
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+            }
+
             .nav-section {
                 padding-top: 4.5rem !important;
                 padding-bottom: 4.5rem !important;
@@ -376,11 +390,11 @@
 </button>
 <!-- 子导航 -->
 <div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
-<a aria-label="Mira — AI Health" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="#digital-pet"><span>Mira</span><span class="nav-hover-label-en">AI Health</span><span class="nav-hover-label-localized" data-i18n="nav.aiHealth">AI 健康管理</span></a>
-<a aria-label="Echo — Digital Pet" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-echo-launch data-nav-hover href="#ai-health"><span>Echo</span><span class="nav-hover-label-en">Digital Pet</span><span class="nav-hover-label-localized" data-i18n="nav.digitalPet">数字宠物</span></a>
-<a aria-label="Pulse — Pet Data Platform" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pulse-launch href="#pet-data"><span>Pulse</span><span class="nav-hover-label-en">Pet Data Platform</span><span class="nav-hover-label-localized" data-i18n="nav.petData">宠物数据平台</span></a>
-<a aria-label="LifeBase — Health Records" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-lifebase-launch data-nav-hover href="#lifebase-experience"><span>LifeBase</span><span class="nav-hover-label-en">Health Records</span><span class="nav-hover-label-localized" data-i18n="nav.lifeBase">健康档案</span></a>
-<a aria-label="Pal Store — Pet Store" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pal-store-launch href="#pet-shop"><span>Pal Store</span><span class="nav-hover-label-en">Pet Store</span><span class="nav-hover-label-localized" data-i18n="nav.petShop">宠物商城</span></a>
+<a aria-label="Mira" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="#digital-pet"><span class="nav-hover-label-en">Mira</span><span class="nav-hover-label-localized" data-i18n="nav.sub.mira" data-nav-default="Mira">Mira</span></a>
+<a aria-label="Echo" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-echo-launch data-nav-hover href="#ai-health"><span class="nav-hover-label-en">Echo</span><span class="nav-hover-label-localized" data-i18n="nav.sub.echo" data-nav-default="Echo">Echo</span></a>
+<a aria-label="Pulse" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pulse-launch href="#pet-data"><span class="nav-hover-label-en">Pulse</span><span class="nav-hover-label-localized" data-i18n="nav.sub.pulse" data-nav-default="Pulse">Pulse</span></a>
+<a aria-label="LifeBase" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-lifebase-launch data-nav-hover href="#lifebase-experience"><span class="nav-hover-label-en">LifeBase</span><span class="nav-hover-label-localized" data-i18n="nav.sub.lifeBase" data-nav-default="LifeBase">LifeBase</span></a>
+<a aria-label="Store" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pal-store-launch href="#pet-shop"><span class="nav-hover-label-en">Store</span><span class="nav-hover-label-localized" data-i18n="nav.sub.store" data-nav-default="Store">Store</span></a>
 </div>
 </div>
 <!-- 社区与支持 (带子菜单) -->
@@ -390,8 +404,8 @@
 </button>
 <!-- 子导航 -->
 <div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
-<a aria-label="Help Center" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/help-center.html"><span class="nav-hover-label-en">Help Center</span><span class="nav-hover-label-localized" data-i18n="nav.help">帮助中心</span></a>
-<a aria-label="Community" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/community.html"><span class="nav-hover-label-en">Community</span><span class="nav-hover-label-localized" data-i18n="nav.community">社区与公益</span></a>
+<a aria-label="Assist" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/help-center.html"><span class="nav-hover-label-en">Assist</span><span class="nav-hover-label-localized" data-i18n="nav.sub.assist" data-nav-default="Assist">Assist</span></a>
+<a aria-label="Circle" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/community.html"><span class="nav-hover-label-en">Circle</span><span class="nav-hover-label-localized" data-i18n="nav.sub.circle" data-nav-default="Circle">Circle</span></a>
 </div>
 </div>
 <!-- 关于我们 (带子菜单) -->
@@ -401,10 +415,10 @@
 </button>
 <!-- 子导航 -->
 <div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
-<a aria-label="Who We Are" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/story.html"><span class="nav-hover-label-en">Who We Are</span><span class="nav-hover-label-localized" data-i18n="nav.aboutUs">我们是谁</span></a>
-<a aria-label="Technology" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/tech.html"><span class="nav-hover-label-en">Technology</span><span class="nav-hover-label-localized" data-i18n="nav.tech">技术与能力</span></a>
-<a aria-label="Data &amp; Trust" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/trust.html"><span class="nav-hover-label-en">Data &amp; Trust</span><span class="nav-hover-label-localized" data-i18n="nav.trust">数据与信任</span></a>
-<a aria-label="Join Us" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/join-us.html"><span class="nav-hover-label-en">Join Us</span><span class="nav-hover-label-localized" data-i18n="nav.joinUs">加入我们</span></a>
+<a aria-label="Origin" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/story.html"><span class="nav-hover-label-en">Origin</span><span class="nav-hover-label-localized" data-i18n="nav.sub.origin" data-nav-default="Origin">Origin</span></a>
+<a aria-label="Core" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/tech.html"><span class="nav-hover-label-en">Core</span><span class="nav-hover-label-localized" data-i18n="nav.sub.core" data-nav-default="Core">Core</span></a>
+<a aria-label="Trust" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/trust.html"><span class="nav-hover-label-en">Trust</span><span class="nav-hover-label-localized" data-i18n="nav.sub.trust" data-nav-default="Trust">Trust</span></a>
+<a aria-label="Careers" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/join-us.html"><span class="nav-hover-label-en">Careers</span><span class="nav-hover-label-localized" data-i18n="nav.sub.careers" data-nav-default="Careers">Careers</span></a>
 </div>
 </div>
 <!-- 社会责任 (带子菜单) -->
@@ -414,9 +428,9 @@
 </button>
 <!-- 子导航 -->
 <div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
-<a aria-label="Animal Care" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/care.html"><span class="nav-hover-label-en">Animal Care</span><span class="nav-hover-label-localized" data-i18n="nav.care">动物关怀</span></a>
-<a aria-label="Sustainability" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/sustainability.html"><span class="nav-hover-label-en">Sustainability</span><span class="nav-hover-label-localized" data-i18n="nav.sustainability">可持续发展</span></a>
-<a aria-label="Innovation for Good" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/progress.html"><span class="nav-hover-label-en">Innovation for Good</span><span class="nav-hover-label-localized" data-i18n="nav.progress">创新向善</span></a>
+<a aria-label="Compassion" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/care.html"><span class="nav-hover-label-en">Compassion</span><span class="nav-hover-label-localized" data-i18n="nav.sub.compassion" data-nav-default="Compassion">Compassion</span></a>
+<a aria-label="Tomorrow" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/sustainability.html"><span class="nav-hover-label-en">Tomorrow</span><span class="nav-hover-label-localized" data-i18n="nav.sub.tomorrow" data-nav-default="Tomorrow">Tomorrow</span></a>
+<a aria-label="Impact" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/progress.html"><span class="nav-hover-label-en">Impact</span><span class="nav-hover-label-localized" data-i18n="nav.sub.impact" data-nav-default="Impact">Impact</span></a>
 </div>
 </div>
 </nav>
@@ -2591,23 +2605,43 @@
         const I18N_NAV = {
             "zh-CN": {
                 "nav.lifeBase": "健康档案", "nav.help": "帮助中心", "nav.care": "动物关怀",
-                "nav.sustainability": "可持续发展", "nav.progress": "创新向善"
+                "nav.sustainability": "可持续发展", "nav.progress": "创新向善",
+                "nav.sub.mira": "健康助手", "nav.sub.echo": "数字宠物", "nav.sub.pulse": "健康守护", "nav.sub.lifeBase": "健康档案", "nav.sub.store": "宠物商城",
+                "nav.sub.assist": "技术支持", "nav.sub.circle": "用户社区",
+                "nav.sub.origin": "我们是谁", "nav.sub.core": "技术与能力", "nav.sub.trust": "数据与信任", "nav.sub.careers": "加入我们",
+                "nav.sub.compassion": "动物关怀", "nav.sub.tomorrow": "可持续发展", "nav.sub.impact": "创新向善"
             },
             "zh-TW": {
                 "nav.lifeBase": "健康檔案", "nav.help": "幫助中心", "nav.care": "動物關懷",
-                "nav.sustainability": "永續發展", "nav.progress": "創新向善"
+                "nav.sustainability": "永續發展", "nav.progress": "創新向善",
+                "nav.sub.mira": "健康助理", "nav.sub.echo": "數位寵物", "nav.sub.pulse": "健康守護", "nav.sub.lifeBase": "健康檔案", "nav.sub.store": "寵物商城",
+                "nav.sub.assist": "技術支援", "nav.sub.circle": "用戶社群",
+                "nav.sub.origin": "我們是誰", "nav.sub.core": "技術與能力", "nav.sub.trust": "數據與信任", "nav.sub.careers": "加入我們",
+                "nav.sub.compassion": "動物關懷", "nav.sub.tomorrow": "永續發展", "nav.sub.impact": "創新向善"
             },
             "en": {
                 "nav.lifeBase": "Health Records", "nav.help": "Help Center", "nav.care": "Animal Care",
-                "nav.sustainability": "Sustainability", "nav.progress": "Innovation for Good"
+                "nav.sustainability": "Sustainability", "nav.progress": "Innovation for Good",
+                "nav.sub.mira": "Mira", "nav.sub.echo": "Echo", "nav.sub.pulse": "Pulse", "nav.sub.lifeBase": "LifeBase", "nav.sub.store": "Store",
+                "nav.sub.assist": "Assist", "nav.sub.circle": "Circle",
+                "nav.sub.origin": "Origin", "nav.sub.core": "Core", "nav.sub.trust": "Trust", "nav.sub.careers": "Careers",
+                "nav.sub.compassion": "Compassion", "nav.sub.tomorrow": "Tomorrow", "nav.sub.impact": "Impact"
             },
             "ja": {
                 "nav.lifeBase": "健康記録", "nav.help": "ヘルプセンター", "nav.care": "動物ケア",
-                "nav.sustainability": "サステナビリティ", "nav.progress": "善のイノベーション"
+                "nav.sustainability": "サステナビリティ", "nav.progress": "善のイノベーション",
+                "nav.sub.mira": "ヘルスアシスタント", "nav.sub.echo": "デジタルペット", "nav.sub.pulse": "健康を守る", "nav.sub.lifeBase": "健康記録", "nav.sub.store": "ペットショップ",
+                "nav.sub.assist": "テクニカルサポート", "nav.sub.circle": "ユーザーコミュニティ",
+                "nav.sub.origin": "私たちについて", "nav.sub.core": "技術と能力", "nav.sub.trust": "データと信頼", "nav.sub.careers": "採用情報",
+                "nav.sub.compassion": "動物ケア", "nav.sub.tomorrow": "サステナビリティ", "nav.sub.impact": "善のイノベーション"
             },
             "ko": {
                 "nav.lifeBase": "건강 기록", "nav.help": "도움말 센터", "nav.care": "동물 케어",
-                "nav.sustainability": "지속가능성", "nav.progress": "선을 위한 혁신"
+                "nav.sustainability": "지속가능성", "nav.progress": "선을 위한 혁신",
+                "nav.sub.mira": "건강 도우미", "nav.sub.echo": "디지털 반려동물", "nav.sub.pulse": "건강 지킴이", "nav.sub.lifeBase": "건강 기록", "nav.sub.store": "펫 스토어",
+                "nav.sub.assist": "기술 지원", "nav.sub.circle": "사용자 커뮤니티",
+                "nav.sub.origin": "우리는 누구인가", "nav.sub.core": "기술과 역량", "nav.sub.trust": "데이터와 신뢰", "nav.sub.careers": "채용",
+                "nav.sub.compassion": "동물 케어", "nav.sub.tomorrow": "지속가능성", "nav.sub.impact": "선을 위한 혁신"
             }
         };
 
@@ -2724,8 +2758,16 @@
             });
         };
 
+        const applyDesktopNavHoverLabels = (navDict) => {
+            document.querySelectorAll("#desktop-nav [data-nav-hover] .nav-hover-label-localized[data-nav-default]").forEach((element) => {
+                const key = element.getAttribute("data-i18n");
+                element.textContent = (key && navDict[key]) || element.dataset.navDefault || "";
+            });
+        };
+
         const applyLanguage = (lang) => {
             const dict = I18N[lang] || I18N["zh-CN"];
+            const navDict = I18N[lang] || {};
             document.documentElement.lang = lang;
             document.documentElement.dataset.lang = lang;
             document.querySelectorAll("#desktop-nav [data-nav-hover].is-localized").forEach((el) => el.classList.remove("is-localized"));
@@ -2747,6 +2789,7 @@
                     el.innerHTML = dict[key];
                 }
             });
+            applyDesktopNavHoverLabels(navDict);
             applyStaticCopy(lang);
             const label = document.getElementById("lang-label");
             if (label) label.textContent = dict["lang.label"] || "Language";
