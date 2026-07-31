@@ -1,0 +1,828 @@
+#pet-shop.pal-store {
+    --pal-paper: #f5f5f1;
+    --pal-ink: #151515;
+    --pal-muted: #74746f;
+    --pal-line: rgba(21, 21, 21, 0.1);
+    --pal-card: rgba(255, 255, 255, 0.52);
+    --pal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    padding: 0;
+    background: var(--pal-paper);
+    color: var(--pal-ink);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 450ms var(--pal-ease),
+        visibility 0s linear 450ms;
+    isolation: isolate;
+}
+
+#pet-shop.pal-store.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        opacity 450ms var(--pal-ease),
+        visibility 0s;
+}
+
+#pet-shop.pal-store.is-closing {
+    opacity: 0;
+}
+
+body.pal-store-open {
+    overflow: hidden;
+}
+
+.pal-store,
+.pal-store button,
+.pal-store a {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+.pal-store button,
+.pal-store a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pal-store-shell {
+    position: relative;
+    width: min(100%, 1440px);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4.6vw, 72px) 104px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pal-store-shell::-webkit-scrollbar {
+    display: none;
+}
+
+.pal-store-experience-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-inline: calc(clamp(20px, 4.6vw, 72px) * -1);
+    padding-inline: clamp(20px, 4.6vw, 72px);
+    border-bottom: 1px solid rgba(21, 21, 21, 0.08);
+    background: rgba(245, 245, 241, 0.78);
+    backdrop-filter: saturate(125%) blur(22px);
+    -webkit-backdrop-filter: saturate(125%) blur(22px);
+}
+
+.pal-store-wordmark {
+    font-family: "Quicksand", "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+.pal-store-close {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--pal-line);
+    border-radius: 50%;
+    background: rgba(245, 245, 241, 0.82);
+    color: var(--pal-ink);
+    cursor: pointer;
+    transition:
+        background-color 250ms ease,
+        transform 250ms var(--pal-ease);
+}
+
+.pal-store-close:hover {
+    background: #fff;
+    transform: scale(1.04);
+}
+
+.pal-store-close:focus-visible {
+    outline: 2px solid rgba(21, 21, 21, 0.48);
+    outline-offset: 3px;
+}
+
+.pal-store-close::before,
+.pal-store-close::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+}
+
+.pal-store-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.pal-store-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.pal-store-topline {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    z-index: 60;
+    box-sizing: border-box;
+    width: min(100%, 1440px);
+    min-height: 72px;
+    padding-inline: clamp(20px, 4.6vw, 72px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    border-top: 1px solid var(--pal-line);
+    background: rgba(245, 245, 241, 0.8);
+    backdrop-filter: saturate(125%) blur(22px);
+    -webkit-backdrop-filter: saturate(125%) blur(22px);
+    transform: translateX(-50%);
+}
+
+.pal-store-tool {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 40px;
+    padding: 0 13px;
+    border: 0;
+    border-radius: 14px;
+    color: #30302e;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: background-color 220ms ease;
+}
+
+.pal-store-tool:hover,
+.pal-store-tool:focus-visible {
+    background: rgba(255, 255, 255, 0.58);
+    outline: none;
+}
+
+.pal-store-tool-icon {
+    width: 17px;
+    height: 17px;
+    display: inline-grid;
+    place-items: center;
+    color: var(--pal-ink);
+    font-size: 15px;
+}
+
+.pal-cart-count {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--pal-ink);
+    color: white;
+    font-size: 9px;
+    line-height: 1;
+}
+
+.pal-store-nav-wrap {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 60;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+.pal-store-nav {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(98px, 1fr));
+    gap: 3px;
+    padding: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 21px;
+    background: rgba(242, 242, 238, 0.66);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.92) inset,
+        0 10px 35px rgba(31, 31, 27, 0.06);
+    backdrop-filter: saturate(125%) blur(18px);
+    -webkit-backdrop-filter: saturate(125%) blur(18px);
+    pointer-events: auto;
+}
+
+.pal-store-tab {
+    position: relative;
+    min-width: 0;
+    height: 43px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 16px;
+    background: transparent;
+    color: #666662;
+    cursor: pointer;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.pal-store-tab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.84);
+    border-radius: inherit;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.22)),
+        rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.92) inset,
+        0 5px 16px rgba(31, 31, 27, 0.06);
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+.pal-store-tab:hover::before,
+.pal-store-tab:focus-visible::before {
+    opacity: 1;
+}
+
+.pal-store-tab:focus-visible {
+    outline: 2px solid rgba(21, 21, 21, 0.28);
+    outline-offset: 2px;
+}
+
+.pal-store-tab.is-active {
+    color: var(--pal-ink);
+}
+
+.pal-store-tab.is-active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.45;
+}
+
+.pal-store-tab-label {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: opacity 300ms ease;
+}
+
+.pal-store-tab-label-cn {
+    display: none;
+}
+
+.pal-store-tab:hover .pal-store-tab-label-en,
+.pal-store-tab:focus-visible .pal-store-tab-label-en {
+    opacity: 1;
+}
+
+.pal-store-tab:hover .pal-store-tab-label-cn,
+.pal-store-tab:focus-visible .pal-store-tab-label-cn {
+    opacity: 0;
+}
+
+.pal-store-stage {
+    position: relative;
+    padding-top: clamp(34px, 5vh, 62px);
+    transition: height 360ms var(--pal-ease);
+}
+
+.pal-store-panel {
+    position: absolute;
+    inset: 0 0 auto;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 300ms ease,
+        visibility 0s linear 300ms;
+}
+
+.pal-store-panel.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+        opacity 300ms ease,
+        visibility 0s;
+}
+
+.pal-store-heading {
+    margin: 6px 0 34px;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+}
+
+.pal-food-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(16px, 2.2vw, 30px);
+}
+
+.pal-product-card {
+    min-width: 0;
+    border: 1px solid rgba(21, 21, 21, 0.07);
+    border-radius: clamp(26px, 3vw, 40px);
+    background: var(--pal-card);
+    overflow: hidden;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.82) inset,
+        0 20px 50px rgba(35, 35, 30, 0.035);
+}
+
+.pal-food-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #eeece7;
+}
+
+.pal-food-image img,
+.pal-custom-visual img,
+.pal-device-visual img,
+.pal-nutrition-collection img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.pal-food-image img {
+    transition: filter 400ms ease;
+}
+
+.pal-product-card:hover .pal-food-image img {
+    filter: contrast(1.015) saturate(1.025);
+}
+
+.pal-product-copy {
+    padding: clamp(24px, 3vw, 38px);
+}
+
+.pal-product-index,
+.pal-device-edition {
+    margin: 0 0 14px;
+    color: var(--pal-muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.pal-product-copy h3,
+.pal-device-card h3 {
+    margin: 0;
+    font-size: clamp(24px, 2.4vw, 34px);
+    line-height: 1.14;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+}
+
+.pal-product-copy > p:not(.pal-product-index) {
+    max-width: 520px;
+    min-height: 52px;
+    margin: 16px 0 24px;
+    color: #686864;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.pal-detail-link,
+.pal-custom-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 17px;
+    border: 1px solid rgba(21, 21, 21, 0.13);
+    border-radius: 999px;
+    color: var(--pal-ink);
+    background: rgba(255, 255, 255, 0.44);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+        background-color 220ms ease,
+        border-color 220ms ease;
+}
+
+.pal-detail-link:hover,
+.pal-detail-link:focus-visible,
+.pal-custom-cta:hover,
+.pal-custom-cta:focus-visible {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(21, 21, 21, 0.22);
+    outline: none;
+}
+
+.pal-nutrition-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+    gap: clamp(24px, 4vw, 58px);
+    align-items: start;
+}
+
+.pal-nutrition-collection {
+    position: sticky;
+    top: calc(var(--site-header-height, 3.5rem) + 118px);
+    aspect-ratio: 3 / 2;
+    border-radius: clamp(26px, 3vw, 40px);
+    overflow: hidden;
+    background: #edeae4;
+}
+
+.pal-nutrition-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--pal-line);
+}
+
+.pal-nutrition-item {
+    min-height: 180px;
+    padding: 24px 20px 26px 0;
+    border-bottom: 1px solid var(--pal-line);
+}
+
+.pal-nutrition-item:nth-child(even) {
+    padding-left: 22px;
+    border-left: 1px solid var(--pal-line);
+}
+
+.pal-nutrition-dot {
+    width: 8px;
+    height: 8px;
+    margin-bottom: 38px;
+    border-radius: 50%;
+    background: var(--dot, #adb4a4);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--dot, #adb4a4) 16%, transparent);
+}
+
+.pal-nutrition-item h3 {
+    margin: 0 0 9px;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.pal-nutrition-item p {
+    margin: 0;
+    color: var(--pal-muted);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.pal-custom-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+    min-height: 590px;
+}
+
+.pal-custom-visual {
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.pal-custom-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(34px, 5vw, 70px);
+}
+
+.pal-custom-steps {
+    margin: 6px 0 38px;
+}
+
+.pal-custom-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    align-items: center;
+    gap: 14px;
+    min-height: 74px;
+}
+
+.pal-custom-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 54px;
+    width: 1px;
+    height: 40px;
+    background: rgba(21, 21, 21, 0.14);
+}
+
+.pal-step-number {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(21, 21, 21, 0.13);
+    border-radius: 50%;
+    color: #656560;
+    background: rgba(255, 255, 255, 0.38);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.pal-custom-step strong {
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.pal-custom-cta {
+    align-self: flex-start;
+    min-height: 42px;
+    padding: 0 21px;
+    background: var(--pal-ink);
+    border-color: var(--pal-ink);
+    color: #fff;
+}
+
+.pal-custom-cta:hover,
+.pal-custom-cta:focus-visible {
+    color: #fff;
+    background: #30302e;
+    border-color: #30302e;
+}
+
+.pal-device-visual {
+    aspect-ratio: 2.05 / 1;
+    margin-bottom: 30px;
+    border-radius: clamp(26px, 3vw, 40px);
+    overflow: hidden;
+    background: #ebe9e4;
+}
+
+.pal-device-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--pal-line);
+}
+
+.pal-device-card {
+    min-width: 0;
+    padding: 34px clamp(22px, 2.8vw, 42px) 42px;
+    border-bottom: 1px solid var(--pal-line);
+}
+
+.pal-device-card + .pal-device-card {
+    border-left: 1px solid var(--pal-line);
+}
+
+.pal-device-top {
+    min-height: 144px;
+}
+
+.pal-device-card h3 {
+    font-size: clamp(21px, 2vw, 29px);
+}
+
+.pal-device-price {
+    margin: 10px 0 0;
+    color: #565652;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.pal-device-purpose {
+    margin: 20px 0 0;
+    color: var(--pal-muted);
+    font-size: 12px;
+}
+
+.pal-device-features {
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pal-device-features li {
+    position: relative;
+    padding: 8px 0 8px 17px;
+    color: #545450;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.pal-device-features li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #a5aaa0;
+}
+
+.pal-device-card-pro {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.pal-device-card-pro .pal-device-features li::before {
+    background: #777d77;
+}
+
+@media (max-width: 900px) {
+    .pal-store-shell {
+        padding-inline: 20px;
+        padding-bottom: 84px;
+    }
+
+    .pal-store-nav {
+        width: min(100%, 520px);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .pal-store-tab {
+        padding-inline: 8px;
+    }
+
+    .pal-nutrition-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pal-nutrition-collection {
+        position: relative;
+        top: auto;
+    }
+
+    .pal-custom-card {
+        grid-template-columns: 1fr;
+    }
+
+    .pal-custom-visual {
+        min-height: 0;
+        aspect-ratio: 3 / 2;
+    }
+
+    .pal-device-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pal-device-card {
+        display: grid;
+        grid-template-columns: minmax(210px, 0.7fr) 1fr;
+        gap: 32px;
+    }
+
+    .pal-device-card + .pal-device-card {
+        border-left: 0;
+    }
+
+    .pal-device-top {
+        min-height: 0;
+    }
+
+    .pal-device-features {
+        margin-top: 0;
+        columns: 2;
+        column-gap: 28px;
+    }
+}
+
+@media (max-width: 640px) {
+    .pal-store-experience-topbar {
+        height: 64px;
+    }
+
+    .pal-store-wordmark {
+        font-size: 16px;
+    }
+
+    .pal-store-close {
+        width: 38px;
+        height: 38px;
+    }
+
+    .pal-store-topline {
+        min-height: 60px;
+    }
+
+    .pal-store-nav-wrap {
+        top: 0;
+        height: 64px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pal-store-nav {
+        gap: 1px;
+        padding: 4px;
+        border-radius: 18px;
+    }
+
+    .pal-store-tab {
+        height: 40px;
+        border-radius: 14px;
+    }
+
+    .pal-store-tab-label {
+        font-size: 11px;
+    }
+
+    .pal-store-heading {
+        margin-top: 0;
+        margin-bottom: 24px;
+    }
+
+    .pal-food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pal-product-copy > p:not(.pal-product-index) {
+        min-height: 0;
+    }
+
+    .pal-nutrition-list {
+        grid-template-columns: 1fr;
+    }
+
+    .pal-nutrition-item,
+    .pal-nutrition-item:nth-child(even) {
+        min-height: 150px;
+        padding: 22px 0;
+        border-left: 0;
+    }
+
+    .pal-nutrition-dot {
+        margin-bottom: 26px;
+    }
+
+    .pal-custom-content {
+        padding: 32px 24px 36px;
+    }
+
+    .pal-custom-step strong {
+        font-size: 15px;
+    }
+
+    .pal-device-visual {
+        aspect-ratio: 1.35 / 1;
+    }
+
+    .pal-device-visual img {
+        object-position: center;
+    }
+
+    .pal-device-card {
+        display: block;
+        padding-inline: 4px;
+    }
+
+    .pal-device-features {
+        margin-top: 24px;
+        columns: 2;
+        column-gap: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pal-store-tab::before,
+    .pal-store-tab-label,
+    .pal-store-panel,
+    .pal-store-stage,
+    .pal-food-image img,
+    #pet-shop.pal-store {
+        transition-duration: 1ms !important;
+    }
+}
