@@ -1,0 +1,734 @@
+:root {
+    --lifebase-paper: var(--mira-paper, #f5f5f1);
+    --lifebase-ink: var(--mira-ink, #151515);
+    --lifebase-muted: var(--mira-muted, #777772);
+    --lifebase-hairline: var(--mira-hairline, rgba(21, 21, 21, 0.12));
+    --lifebase-ease: var(--mira-ease, cubic-bezier(0.65, 0, 0.35, 1));
+}
+
+body.lifebase-open {
+    overflow: hidden;
+}
+
+#lifebase-experience {
+    position: fixed;
+    inset: 0;
+    z-index: 1020;
+    overflow: hidden;
+    background: var(--lifebase-paper);
+    color: var(--lifebase-ink);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(1.008);
+    transition:
+        opacity 240ms var(--lifebase-ease),
+        transform 360ms var(--lifebase-ease),
+        visibility 0s linear 360ms;
+    isolation: isolate;
+}
+
+#lifebase-experience.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
+    transition:
+        opacity 240ms var(--lifebase-ease),
+        transform 360ms var(--lifebase-ease),
+        visibility 0s;
+}
+
+#lifebase-experience.is-closing {
+    opacity: 0;
+    transform: scale(0.994);
+}
+
+#lifebase-experience:focus {
+    outline: none;
+}
+
+.lifebase-shell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(21, 21, 21, 0.18) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.lifebase-shell::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lifebase-shell::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lifebase-shell::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(21, 21, 21, 0.16);
+}
+
+.lifebase-topbar {
+    position: fixed;
+    z-index: 12;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 76px;
+    padding: 0 clamp(22px, 4vw, 58px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition:
+        opacity 320ms var(--lifebase-ease),
+        transform 320ms var(--lifebase-ease),
+        visibility 0s linear 320ms;
+}
+
+#lifebase-experience.is-content-visible .lifebase-topbar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+        opacity 320ms var(--lifebase-ease),
+        transform 320ms var(--lifebase-ease),
+        visibility 0s;
+}
+
+.lifebase-wordmark {
+    font-family: "Quicksand", "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+.lifebase-close {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--lifebase-hairline);
+    border-radius: 50%;
+    background: rgba(245, 245, 241, 0.82);
+    color: var(--lifebase-ink);
+    cursor: pointer;
+    transition:
+        background-color 280ms ease,
+        transform 280ms var(--lifebase-ease);
+}
+
+.lifebase-close:hover {
+    background: rgba(255, 255, 255, 0.88);
+    transform: scale(1.035);
+}
+
+.lifebase-close:focus-visible,
+.lifebase-tab:focus-visible,
+.lifebase-panel:focus-visible {
+    outline: 2px solid rgba(21, 21, 21, 0.58);
+    outline-offset: 3px;
+}
+
+.lifebase-panel:focus-visible {
+    border-radius: 2px;
+}
+
+.lifebase-close::before,
+.lifebase-close::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+}
+
+.lifebase-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.lifebase-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.lifebase-intro {
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    transition:
+        opacity 230ms var(--lifebase-ease),
+        visibility 0s linear 230ms;
+}
+
+#lifebase-experience.is-intro-complete .lifebase-intro {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#lifebase-particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.lifebase-intro-fallback {
+    position: relative;
+    z-index: 1;
+    width: min(90vw, 900px);
+    margin: 0;
+    color: var(--lifebase-ink);
+    font-size: clamp(34px, 5.2vw, 68px);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.045em;
+    text-align: center;
+    opacity: 0;
+}
+
+.lifebase-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.lifebase-main {
+    position: relative;
+    z-index: 2;
+    min-height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition:
+        opacity 330ms var(--lifebase-ease),
+        transform 330ms var(--lifebase-ease),
+        visibility 0s linear 330ms;
+}
+
+#lifebase-experience.is-content-visible .lifebase-main {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+        opacity 330ms var(--lifebase-ease),
+        transform 330ms var(--lifebase-ease),
+        visibility 0s;
+}
+
+.lifebase-layout {
+    width: min(1380px, 100%);
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: clamp(126px, 13vh, 170px) clamp(34px, 6vw, 92px) clamp(90px, 12vh, 150px);
+    display: grid;
+    grid-template-columns: minmax(180px, 22%) minmax(0, 78%);
+    column-gap: clamp(52px, 7vw, 112px);
+    align-items: start;
+}
+
+.lifebase-tabs {
+    --lifebase-tab-height: 58px;
+    --lifebase-tab-gap: 12px;
+    position: sticky;
+    top: 122px;
+    width: min(100%, 194px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--lifebase-tab-gap);
+    align-self: start;
+    isolation: isolate;
+}
+
+.lifebase-liquid {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--lifebase-tab-height);
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 24% 10%, rgba(255, 255, 255, 0.82), transparent 42%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.58), rgba(229, 229, 221, 0.38));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(21, 21, 21, 0.045),
+        inset 1px 0 0 rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(18px) saturate(118%);
+    -webkit-backdrop-filter: blur(18px) saturate(118%);
+    transform: translate3d(0, 0, 0);
+    transition: transform 340ms cubic-bezier(0.58, 0, 0.22, 1);
+    will-change: transform;
+}
+
+.lifebase-tabs[data-active="1"] .lifebase-liquid {
+    transform: translate3d(0, calc(var(--lifebase-tab-height) + var(--lifebase-tab-gap)), 0);
+}
+
+.lifebase-liquid::before,
+.lifebase-liquid::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.lifebase-liquid::before {
+    inset: 1px;
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.3), transparent 46%, rgba(255, 255, 255, 0.16));
+    opacity: 0.72;
+    transform: scaleY(1);
+    transition:
+        transform 190ms var(--lifebase-ease),
+        opacity 240ms ease;
+}
+
+.lifebase-liquid::after {
+    top: 8px;
+    left: 14%;
+    width: 34%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.44);
+    filter: blur(6px);
+    opacity: 0.52;
+    transform: translateX(0);
+    transition: transform 340ms var(--lifebase-ease);
+}
+
+.lifebase-liquid.is-moving::before {
+    transform: scaleY(1.075);
+    opacity: 0.88;
+}
+
+.lifebase-liquid.is-moving::after {
+    transform: translateX(34%);
+}
+
+.lifebase-tab {
+    position: relative;
+    z-index: 1;
+    height: var(--lifebase-tab-height);
+    padding: 0 20px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--lifebase-ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    text-align: left;
+    cursor: pointer;
+    opacity: 0.42;
+    transition:
+        color 260ms ease,
+        opacity 260ms ease;
+}
+
+.lifebase-tab:hover {
+    opacity: 0.72;
+}
+
+.lifebase-tab.is-active {
+    opacity: 0.94;
+}
+
+.lifebase-content {
+    width: min(100%, 930px);
+}
+
+.lifebase-panels {
+    display: grid;
+    width: 100%;
+}
+
+.lifebase-panel {
+    grid-area: 1 / 1;
+    min-width: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition:
+        opacity 210ms ease,
+        transform 420ms var(--lifebase-ease),
+        visibility 0s linear 420ms;
+}
+
+.lifebase-panel.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+        opacity 260ms ease 100ms,
+        transform 420ms var(--lifebase-ease) 30ms,
+        visibility 0s;
+}
+
+.lifebase-panel.is-leaving {
+    opacity: 0;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+        opacity 170ms ease,
+        visibility 0s linear 170ms;
+}
+
+.lifebase-panel-head,
+.lifebase-lead,
+.lifebase-values,
+.lifebase-signoff {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        opacity 270ms ease,
+        transform 380ms var(--lifebase-ease);
+}
+
+#lifebase-experience.is-content-visible .lifebase-panel.is-active .lifebase-panel-head {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 90ms;
+}
+
+#lifebase-experience.is-content-visible .lifebase-panel.is-active .lifebase-lead {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 140ms;
+}
+
+#lifebase-experience.is-content-visible .lifebase-panel.is-active .lifebase-values {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 185ms;
+}
+
+#lifebase-experience.is-content-visible .lifebase-panel.is-active .lifebase-signoff {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 225ms;
+}
+
+.lifebase-eyebrow {
+    margin: 0 0 22px;
+    color: var(--lifebase-muted);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.lifebase-panel-head h2 {
+    max-width: 820px;
+    margin: 0;
+    color: var(--lifebase-ink);
+    font-size: clamp(43px, 5vw, 70px);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+}
+
+.lifebase-lead {
+    width: min(100%, 760px);
+    margin-top: clamp(42px, 5.5vw, 72px);
+    color: #5f5f5a;
+    font-size: clamp(15px, 1.25vw, 17px);
+    font-weight: 300;
+    line-height: 1.95;
+    letter-spacing: 0.018em;
+}
+
+.lifebase-lead p {
+    margin: 0;
+}
+
+.lifebase-lead p + p {
+    margin-top: 20px;
+}
+
+.lifebase-values {
+    margin-top: clamp(76px, 9vw, 118px);
+}
+
+.lifebase-section-label {
+    margin: 0 0 38px;
+    color: var(--lifebase-muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+}
+
+.lifebase-values-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(48px, 6vw, 72px) clamp(44px, 5.5vw, 76px);
+}
+
+.lifebase-value {
+    min-width: 0;
+}
+
+.lifebase-value-wide {
+    grid-column: 1 / -1;
+    width: min(100%, 760px);
+}
+
+.lifebase-value h3 {
+    margin: 0 0 15px;
+    color: var(--lifebase-ink);
+    font-size: clamp(20px, 1.7vw, 25px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+}
+
+.lifebase-value p {
+    margin: 0;
+    color: #676762;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.85;
+    letter-spacing: 0.018em;
+}
+
+.lifebase-value p + p {
+    margin-top: 12px;
+}
+
+.lifebase-signoff {
+    width: min(100%, 820px);
+    margin: clamp(90px, 11vw, 140px) 0 0;
+    color: var(--lifebase-ink);
+    font-size: clamp(23px, 2.5vw, 34px);
+    font-weight: 400;
+    line-height: 1.42;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+}
+
+@media (max-width: 900px) {
+    .lifebase-topbar {
+        height: 68px;
+        padding: 0 20px;
+    }
+
+    .lifebase-wordmark {
+        font-size: 17px;
+    }
+
+    .lifebase-close {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lifebase-layout {
+        min-height: 100%;
+        padding: 104px 20px 84px;
+        display: block;
+    }
+
+    .lifebase-tabs {
+        --lifebase-tab-height: 54px;
+        position: relative;
+        top: auto;
+        width: min(100%, 440px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
+        margin: 0 auto;
+    }
+
+    .lifebase-liquid {
+        width: 50%;
+    }
+
+    .lifebase-tabs[data-active="1"] .lifebase-liquid {
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .lifebase-liquid.is-moving::before {
+        transform: scaleX(1.065);
+    }
+
+    .lifebase-tab {
+        padding: 0 12px;
+        text-align: center;
+    }
+
+    .lifebase-content {
+        width: min(100%, 760px);
+        margin: 58px auto 0;
+    }
+
+    .lifebase-panel-head h2 {
+        font-size: clamp(39px, 9vw, 58px);
+    }
+
+    .lifebase-lead {
+        margin-top: 42px;
+        font-size: 16px;
+        line-height: 1.9;
+    }
+
+    .lifebase-values {
+        margin-top: 76px;
+    }
+
+    .lifebase-values-list {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .lifebase-value-wide {
+        grid-column: auto;
+        width: auto;
+    }
+
+    .lifebase-value h3 {
+        font-size: 22px;
+    }
+
+    .lifebase-value p {
+        font-size: 15px;
+        line-height: 1.82;
+    }
+
+    .lifebase-signoff {
+        margin-top: 90px;
+    }
+}
+
+@media (max-width: 520px) {
+    .lifebase-intro-fallback {
+        width: min(84vw, 330px);
+        font-size: clamp(34px, 10vw, 46px);
+    }
+
+    .lifebase-layout {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .lifebase-content {
+        margin-top: 52px;
+    }
+
+    .lifebase-eyebrow {
+        margin-bottom: 18px;
+    }
+
+    .lifebase-panel-head h2 {
+        font-size: clamp(36px, 10vw, 48px);
+        line-height: 1.12;
+    }
+
+    .lifebase-lead {
+        margin-top: 36px;
+        font-size: 15px;
+        line-height: 1.88;
+    }
+
+    .lifebase-lead p + p {
+        margin-top: 18px;
+    }
+
+    .lifebase-values {
+        margin-top: 68px;
+    }
+
+    .lifebase-section-label {
+        margin-bottom: 34px;
+    }
+
+    .lifebase-values-list {
+        gap: 44px;
+    }
+
+    .lifebase-value h3 {
+        margin-bottom: 12px;
+        font-size: 21px;
+    }
+
+    .lifebase-value p {
+        font-size: 14.5px;
+    }
+
+    .lifebase-signoff {
+        margin-top: 78px;
+        font-size: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #lifebase-experience,
+    #lifebase-experience.is-open,
+    #lifebase-experience.is-closing {
+        transform: none;
+        transition:
+            opacity 160ms ease,
+            visibility 0s linear 160ms;
+    }
+
+    #lifebase-experience.is-open {
+        transition:
+            opacity 160ms ease,
+            visibility 0s;
+    }
+
+    #lifebase-particles {
+        display: none;
+    }
+
+    #lifebase-experience.is-intro-active .lifebase-intro-fallback {
+        opacity: 1;
+        transition: opacity 160ms ease;
+    }
+
+    .lifebase-main,
+    .lifebase-topbar,
+    .lifebase-liquid,
+    .lifebase-liquid::before,
+    .lifebase-liquid::after,
+    .lifebase-panel,
+    .lifebase-panel.is-active,
+    .lifebase-panel.is-leaving,
+    .lifebase-panel-head,
+    .lifebase-lead,
+    .lifebase-values,
+    .lifebase-signoff {
+        animation: none !important;
+        transform: none !important;
+        transition-duration: 120ms !important;
+        transition-delay: 0ms !important;
+    }
+}
