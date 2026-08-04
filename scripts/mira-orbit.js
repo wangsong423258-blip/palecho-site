@@ -40,6 +40,7 @@
     {
       kind: "dog",
       element: root.querySelector(".particle-dog"),
+      image: null,
       direction: -1,
       mask: { cx: .44, cy: .56, rx: .72, ry: .67 },
       particles: [],
@@ -48,6 +49,7 @@
     {
       kind: "cat",
       element: root.querySelector(".particle-cat"),
+      image: null,
       direction: 1,
       mask: { cx: .48, cy: .42, rx: .68, ry: .64 },
       particles: [],
@@ -64,7 +66,7 @@
   };
 
   const buildPetParticles = (source, sourceIndex) => {
-    const image = source.element;
+    const image = source.image;
     if (!image?.naturalWidth || !image?.naturalHeight || !sampleCtx) return;
 
     sampleCanvas.width = image.naturalWidth;
@@ -72,23 +74,44 @@
     sampleCtx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
     sampleCtx.drawImage(image, 0, 0);
     const pixels = sampleCtx.getImageData(0, 0, sampleCanvas.width, sampleCanvas.height).data;
-    const step = window.innerWidth <= 720 ? 3 : 2;
+    const mobileParticles = window.innerWidth <= 720;
+    const step = 2;
     const particles = [];
     const connections = [];
+    const darknessAt = (x, y) => {
+      const safeX = Math.max(0, Math.min(sampleCanvas.width - 1, x));
+      const safeY = Math.max(0, Math.min(sampleCanvas.height - 1, y));
+      const index = (safeY * sampleCanvas.width + safeX) * 4;
+      const pixelAlpha = pixels[index + 3] / 255;
+      const pixelLuminance = (pixels[index] * .2126
+        + pixels[index + 1] * .7152
+        + pixels[index + 2] * .0722) / 255;
+      return (1 - pixelLuminance) * pixelAlpha;
+    };
 
     for (let y = 1; y < sampleCanvas.height - 1; y += step) {
       for (let x = 1; x < sampleCanvas.width - 1; x += step) {
-        const pixelIndex = (y * sampleCanvas.width + x) * 4;
-        const alpha = pixels[pixelIndex + 3] / 255;
-        if (alpha < .04) continue;
-        const luminance = (pixels[pixelIndex] * .2126
-          + pixels[pixelIndex + 1] * .7152
-          + pixels[pixelIndex + 2] * .0722) / 255;
-        const darkness = (1 - luminance) * alpha;
+        const darkness = darknessAt(x, y);
         if (darkness < .018) continue;
+        const edgeStrength = mobileParticles
+          ? Math.min(1, (
+            Math.abs(darkness - darknessAt(x + step, y))
+            + Math.abs(darkness - darknessAt(x - step, y))
+            + Math.abs(darkness - darknessAt(x, y + step))
+            + Math.abs(darkness - darknessAt(x, y - step))
+          ) * 1.45)
+          : 0;
 
         const nx = x / sampleCanvas.width;
         const ny = y / sampleCanvas.height;
+        const catFace = source.kind === "cat" && nx < .62 && ny < .52;
+        const dogFace = source.kind === "dog" && nx > .38 && ny < .66;
+        const facialDensity = mobileParticles
+          ? catFace ? .78 : dogFace ? .88 : 1
+          : 1;
+        const facialAlpha = mobileParticles
+          ? catFace ? .76 : dogFace ? .88 : 1
+          : 1;
         const maskDistance = Math.hypot(
           (nx - source.mask.cx) / source.mask.rx,
           (ny - source.mask.cy) / source.mask.ry,
@@ -97,7 +120,9 @@
         if (edgeFade <= .018) continue;
 
         const noise = pixelNoise(x, y, sourceIndex + 1);
-        const density = Math.min(1, .42 + darkness * .85);
+        const density = (mobileParticles
+          ? Math.min(.76, .1 + darkness * .28 + edgeStrength * .48)
+          : Math.min(1, .42 + darkness * .85)) * facialDensity;
         if (noise > density) continue;
 
         particles.push({
@@ -105,18 +130,24 @@
           ny,
           sx: x,
           sy: y,
-          size: .48 + darkness * 1.08 + (noise < .028 ? .82 : 0),
-          alpha: (.28 + darkness * .7) * edgeFade,
+          size: mobileParticles
+            ? .19 + darkness * .24 + edgeStrength * .18 + (edgeStrength > .24 && noise < .012 ? .14 : 0)
+            : .48 + darkness * 1.08 + (noise < .028 ? .82 : 0),
+          alpha: (mobileParticles
+            ? .16 + darkness * .3 + edgeStrength * .22
+            : .28 + darkness * .7) * edgeFade * facialAlpha,
           phase: pixelNoise(y, x, sourceIndex + 7) * TAU,
           speed: .00032 + pixelNoise(x + y, y, sourceIndex + 11) * .00024,
           drift: .28 + pixelNoise(y + x, x, sourceIndex + 13) * .72,
-          anchor: darkness > .64 && noise < .38,
+          anchor: mobileParticles
+            ? edgeStrength > .25 && darkness > .42 && noise < .08
+            : darkness > .64 && noise < .38,
         });
 
       }
     }
 
-    const connectionStep = window.innerWidth <= 720 ? 30 : 24;
+    const connectionStep = mobileParticles ? 46 : 24;
     const maxSourceDistance = step * 6;
     for (let index = connectionStep; index < particles.length; index += connectionStep) {
       const point = particles[index];
@@ -141,9 +172,11 @@
   };
 
   petSources.forEach((source, index) => {
-    if (!source.element) return;
-    if (source.element.complete) buildPetParticles(source, index);
-    else source.element.addEventListener("load", () => buildPetParticles(source, index), { once: true });
+    const asset = source.element?.dataset.particleSource;
+    if (!asset) return;
+    source.image = new Image();
+    source.image.addEventListener("load", () => buildPetParticles(source, index), { once: true });
+    source.image.src = asset;
   });
 
   let width = 0;
@@ -202,9 +235,12 @@
     pointerYaw += (targetYaw - pointerYaw) * .045;
     pointerPitch += (targetPitch - pointerPitch) * .045;
 
-    const cx = width * .515;
-    const cy = height * .508;
-    const baseRadius = Math.min(width * .43, height * .485);
+    const mobileLayout = width <= 720;
+    const cx = width * (mobileLayout ? .5 : .515);
+    const cy = height * (mobileLayout ? .47 : .508);
+    const baseRadius = mobileLayout
+      ? Math.min(width * .29, height * .2)
+      : Math.min(width * .43, height * .485);
     const autoYaw = reduceMotion ? 0 : time * .000025;
 
     rings.forEach((ring, ringIndex) => {
@@ -247,15 +283,15 @@
     nucleus.forEach((particle) => {
       const angle = particle.angle + particle.phase * .12 + (reduceMotion ? 0 : time * particle.speed);
       const ripple = 1 + Math.sin(time * .00042 + particle.phase) * .035;
-      const sphereRadius = baseRadius * particle.radius * ripple;
+      const sphereRadius = baseRadius * particle.radius * ripple * (mobileLayout ? .62 : 1);
       const x = Math.cos(angle) * Math.sin(particle.latitude) * sphereRadius;
       const y = Math.sin(angle) * Math.sin(particle.latitude) * sphereRadius;
       const z = Math.cos(particle.latitude) * sphereRadius;
       const rotated = rotatePoint(x, y, z, pointerPitch * .52 + .1, pointerYaw * .52 + autoYaw * .7, .18);
       const point = project(rotated, cx, cy, baseRadius);
       ctx.beginPath();
-      ctx.arc(point.x, point.y, particle.size * (.68 + point.depth * .62), 0, TAU);
-      ctx.fillStyle = `rgba(0,0,0,${particle.alpha * (.46 + point.depth * .72)})`;
+      ctx.arc(point.x, point.y, particle.size * (.68 + point.depth * .62) * (mobileLayout ? .78 : 1), 0, TAU);
+      ctx.fillStyle = `rgba(0,0,0,${particle.alpha * (.46 + point.depth * .72) * (mobileLayout ? .42 : 1)})`;
       ctx.fill();
     });
 
@@ -294,19 +330,19 @@
         petCtx.moveTo(from.x, from.y);
         petCtx.lineTo(to.x, to.y);
       });
-      petCtx.strokeStyle = "rgba(0,0,0,.12)";
-      petCtx.lineWidth = .52;
+      petCtx.strokeStyle = mobileLayout ? "rgba(0,0,0,.082)" : "rgba(0,0,0,.12)";
+      petCtx.lineWidth = mobileLayout ? .34 : .52;
       petCtx.stroke();
 
       points.forEach(({ x, y, particle, wake }, index) => {
         const breathing = reduceMotion ? 1 : .94 + Math.sin(time * .00105 + particle.phase) * .06;
-        const radius = particle.size * breathing * (particle.anchor ? 1.38 : 1) * (1 + wake * .26);
-        const alpha = Math.min(1, particle.alpha * (breathing + wake * .52));
+        const radius = particle.size * breathing * (particle.anchor ? (mobileLayout ? 1.12 : 1.38) : 1) * (1 + wake * .26);
+        const alpha = Math.min(1, particle.alpha * (breathing + wake * (mobileLayout ? .34 : .52)));
 
         if (wake > .08 && index % 3 === 0) {
           petCtx.beginPath();
-          petCtx.arc(x - source.direction * 3.2, y, radius * .72, 0, TAU);
-          petCtx.fillStyle = `rgba(0,0,0,${alpha * wake * .24})`;
+          petCtx.arc(x - source.direction * 3.2, y, radius * (mobileLayout ? .56 : .72), 0, TAU);
+          petCtx.fillStyle = `rgba(0,0,0,${alpha * wake * (mobileLayout ? .12 : .24)})`;
           petCtx.fill();
         }
 

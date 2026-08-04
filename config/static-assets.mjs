@@ -1,4 +1,5 @@
 export const staticSourceFiles = [
+  "CNAME",
   "pages/intro.html",
   "pages/index.html",
   "pages/standalone/care.html",
