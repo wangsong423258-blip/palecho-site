@@ -1,0 +1,103 @@
+:root {
+  --progress-paper: #f5f5f1;
+  --progress-ink: #151515;
+  --progress-body: #656560;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--progress-paper);
+}
+
+body {
+  color: var(--progress-ink);
+  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, p { margin: 0; }
+
+.page-return {
+  position: fixed;
+  z-index: 20;
+  top: 30px;
+  right: clamp(24px, 4vw, 60px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(21, 21, 21, 0.12);
+  border-radius: 50%;
+  background: rgba(245, 245, 241, 0.8);
+  color: var(--progress-ink);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background-color 300ms ease;
+}
+
+.page-return::before,
+.page-return::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+}
+
+.page-return::before { transform: translate(-50%, -50%) rotate(45deg); }
+.page-return::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.page-return:hover { background: #fff; transform: scale(1.04); }
+.page-return:focus-visible { outline: 2px solid rgba(21, 21, 21, .55); outline-offset: 3px; }
+
+.progress-page,
+.progress-statement {
+  min-height: 100vh;
+}
+
+.progress-statement {
+  display: grid;
+  place-items: center;
+  padding: 48px;
+}
+
+.progress-copy {
+  width: min(100%, 1024px);
+  text-align: center;
+}
+
+.progress-copy h1 {
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.08em;
+}
+
+.progress-eyebrow {
+  margin-top: clamp(12px, 1.5vw, 18px);
+  color: #8e8e93;
+  font-size: clamp(14px, 1.35vw, 18px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.progress-copy p {
+  max-width: 980px;
+  margin: clamp(26px, 3vw, 38px) auto 0;
+  color: var(--progress-body);
+  font-size: clamp(18px, 1.7vw, 23px);
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: -0.035em;
+}
+
+@media (max-width: 680px) {
+  .progress-statement { padding: 32px 24px; }
+  .progress-copy h1 { font-size: clamp(42px, 12vw, 58px); }
+  .progress-eyebrow { font-size: 14px; }
+  .progress-copy p { font-size: 17px; line-height: 1.78; }
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#E8F1ED" />
+  <title>Mira AI | PalEcho</title>
+  <meta name="description" content="Mira AI 正在理解每一份生命数据。" />
+  <link rel="icon" href="/favicon.ico?v=20260803-1" sizes="any" />
+  <link rel="stylesheet" href="/mira-intro.css?v=20260804-31" />
+</head>
+<body>
+  <main class="mira-intro" aria-label="Mira AI 数字生命开场">
+    <canvas id="mira-orbit-canvas" aria-hidden="true"></canvas>
+    <img class="particle-pet particle-dog" src="/mira-samoyed-only.png" alt="" aria-hidden="true" />
+    <img class="particle-pet particle-cat" src="/mira-cat-clean.png" alt="" aria-hidden="true" />
+    <canvas id="pet-flow-canvas" aria-hidden="true"></canvas>
+    <section class="metric-orbit" aria-label="宠物健康数据概览">
+      <article class="metric-card metric-heart">
+        <div class="metric-icon">♡</div>
+        <div class="metric-label">Heart Rate</div>
+        <div class="metric-value">92 <small>bpm</small></div>
+        <canvas class="metric-chart" data-chart="heart" aria-hidden="true"></canvas>
+        <div class="chart-ticks"><span>00:00</span><span>12:00</span><span>24:00</span></div>
+        <div class="metric-state"><span class="state-dot"></span><span>正常范围</span><small>60–120 bpm</small></div>
+      </article>
+
+      <article class="metric-card metric-location">
+        <div class="metric-icon">⌖</div>
+        <div class="metric-label">Location</div>
+        <div class="metric-word">家附近</div>
+        <div class="mini-map" aria-hidden="true">
+          <img src="https://tile.openstreetmap.org/15/27440/13389.png" alt="" />
+          <span></span><b>PalEcho</b><small>© OpenStreetMap</small>
+        </div>
+        <div class="metric-state"><span class="state-dot"></span><span>安全区域</span><small>定位精度 ±5m</small></div>
+      </article>
+
+      <article class="metric-card metric-respiration">
+        <div class="metric-icon icon-lungs" aria-hidden="true"><i></i><i></i></div>
+        <div class="metric-label">Respiration</div>
+        <div class="metric-value">20 <small>/min</small></div>
+        <canvas class="metric-chart" data-chart="respiration" aria-hidden="true"></canvas>
+        <div class="chart-ticks"><span>00:00</span><span>12:00</span><span>24:00</span></div>
+        <div class="metric-state"><span class="state-dot"></span><span>正常范围</span><small>10–30 /min</small></div>
+      </article>
+
+      <article class="metric-card metric-stress">
+        <div class="metric-icon">☺</div>
+        <div class="metric-label">Stress</div>
+        <div class="metric-word">Low</div>
+        <canvas class="metric-chart metric-bar-chart" data-chart="stress" aria-hidden="true"></canvas>
+        <div class="metric-state"><span class="state-dot"></span><span>放松状态</span><small>压力指数 15/100</small></div>
+      </article>
+
+      <article class="metric-card metric-temperature">
+        <div class="metric-icon icon-thermometer" aria-hidden="true"></div>
+        <div class="metric-label">Body Temperature</div>
+        <div class="metric-value">38.3 <small>°C</small></div>
+        <canvas class="metric-chart" data-chart="temperature" aria-hidden="true"></canvas>
+        <div class="chart-ticks"><span>00:00</span><span>12:00</span><span>24:00</span></div>
+        <div class="metric-state"><span class="state-dot"></span><span>正常范围</span><small>37.5–39.2 °C</small></div>
+      </article>
+
+      <article class="metric-card metric-sleep">
+        <div class="metric-icon">☾</div>
+        <div class="metric-label">Sleep</div>
+        <div class="metric-value">10.1 <small>h</small></div>
+        <canvas class="metric-chart metric-bar-chart" data-chart="sleep" aria-hidden="true"></canvas>
+        <div class="chart-ticks"><span>00:00</span><span>12:00</span><span>24:00</span></div>
+        <div class="metric-state"><span class="state-dot"></span><span>睡眠充足</span><small>优质睡眠</small></div>
+      </article>
+    </section>
+    <div class="mira-core" aria-label="Mira AI"><span>Mira AI</span></div>
+    <a class="home-glass-button" href="/home.html" aria-label="进入 PalEcho 首页">进入首页</a>
+    <canvas id="life-effect-canvas" aria-hidden="true"></canvas>
+  </main>
+  <script src="/mira-orbit.js?v=20260804-10"></script>
+  <script src="/health-charts.js?v=20260804-2"></script>
+  <script src="/life-pulse-effects.js?v=20260804-6"></script>
+</body>
+</html>

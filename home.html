@@ -1,0 +1,3290 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PalEcho | The Next Sense</title>
+<meta name="description" content="PalEcho 连接 Mira 的生命理解与 Echo 的数字陪伴，让真实宠物的健康、状态与成长始终与你靠近。" />
+<meta property="og:title" content="PalEcho | The Next Sense" />
+<meta property="og:description" content="Echo 映射真实宠物此刻的状态，让陪伴跨越距离，始终靠近。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://palecho.com" />
+<meta property="og:site_name" content="PalEcho" />
+<meta property="og:image" content="https://palecho.com/og-pulse.png" />
+<meta property="og:image:width" content="1731" />
+<meta property="og:image:height" content="909" />
+<meta property="og:image:alt" content="Pulse — 让健康，一目了然。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PalEcho | The Next Sense" />
+<meta name="twitter:description" content="Echo 映射真实宠物此刻的状态，让陪伴跨越距离，始终靠近。" />
+<meta name="twitter:image" content="https://palecho.com/og-pulse.png" />
+<link rel="icon" href="/favicon.ico?v=20260729-2" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20260729-2" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260729-2" />
+<link rel="manifest" href="/site.webmanifest?v=20260729-2" />
+<meta name="theme-color" content="#ffffff" />
+<!-- 引入 Tailwind CSS -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/0915/3.4.17.js"></script>
+<!-- 引入 Font Awesome 图标库 -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/js/all.min.js"></script>
+<link href="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/css/fontawesome.min.css" rel="stylesheet"/>
+<!-- 引入 Google Fonts (Quicksand 用于圆润字体) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Quicksand:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="/mira-experience.css?v=20260731-9" rel="stylesheet"/>
+<link href="/lifebase-experience.css?v=20260731-3" rel="stylesheet"/>
+<link href="/echo-experience.css?v=20260731-2" rel="stylesheet"/>
+<link href="/pulse-experience.css?v=20260731-2" rel="stylesheet"/>
+<link href="/pal-store.css?v=20260731-1" rel="stylesheet"/>
+<link href="/community-experience.css?v=20260731-1" rel="stylesheet"/>
+<style>
+        :root {
+            --site-header-height: 3.5rem;
+        }
+
+        /* 全局字体设置 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff url('/home-liquid-glass-white.png') center top / cover fixed no-repeat;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* 品牌名称圆润字体 */
+        .brand-font {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* 玻璃拟态导航栏 */
+        .glass-nav {
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-bottom: 0;
+            box-shadow: none;
+        }
+
+        .brand-liquid {
+            color: #07090d;
+            background: linear-gradient(180deg, #343942 0%, #05070a 42%, #000000 68%, #2f3540 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
+            filter: drop-shadow(0 5px 10px rgba(20, 24, 31, 0.12));
+        }
+
+        .nav-liquid-control {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-height: 2.1rem;
+            padding: 0.42rem 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.78);
+            border-radius: 999px;
+            color: #4b5563;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2) 52%, rgba(255, 255, 255, 0.48));
+            backdrop-filter: blur(16px) saturate(125%);
+            -webkit-backdrop-filter: blur(16px) saturate(125%);
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.96),
+                inset -1px -1px 0 rgba(31, 41, 55, 0.08),
+                0 5px 14px rgba(31, 41, 55, 0.08);
+            transition: color 180ms ease, transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+        }
+
+        .nav-liquid-control::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            inset: 1px 12% 52%;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0));
+            opacity: 0.74;
+            pointer-events: none;
+        }
+
+        .nav-liquid-control:hover,
+        .nav-liquid-control:focus-visible {
+            color: #111827;
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.3) 52%, rgba(255, 255, 255, 0.6));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 1),
+                inset -1px -1px 0 rgba(31, 41, 55, 0.08),
+                0 8px 20px rgba(31, 41, 55, 0.12);
+        }
+
+        .nav-liquid-control:active {
+            transform: translateY(0) scale(0.97);
+        }
+
+        .nav-liquid-primary {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.68);
+            background: linear-gradient(135deg, rgba(54, 125, 246, 0.9), rgba(28, 92, 224, 0.82) 52%, rgba(72, 139, 255, 0.92));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.52),
+                inset -1px -1px 0 rgba(12, 55, 149, 0.28),
+                0 7px 18px rgba(35, 94, 211, 0.25);
+        }
+
+        .nav-liquid-primary:hover,
+        .nav-liquid-primary:focus-visible {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(72, 139, 255, 0.96), rgba(28, 92, 224, 0.86) 52%, rgba(87, 149, 255, 0.96));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.62),
+                inset -1px -1px 0 rgba(12, 55, 149, 0.28),
+                0 10px 24px rgba(35, 94, 211, 0.32);
+        }
+
+        /* 导航下拉菜单始终保持固定命中区域，避免 Safari 在模糊层与位移动画之间丢失 hover。 */
+        .group > .nav-dropdown {
+            display: block;
+            top: calc(100% - 4px);
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%);
+            transition:
+                opacity 180ms ease,
+                visibility 0s linear 180ms;
+        }
+
+        .group:hover > .nav-dropdown,
+        .group:focus-within > .nav-dropdown {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                opacity 180ms ease,
+                visibility 0s;
+        }
+
+        /* 语言菜单同样在悬停标题时展开，并保留键盘聚焦与触控点击支持。 */
+        #lang-menu {
+            display: flex;
+            top: calc(100% - 4px);
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition:
+                opacity 180ms ease,
+                visibility 0s linear 180ms;
+        }
+
+        #lang-switcher:hover #lang-menu,
+        #lang-switcher:focus-within #lang-menu,
+        #lang-switcher.is-open #lang-menu {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                opacity 180ms ease,
+                visibility 0s;
+        }
+
+        /* 二级导航在默认状态保持英文，仅在当前条目悬停时显示本地化标题。 */
+        .product-name-switch,
+        .nav-label-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            min-height: 1.25rem;
+            white-space: nowrap;
+        }
+
+        #mobile-menu .grid > a:not(.nav-label-switch) {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+
+        #mobile-menu .grid > a:not(.nav-label-switch) small {
+            color: #6b7280;
+            font-size: .72rem;
+            line-height: 1.2;
+        }
+
+        /* 两个标题占用同一网格单元，以最长文本稳定下拉菜单的宽度与行高。 */
+        #desktop-nav [data-nav-hover] {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: center;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-en,
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            grid-area: 1 / 1;
+            transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-en {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-en {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-localized {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 180ms ease-in-out, visibility 0s;
+        }
+
+        .locale-fit,
+        [data-i18n] {
+            overflow-wrap: anywhere;
+        }
+
+        /* 简短标题、按钮和导航在各语言中保持单行；正文保留自然换行。 */
+        [data-i18n].locale-nowrap,
+        .product-name-switch,
+        .nav-label-switch,
+        #lang-label,
+        [data-i18n="hero.title"],
+        [data-i18n="digital.title"],
+        [data-i18n="ai.title"],
+        [data-i18n="data.title"],
+        [data-i18n="hardware.title"],
+        [data-i18n="shop.title"],
+        [data-i18n="support.title"] {
+            white-space: nowrap;
+            overflow-wrap: normal;
+        }
+
+        html[data-lang="en"] [data-i18n="hero.title"],
+        html[data-lang="ja"] [data-i18n="hero.title"] {
+            letter-spacing: -.055em;
+        }
+
+        @media (max-width: 767px) {
+            [data-i18n="hero.title"],
+            [data-i18n="digital.title"],
+            [data-i18n="ai.title"],
+            [data-i18n="data.title"],
+            [data-i18n="hardware.title"],
+            [data-i18n="shop.title"],
+            [data-i18n="support.title"] {
+                white-space: normal;
+                text-wrap: balance;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .product-name-switch > span,
+            .nav-label-switch > span {
+                transition-duration: 1ms;
+            }
+        }
+
+        /* 滚动显现动画类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 首页独立生命感背景层 */
+        #canvas-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background: transparent;
+            isolation: isolate;
+        }
+
+        #canvas-container::before,
+        #canvas-container::after {
+            display: none;
+        }
+
+        #canvas-container .hero-living-canvas {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-subtitle {
+            display: inline-block;
+            width: max-content;
+            max-width: none !important;
+            margin-inline: auto;
+            text-align: center;
+            white-space: nowrap;
+            overflow-wrap: normal;
+        }
+
+        @media (max-width: 1023px) {
+            .hero-subtitle {
+                display: block;
+                width: auto;
+                max-width: 42rem !important;
+                white-space: normal;
+                text-wrap: balance;
+            }
+        }
+
+        /* 文本阴影增强可读性 */
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .flow-step::after {
+            content: '';
+            position: absolute;
+            right: -28px;
+            top: 50%;
+            width: 24px;
+            height: 2px;
+            background: #d1d5db;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .chat-bubble {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+
+        .tab-active {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .nav-section {
+            display: none;
+            min-height: calc(100vh - var(--site-header-height));
+            min-height: calc(100dvh - var(--site-header-height));
+            scroll-margin-top: var(--site-header-height);
+        }
+
+        .nav-section.visible {
+            display: block;
+            animation: sectionFadeUp 0.45s ease-out;
+        }
+
+        .hero-section {
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        #mobile-menu {
+            max-height: calc(100vh - var(--site-header-height));
+            max-height: calc(100dvh - var(--site-header-height));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body.mobile-menu-open {
+            overflow: hidden;
+        }
+
+        .pop-in {
+            animation: popIn 0.35s ease-out;
+        }
+
+        @keyframes sectionFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                background-attachment: scroll;
+                background-position: center top;
+                background-size: auto max(100svh, 37rem);
+            }
+
+            .glass-nav > div:first-child {
+                gap: 0.5rem;
+                padding-left: max(0.875rem, env(safe-area-inset-left, 0px));
+                padding-right: max(0.875rem, env(safe-area-inset-right, 0px));
+            }
+
+            .brand-liquid {
+                flex-shrink: 0;
+                font-size: 1.25rem !important;
+                line-height: 1;
+            }
+
+            #lang-btn,
+            #mobile-menu-btn {
+                width: 2.75rem;
+                min-width: 2.75rem;
+                min-height: 2.75rem;
+                padding: 0;
+                touch-action: manipulation;
+            }
+
+            #lang-btn {
+                gap: 0;
+            }
+
+            #mobile-menu {
+                max-height: calc(100svh - var(--site-header-height));
+                scrollbar-width: thin;
+            }
+
+            #mobile-menu > nav {
+                padding-left: max(1rem, env(safe-area-inset-left, 0px));
+                padding-right: max(1rem, env(safe-area-inset-right, 0px));
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+            }
+
+            #mobile-menu a,
+            #mobile-menu button {
+                min-height: 2.75rem;
+                touch-action: manipulation;
+            }
+
+            .hero-section {
+                height: 100svh;
+                min-height: 37rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero-section [data-i18n="hero.title"] {
+                max-width: calc(100vw - 2rem);
+                margin-inline: auto;
+                font-size: clamp(2rem, 10.2vw, 2.55rem) !important;
+                line-height: 1.12;
+                letter-spacing: -0.045em;
+            }
+
+            html[data-lang="en"] .hero-section [data-i18n="hero.title"],
+            html[data-lang="ja"] .hero-section [data-i18n="hero.title"],
+            html[data-lang="ko"] .hero-section [data-i18n="hero.title"] {
+                font-size: clamp(1.8rem, 8.8vw, 2.25rem) !important;
+                line-height: 1.15;
+            }
+
+            .hero-subtitle {
+                width: 100%;
+                max-width: 34rem !important;
+                padding-inline: 0.5rem;
+                font-size: 0.95rem !important;
+                line-height: 1.72;
+            }
+
+            .hero-section a[data-i18n="hero.primary"] {
+                min-height: 2.9rem;
+                min-width: min(11.25rem, calc(100vw - 2rem));
+                touch-action: manipulation;
+            }
+
+            .nav-section {
+                padding-top: 4.5rem !important;
+                padding-bottom: 4.5rem !important;
+            }
+
+            .nav-section .space-y-16 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 2.5rem;
+            }
+
+            .flow-step::after {
+                display: none;
+            }
+
+            #meta-claw article,
+            #data-chain article {
+                min-height: auto;
+            }
+
+            #pet-data .w-24 {
+                width: 4.5rem;
+                flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 374px) {
+            .hero-section [data-i18n="hero.title"] {
+                font-size: 1.9rem !important;
+            }
+
+            .hero-subtitle {
+                padding-inline: 0.25rem;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        @media (max-width: 767px) and (orientation: landscape) {
+            .hero-section {
+                height: 36rem;
+                min-height: 36rem;
+            }
+
+            .hero-section [data-i18n="hero.title"] {
+                font-size: 2rem !important;
+            }
+
+            .hero-subtitle {
+                max-width: 38rem !important;
+                font-size: 0.9rem !important;
+                line-height: 1.55;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+<!-- 导航栏 -->
+<header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+<div class="max-w-[1024px] mx-auto px-4 md:px-6 h-14 flex items-center justify-between flex-nowrap">
+<!-- 左上角品牌信息 -->
+<div class="flex items-center space-x-2 cursor-pointer group">
+<span class="brand-liquid text-xl sm:text-2xl font-bold brand-font tracking-tight group-hover:opacity-80 transition-opacity">PalEcho</span>
+</div>
+<!-- 中间主导航栏 -->
+<nav class="hidden lg:flex gap-2 text-sm font-medium text-gray-600 whitespace-nowrap" id="desktop-nav">
+<!-- 主页 -->
+<a class="nav-liquid-control whitespace-nowrap" href="/home.html" data-i18n="nav.home">主页</a>
+<!-- 产品与服务 (带子菜单) -->
+<div class="relative group py-2">
+<button class="nav-liquid-control whitespace-nowrap">
+                        <span data-i18n="nav.products">产品与服务</span>
+</button>
+<!-- 子导航 -->
+<div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a aria-label="Mira" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="#digital-pet"><span class="nav-hover-label-en">Mira</span><span class="nav-hover-label-localized" data-i18n="nav.sub.mira" data-nav-default="Mira">Mira</span></a>
+<a aria-label="Echo" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-echo-launch data-nav-hover href="#ai-health"><span class="nav-hover-label-en">Echo</span><span class="nav-hover-label-localized" data-i18n="nav.sub.echo" data-nav-default="Echo">Echo</span></a>
+<a aria-label="Pulse" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pulse-launch href="#pet-data"><span class="nav-hover-label-en">Pulse</span><span class="nav-hover-label-localized" data-i18n="nav.sub.pulse" data-nav-default="Pulse">Pulse</span></a>
+<a aria-label="LifeBase" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-lifebase-launch data-nav-hover href="#lifebase-experience"><span class="nav-hover-label-en">LifeBase</span><span class="nav-hover-label-localized" data-i18n="nav.sub.lifeBase" data-nav-default="LifeBase">LifeBase</span></a>
+<a aria-label="Store" class="product-name-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover data-pal-store-launch href="#pet-shop"><span class="nav-hover-label-en">Store</span><span class="nav-hover-label-localized" data-i18n="nav.sub.store" data-nav-default="Store">Store</span></a>
+</div>
+</div>
+<!-- 社区与支持 (带子菜单) -->
+<div class="relative group py-2">
+<button class="nav-liquid-control whitespace-nowrap">
+                        <span data-i18n="nav.communitySupport">社区与支持</span>
+</button>
+<!-- 子导航 -->
+<div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a aria-label="Assist" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/help-center.html"><span class="nav-hover-label-en">Assist</span><span class="nav-hover-label-localized" data-i18n="nav.sub.assist" data-nav-default="Assist">Assist</span></a>
+<a aria-label="Circle" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/community.html"><span class="nav-hover-label-en">Circle</span><span class="nav-hover-label-localized" data-i18n="nav.sub.circle" data-nav-default="Circle">Circle</span></a>
+</div>
+</div>
+<!-- 关于我们 (带子菜单) -->
+<div class="relative group py-2">
+<button class="nav-liquid-control whitespace-nowrap">
+                        <span data-i18n="nav.about">关于我们</span>
+</button>
+<!-- 子导航 -->
+<div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a aria-label="Origin" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/story.html"><span class="nav-hover-label-en">Origin</span><span class="nav-hover-label-localized" data-i18n="nav.sub.origin" data-nav-default="Origin">Origin</span></a>
+<a aria-label="Core" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/tech.html"><span class="nav-hover-label-en">Core</span><span class="nav-hover-label-localized" data-i18n="nav.sub.core" data-nav-default="Core">Core</span></a>
+<a aria-label="Trust" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/trust.html"><span class="nav-hover-label-en">Trust</span><span class="nav-hover-label-localized" data-i18n="nav.sub.trust" data-nav-default="Trust">Trust</span></a>
+<a aria-label="Careers" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/join-us.html"><span class="nav-hover-label-en">Careers</span><span class="nav-hover-label-localized" data-i18n="nav.sub.careers" data-nav-default="Careers">Careers</span></a>
+</div>
+</div>
+<!-- 社会责任 (带子菜单) -->
+<div class="relative group py-2">
+<button class="nav-liquid-control whitespace-nowrap">
+                        <span data-i18n="nav.responsibility">社会责任</span>
+</button>
+<!-- 子导航 -->
+<div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white/95 backdrop-blur-xl shadow-lg rounded-lg border border-gray-100 p-2 hidden group-hover:block">
+<a aria-label="Compassion" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/care.html"><span class="nav-hover-label-en">Compassion</span><span class="nav-hover-label-localized" data-i18n="nav.sub.compassion" data-nav-default="Compassion">Compassion</span></a>
+<a aria-label="Tomorrow" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/sustainability.html"><span class="nav-hover-label-en">Tomorrow</span><span class="nav-hover-label-localized" data-i18n="nav.sub.tomorrow" data-nav-default="Tomorrow">Tomorrow</span></a>
+<a aria-label="Impact" class="nav-label-switch block px-4 py-2 hover:bg-gray-50 rounded text-sm text-gray-700 hover:text-black transition-colors" data-nav-hover href="/progress.html"><span class="nav-hover-label-en">Impact</span><span class="nav-hover-label-localized" data-i18n="nav.sub.impact" data-nav-default="Impact">Impact</span></a>
+</div>
+</div>
+</nav>
+<!-- 右上角按钮 -->
+<div class="flex items-center gap-2 text-sm whitespace-nowrap">
+<button class="nav-liquid-control hidden lg:inline-flex" data-i18n="nav.login">登录</button>
+<div class="relative" id="lang-switcher">
+<button aria-expanded="false" aria-haspopup="menu" aria-label="切换语言" class="nav-liquid-control flex items-center gap-2 whitespace-nowrap" id="lang-btn">
+<i class="fa-solid fa-globe text-xs"></i>
+<span class="hidden sm:inline" id="lang-label">语言</span>
+</button>
+<div class="absolute right-0 min-w-[180px] bg-white border border-gray-200 rounded-xl shadow-lg py-2 z-50 flex flex-col" id="lang-menu">
+<button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="zh-CN">简体中文</button>
+<button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="zh-TW">繁體中文</button>
+<button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="en">English</button>
+<button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="ja">日本語</button>
+<button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 whitespace-nowrap" data-lang="ko">한국어</button>
+</div>
+</div>
+<button class="nav-liquid-control nav-liquid-primary hidden lg:inline-flex" data-i18n="nav.cta">
+                    立即创建宠物
+                </button>
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="打开导航菜单" class="nav-liquid-control lg:hidden w-10 h-10 inline-flex items-center justify-center" id="mobile-menu-btn" type="button">
+<i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+</button>
+</div>
+</div>
+<div aria-hidden="true" class="lg:hidden hidden absolute top-full inset-x-0 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-xl" id="mobile-menu">
+<nav class="max-w-[1024px] mx-auto px-4 py-5 space-y-5 text-sm text-gray-700">
+<a class="block rounded-xl bg-gray-50 px-4 py-3 font-medium text-gray-900" href="/home.html" data-i18n="nav.home">主页</a>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.products">产品与服务</div>
+<div class="grid grid-cols-2 gap-2">
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#digital-pet"><span>Mira</span><small data-i18n="nav.aiHealth">AI 健康管理</small></a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" href="#ai-health" data-echo-launch><span>Echo</span><small data-i18n="nav.digitalPet">数字宠物</small></a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" data-pulse-launch href="#pet-data"><span>Pulse</span><small data-i18n="nav.petData">宠物数据平台</small></a>
+<a class="rounded-xl border border-gray-100 px-3 py-3" data-lifebase-launch href="#lifebase-experience"><span>LifeBase</span><small data-i18n="nav.lifeBase">健康档案</small></a>
+<a class="rounded-xl border border-gray-100 px-3 py-3 col-span-2" data-pal-store-launch href="#pet-shop"><span>Pal Store</span><small data-i18n="nav.petShop">宠物商城</small></a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.communitySupport">社区与支持</div>
+<div class="grid grid-cols-2 gap-2">
+<a aria-label="Help Center / 帮助中心" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/help-center.html"><span data-i18n="nav.help">帮助中心</span></a>
+<a aria-label="Community / 社区与公益" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/community.html"><span data-i18n="nav.community">社区与公益</span></a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.about">关于我们</div>
+<div class="grid grid-cols-2 gap-2">
+<a aria-label="Story / 我们是谁" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/story.html"><span data-i18n="nav.aboutUs">我们是谁</span></a>
+<a aria-label="Tech / 技术与能力" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/tech.html"><span data-i18n="nav.tech">技术与能力</span></a>
+<a aria-label="Trust / 数据与信任" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/trust.html"><span data-i18n="nav.trust">数据与信任</span></a>
+<a aria-label="Careers / 加入我们" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3 col-span-2" href="/join-us.html"><span data-i18n="nav.joinUs">加入我们</span></a>
+</div>
+</div>
+<div>
+<div class="px-1 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="nav.responsibility">社会责任</div>
+<div class="grid grid-cols-2 gap-2">
+<a aria-label="Care / 动物关怀" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/care.html"><span data-i18n="nav.care">动物关怀</span></a>
+<a aria-label="Sustainability / 可持续发展" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/sustainability.html"><span data-i18n="nav.sustainability">可持续发展</span></a>
+<a aria-label="Innovation for Good / 创新向善" class="nav-label-switch rounded-xl border border-gray-100 px-3 py-3" href="/progress.html"><span data-i18n="nav.progress">创新向善</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 border-t border-gray-100 pt-5">
+<button class="rounded-full border border-gray-200 px-4 py-3 text-gray-700" data-i18n="nav.login">登录</button>
+<button class="rounded-full bg-blue-600 px-4 py-3 text-white shadow-md" data-i18n="nav.cta">立即创建宠物</button>
+</div>
+</nav>
+</div>
+</header>
+<!-- 主体内容 -->
+<main>
+<!-- 首屏 Hero Section -->
+<section class="hero-section relative flex flex-col justify-center items-center text-center px-5 overflow-hidden">
+<!-- 首页生命感背景容器 -->
+<div id="canvas-container"></div>
+<div class="relative z-10 w-full h-full max-w-[1100px] mx-auto pt-14">
+<div class="absolute inset-x-0 top-[31%] sm:top-[33%] -translate-y-1/2 px-1">
+<h1 class="text-[2.35rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold tracking-[-0.04em] text-gray-900 leading-[1.08] reveal text-shadow-sm" data-i18n="hero.title">
+                    一家让 AI 理解生命的科技公司
+                </h1>
+</div>
+<div class="absolute inset-x-0 top-[54%] sm:top-[55%] -translate-y-1/2 px-1 flex items-center justify-center">
+<p class="hero-subtitle text-base sm:text-lg md:text-xl leading-relaxed text-gray-500 reveal" style="transition-delay: 100ms;" data-i18n="hero.subtitle">
+                    PalEcho 正在构建数字生命生态，连接 AI、智能硬件与生命数据，让健康管理从被动响应，走向持续理解与主动守护。
+                </p>
+</div>
+<div class="absolute inset-x-0 bottom-[12%] sm:bottom-[14%] flex items-center justify-center reveal" style="transition-delay: 180ms;">
+<a class="inline-flex min-w-[180px] sm:min-w-[220px] items-center justify-center py-3 sm:py-3.5 px-6 rounded-full border border-gray-300 bg-white/80 text-sm sm:text-base font-medium text-gray-800 shadow-sm backdrop-blur-sm hover:bg-white hover:border-gray-400 hover:shadow-md transition-all active:scale-95 whitespace-nowrap" href="/story.html" data-i18n="hero.primary">
+                        了解我们的理念
+                    </a>
+</div>
+</div>
+</section>
+<!-- 数字宠物 -->
+<section class="py-32 px-4 bg-white nav-section" id="digital-pet">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="digital.title">现在，让宠物数字化</h2>
+<p class="text-lg md:text-xl text-gray-600" data-i18n="digital.subtitle">将真实宠物转化为3D数字形象，实时同步健康与状态变化</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 items-center reveal">
+<div class="space-y-6">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="relative bg-white border border-gray-200 rounded-2xl p-5 flex-1 shadow-sm">
+<div class="text-sm text-gray-500 mb-2" data-i18n="digital.howto">如何操作</div>
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400" data-i18n="digital.step1.label">步骤 1</div>
+<div class="font-semibold text-gray-800" data-i18n="digital.step1.text">上传宠物信息</div>
+</div>
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400" data-i18n="digital.step2.label">步骤 2</div>
+<div class="font-semibold text-gray-800" data-i18n="digital.step2.text">生成3D数字宠物</div>
+</div>
+<div class="relative flow-step bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 w-full md:w-auto">
+<div class="text-xs text-gray-400" data-i18n="digital.step3.label">步骤 3</div>
+<div class="font-semibold text-gray-800" data-i18n="digital.step3.text">连接设备，实时同步</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-start gap-4">
+<button class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-700 transition-all" id="generate-pet-btn" data-i18n="digital.cta">立即生成数字宠物</button>
+<p class="text-sm text-gray-500" data-i18n="digital.ctaHint">生成后即可在当前页面查看 3D 分身与健康状态。</p>
+</div>
+</div>
+<div class="hidden-section" id="digital-pet-result">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start reveal">
+<div class="bg-gray-50 rounded-3xl p-6 shadow-inner">
+<div class="h-64 rounded-2xl bg-white border border-gray-200 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-blue-100 via-white to-amber-100 opacity-70"></div>
+<div class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-tr from-blue-400 to-teal-300 animate-pulse"></div>
+<div class="absolute bottom-4 right-4 text-xs text-gray-400 font-mono">PET-3D-V1</div>
+</div>
+<div class="mt-5 grid grid-cols-2 gap-4">
+<div class="bg-white border border-gray-200 rounded-xl p-4">
+<div class="text-xs text-gray-400" data-i18n="digital.card1.label">身体状况</div>
+<div class="text-lg font-semibold text-gray-900" data-i18n="digital.card1.status">状态良好</div>
+<div class="text-sm text-gray-500 mt-1" data-i18n="digital.card1.meta">心率 92 | 活动 68%</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-xl p-4">
+<div class="text-xs text-gray-400" data-i18n="digital.card2.label">虚拟互动</div>
+<div class="text-lg font-semibold text-gray-900" data-i18n="digital.card2.status">陪伴中</div>
+<div class="text-sm text-gray-500 mt-1" data-i18n="digital.card2.meta">今日互动 3 次</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-2xl font-semibold text-gray-900" data-i18n="digital.scenes.title">数字宠物使用场景</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900" data-i18n="digital.scene1.title">外出也能随时了解宠物状态</div>
+<p class="text-sm text-gray-600 mt-2" data-i18n="digital.scene1.desc">实时查看宠物活动与健康数据，即使不在家也能安心</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900" data-i18n="digital.scene2.title">宠物健康，一目了然</div>
+<p class="text-sm text-gray-600 mt-2" data-i18n="digital.scene2.desc">通过数据可视化，及时掌握饮食、运动与身体变化</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900" data-i18n="digital.scene3.title">异常变化，提前发现</div>
+<p class="text-sm text-gray-600 mt-2" data-i18n="digital.scene3.desc">系统自动识别异常状态，帮助你更早发现潜在健康问题</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+<div class="font-semibold text-gray-900" data-i18n="digital.scene4.title">记录宠物的每一个成长瞬间</div>
+<p class="text-sm text-gray-600 mt-2" data-i18n="digital.scene4.desc">保存宠物的行为轨迹与变化，见证陪伴的每一刻</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm sm:col-span-2">
+<div class="font-semibold text-gray-900" data-i18n="digital.scene5.title">不在身边，也能陪伴</div>
+<p class="text-sm text-gray-600 mt-2" data-i18n="digital.scene5.desc">通过数字宠物，随时查看状态，拉近与宠物的距离</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI健康管理 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="ai-health">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start reveal">
+<div class="space-y-4">
+<div class="chat-bubble p-5">
+<div class="text-sm text-gray-500 mb-3" data-i18n="ai.label">AI健康管理</div>
+<div class="space-y-3">
+<div class="bg-white border border-gray-200 rounded-xl p-3 text-sm text-gray-700" data-i18n="ai.chat1">你好，我可以帮你分析宠物的健康状态。</div>
+<div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-sm text-gray-700" data-i18n="ai.chat2">请上传照片或描述症状。</div>
+</div>
+<div class="mt-4 space-y-2">
+<label class="text-xs uppercase tracking-wide text-gray-400" data-i18n="ai.input.label">健康问题描述</label>
+<textarea id="ai-health-question" class="w-full rounded-xl border border-gray-200 p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-200" rows="4" placeholder="例如：近两天食欲下降，精神不佳，偶尔打喷嚏。" data-i18n-placeholder="ai.input.placeholder"></textarea>
+<div id="ai-health-status" class="text-xs text-gray-400" data-i18n="ai.status">点击深度分析后，将由 AI 返回健康建议。</div>
+</div>
+<div class="flex items-center gap-3 mt-4">
+<input type="file" id="ai-health-upload-input" class="hidden" accept="image/*" />
+<button class="px-4 py-2 rounded-full border border-gray-300 text-sm text-gray-600 hover:border-gray-400 transition" id="ai-health-upload-btn" data-i18n="ai.upload">上传图片</button>
+<button class="px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 transition" id="deep-analysis-btn" data-i18n="ai.analyze">深度分析</button>
+</div>
+</div>
+<div class="hidden-section space-y-4" id="analysis-panel">
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="font-semibold text-gray-900" data-i18n="ai.result.title">健康分析结果</div>
+<p class="text-sm text-gray-600 mt-2" id="ai-health-reply">体征整体正常，建议关注近期饮食与运动节奏。</p>
+<div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-1">心率区间：正常</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-2">活动趋势：轻微下降</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-3">饮食评估：可优化</div>
+<div class="bg-gray-50 rounded-lg p-3" id="ai-health-metric-4">睡眠状态：稳定</div>
+</div>
+</div>
+<div class="chat-bubble p-5">
+<div class="text-sm text-gray-500 mb-3" data-i18n="ai.followup.label">继续向 AI 询问</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3 text-sm text-gray-700" data-i18n="ai.followup.example">可以给我定制宠物饮食建议吗？</div>
+</div>
+<div class="grid grid-cols-2 gap-3 text-sm">
+<div class="bg-white border border-gray-200 rounded-xl p-3" data-i18n="ai.card1">健康评估</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3" data-i18n="ai.card2">风险预警</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3" data-i18n="ai.card3">AI建议</div>
+<div class="bg-white border border-gray-200 rounded-xl p-3" data-i18n="ai.card4">趋势分析</div>
+</div>
+<button class="w-full bg-blue-600 text-white py-3 rounded-full shadow hover:bg-blue-700 transition" id="ai-feed-btn" data-i18n="ai.feed">AI定制宠粮</button>
+</div>
+</div>
+<div class="space-y-6">
+<div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold tracking-wide uppercase" data-i18n="ai.badge">健康场景</div>
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="ai.title">AI守护宠物健康</h2>
+<p class="text-lg text-gray-600" data-i18n="ai.subtitle">基于数据分析与智能算法，为宠物提供实时健康评估与科学建议</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+<div class="bg-white rounded-2xl p-4 border border-gray-200" data-i18n="ai.scene1">宠物精神不好，不知道原因</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200" data-i18n="ai.scene2">饮食是否合理</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200" data-i18n="ai.scene3">是否需要看医生</div>
+<div class="bg-white rounded-2xl p-4 border border-gray-200" data-i18n="ai.scene4">日常健康管理</div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-8 reveal">
+<h3 class="text-2xl font-semibold text-gray-900 mb-4" data-i18n="ai.trust.title">让用户信任大模型的方式</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
+<div class="bg-gray-50 rounded-xl p-4" data-i18n="ai.trust.item1">基于数据模型分析</div>
+<div class="bg-gray-50 rounded-xl p-4" data-i18n="ai.trust.item2">结合宠物健康知识库</div>
+<div class="bg-gray-50 rounded-xl p-4" data-i18n="ai.trust.item3">持续优化算法</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 宠物数据平台 -->
+<section class="py-32 px-4 bg-white nav-section" id="pet-data">
+<div class="max-w-[1024px] mx-auto space-y-16">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
+<div class="space-y-4">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="data.title">数据上链，安全可靠</h2>
+<p class="text-lg text-gray-600" data-i18n="data.subtitle">宠物数据全程加密传输与存储，确保每一次记录都可信。</p>
+</div>
+<div class="bg-gray-50 rounded-3xl p-8 flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-amber-50"></div>
+<div class="relative z-10 flex flex-col items-center">
+<i class="fa-solid fa-lock text-5xl text-gray-700"></i>
+<div class="text-sm text-gray-500 mt-3" data-i18n="data.vault">Encrypted Data Vault</div>
+</div>
+</div>
+</div>
+<div class="space-y-6 reveal">
+<h3 class="text-2xl font-semibold text-gray-900" data-i18n="data.overview">宠物数据一览</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3" data-i18n="data.card1.label">基础信息</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700" data-i18n="data.card1.text">年龄 / 体重 / 疫苗</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-blue-500 w-3/4"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3" data-i18n="data.card2.label">健康数据</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700" data-i18n="data.card2.text">心率 / 饮食 / 活动</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-green-500 w-2/3"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3" data-i18n="data.card3.label">医疗记录</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700" data-i18n="data.card3.text">报告 / 诊断</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-amber-500 w-1/2"></div>
+</div>
+</div>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+<div class="text-sm text-gray-500 mb-3" data-i18n="data.card4.label">行为数据</div>
+<div class="flex items-center justify-between">
+<div class="text-sm text-gray-700" data-i18n="data.card4.text">作息 / 异常</div>
+<div class="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+<div class="h-2 bg-purple-500 w-2/5"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start reveal">
+<div class="bg-gray-50 rounded-2xl p-6">
+<h4 class="text-xl font-semibold text-gray-900" data-i18n="data.decentral.title">去中心化上传与回报</h4>
+<p class="text-sm text-gray-600 mt-3" data-i18n="data.decentral.desc">将宠物数据上传到去中心化数据中心，获得数据回报与更强的模型服务能力。</p>
+</div>
+<div class="bg-white border border-gray-200 rounded-2xl p-6">
+<h4 class="text-xl font-semibold text-gray-900" data-i18n="data.security.title">数据安全与隐私</h4>
+<ul class="text-sm text-gray-600 mt-3 space-y-2">
+<li data-i18n="data.security.item1">加密存储，确保数据不可篡改</li>
+<li data-i18n="data.security.item2">用户数据控制权，授权可随时管理</li>
+<li data-i18n="data.security.item3">去中心化存储，降低单点风险</li>
+<li data-i18n="data.security.item4">加密货币、代币化等需法规合规后适时上线</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 智能硬件 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="hardware">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-4xl font-bold text-gray-900" data-i18n="hardware.title">即将上线</h2>
+<p class="text-lg text-gray-600" data-i18n="hardware.subtitle">我们同样期待产品与您见面</p>
+</div>
+</section>
+<!-- PAL Store -->
+<section aria-hidden="true" aria-label="PAL Store 商品体验" aria-modal="true" class="pal-store" id="pet-shop" inert role="dialog">
+<div class="pal-store-shell">
+<div class="pal-store-experience-topbar">
+<span class="pal-store-wordmark">PAL Store</span>
+<button aria-label="返回 PalEcho 首页" class="pal-store-close" id="pal-store-close" type="button"></button>
+</div>
+<div class="pal-store-topline" aria-label="商店工具">
+<button class="pal-store-tool" type="button" aria-label="选择收货地址">
+<span class="pal-store-tool-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+<span>收货地址</span>
+</button>
+<button class="pal-store-tool" type="button" aria-label="购物车，0 件商品">
+<span class="pal-store-tool-icon" aria-hidden="true"><i class="fa-solid fa-bag-shopping"></i></span>
+<span>购物车</span>
+<span class="pal-cart-count" aria-hidden="true">0</span>
+</button>
+</div>
+<div class="pal-store-nav-wrap">
+<nav class="pal-store-nav" aria-label="PAL Store 商品分类" role="tablist">
+<button class="pal-store-tab is-active" data-pal-store-tab="food" id="pal-store-tab-food" aria-controls="pal-store-panel-food" aria-selected="true" role="tab" type="button">
+<span class="pal-store-tab-label pal-store-tab-label-en">Food</span>
+<span class="pal-store-tab-label pal-store-tab-label-cn">主粮</span>
+</button>
+<button class="pal-store-tab" data-pal-store-tab="nutrition" id="pal-store-tab-nutrition" aria-controls="pal-store-panel-nutrition" aria-selected="false" role="tab" tabindex="-1" type="button">
+<span class="pal-store-tab-label pal-store-tab-label-en">Nutrition</span>
+<span class="pal-store-tab-label pal-store-tab-label-cn">营养</span>
+</button>
+<button class="pal-store-tab" data-pal-store-tab="custom" id="pal-store-tab-custom" aria-controls="pal-store-panel-custom" aria-selected="false" role="tab" tabindex="-1" type="button">
+<span class="pal-store-tab-label pal-store-tab-label-en">Custom</span>
+<span class="pal-store-tab-label pal-store-tab-label-cn">定制</span>
+</button>
+<button class="pal-store-tab" data-pal-store-tab="devices" id="pal-store-tab-devices" aria-controls="pal-store-panel-devices" aria-selected="false" role="tab" tabindex="-1" type="button">
+<span class="pal-store-tab-label pal-store-tab-label-en">Devices</span>
+<span class="pal-store-tab-label pal-store-tab-label-cn">设备</span>
+</button>
+</nav>
+</div>
+<div class="pal-store-stage">
+<section class="pal-store-panel is-active" data-pal-store-panel="food" id="pal-store-panel-food" aria-labelledby="pal-store-tab-food" aria-hidden="false" role="tabpanel">
+<h2 class="pal-store-heading">两条系列线</h2>
+<div class="pal-food-grid">
+<article class="pal-product-card">
+<div class="pal-food-image">
+<img src="/pal-store-food-sea.jpg" alt="PalEcho 深海营养系列极简包装" width="1456" height="1118" loading="lazy"/>
+</div>
+<div class="pal-product-copy">
+<p class="pal-product-index">01 / Deep Sea</p>
+<h3>深海营养系列</h3>
+<p>优质蛋白与深海营养支持，帮助维持皮毛状态、活力与日常营养补充。</p>
+<a class="pal-detail-link" href="#pal-store-panel-food">查看详情</a>
+</div>
+</article>
+<article class="pal-product-card">
+<div class="pal-food-image">
+<img src="/pal-store-food-daily.jpg" alt="PalEcho 日常守护系列极简包装" width="1456" height="1118" loading="lazy"/>
+</div>
+<div class="pal-product-copy">
+<p class="pal-product-index">02 / Daily Care</p>
+<h3>日常守护系列</h3>
+<p>关注肠胃舒适、体态管理、口腔清新与基础健康维护。</p>
+<a class="pal-detail-link" href="#pal-store-panel-food">查看详情</a>
+</div>
+</article>
+</div>
+</section>
+<section class="pal-store-panel" data-pal-store-panel="nutrition" id="pal-store-panel-nutrition" aria-labelledby="pal-store-tab-nutrition" aria-hidden="true" role="tabpanel">
+<h2 class="pal-store-heading">6款营养补充</h2>
+<div class="pal-nutrition-layout">
+<div class="pal-nutrition-collection">
+<img src="/pal-store-nutrition.jpg" alt="六款 PalEcho 营养补充产品系列" width="1536" height="1024" loading="lazy"/>
+</div>
+<div class="pal-nutrition-list">
+<article class="pal-nutrition-item" style="--dot:#abb49f">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>肠胃舒稳粉</h3>
+<p>帮助日常肠胃舒适与换粮适应。</p>
+</article>
+<article class="pal-nutrition-item" style="--dot:#9b9b80">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>深海皮毛营养油</h3>
+<p>帮助维持皮毛光泽与皮肤屏障。</p>
+</article>
+<article class="pal-nutrition-item" style="--dot:#c4ad91">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>关节活力软嚼</h3>
+<p>关注成长、运动与关节活力。</p>
+</article>
+<article class="pal-nutrition-item" style="--dot:#c5a49b">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>轻盈体态管理粉</h3>
+<p>帮助日常体态管理。</p>
+</article>
+<article class="pal-nutrition-item" style="--dot:#aebcbf">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>口气清新粉</h3>
+<p>帮助维持口腔清新。</p>
+</article>
+<article class="pal-nutrition-item" style="--dot:#91a8ad">
+<div class="pal-nutrition-dot" aria-hidden="true"></div>
+<h3>水润守护粉</h3>
+<p>帮助日常饮水与泌尿健康。</p>
+</article>
+</div>
+</div>
+</section>
+<section class="pal-store-panel" data-pal-store-panel="custom" id="pal-store-panel-custom" aria-labelledby="pal-store-tab-custom" aria-hidden="true" role="tabpanel">
+<h2 class="pal-store-heading">根据体检报告推荐</h2>
+<article class="pal-product-card pal-custom-card">
+<div class="pal-custom-visual">
+<img src="/pal-store-custom.jpg" alt="PalEcho 体检报告定制营养套装" width="1536" height="1024" loading="lazy"/>
+</div>
+<div class="pal-custom-content">
+<div class="pal-custom-steps">
+<div class="pal-custom-step">
+<span class="pal-step-number">01</span>
+<strong>上传体检报告</strong>
+</div>
+<div class="pal-custom-step">
+<span class="pal-step-number">02</span>
+<strong>结合宠物档案分析</strong>
+</div>
+<div class="pal-custom-step">
+<span class="pal-step-number">03</span>
+<strong>推荐营养方案</strong>
+</div>
+</div>
+<button class="pal-custom-cta" type="button">立即开始</button>
+</div>
+</article>
+</section>
+<section class="pal-store-panel" data-pal-store-panel="devices" id="pal-store-panel-devices" aria-labelledby="pal-store-tab-devices" aria-hidden="true" role="tabpanel">
+<h2 class="pal-store-heading">三款设备</h2>
+<div class="pal-device-visual">
+<img src="/pal-store-devices.jpg" alt="PalEcho Trace、Sensa 与 Sensa Pro 胸背带式智能穿戴" width="1776" height="887" loading="lazy"/>
+</div>
+<div class="pal-device-grid">
+<article class="pal-device-card">
+<div class="pal-device-top">
+<p class="pal-device-edition">轻量定位版</p>
+<h3>PalEcho Trace</h3>
+<p class="pal-device-purpose">用于防丢</p>
+</div>
+<ul class="pal-device-features">
+<li>GPS 实时定位</li>
+<li>响铃寻找</li>
+<li>历史轨迹</li>
+<li>电子围栏</li>
+<li>找宠模式</li>
+<li>低电提醒</li>
+</ul>
+</article>
+<article class="pal-device-card">
+<div class="pal-device-top">
+<p class="pal-device-edition">基础健康版</p>
+<h3>PalEcho Sensa</h3>
+<p class="pal-device-price">399 元</p>
+</div>
+<ul class="pal-device-features">
+<li>GPS 实时定位</li>
+<li>电子围栏</li>
+<li>历史轨迹</li>
+<li>找宠模式</li>
+<li>活动量记录</li>
+<li>睡眠趋势</li>
+<li>静息趋势</li>
+<li>家庭共享</li>
+<li>AI 日报</li>
+</ul>
+</article>
+<article class="pal-device-card pal-device-card-pro">
+<div class="pal-device-top">
+<p class="pal-device-edition">旗舰健康版</p>
+<h3>PalEcho Sensa Pro</h3>
+<p class="pal-device-price">699 元</p>
+</div>
+<ul class="pal-device-features">
+<li>PalEcho Sensa 全部功能</li>
+<li>心率趋势</li>
+<li>呼吸趋势</li>
+<li>体温趋势</li>
+<li>睡眠质量分析</li>
+<li>活动强度分析</li>
+<li>异常行为识别</li>
+<li>AI 健康日报</li>
+<li>AI 健康周报</li>
+<li>健康风险提醒</li>
+<li>体检报告联动分析</li>
+<li>兽医参考报告</li>
+</ul>
+</article>
+</div>
+</section>
+</div>
+</div>
+</section>
+<!-- 官方技术支持 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="support">
+<div class="max-w-[1024px] mx-auto grid grid-cols-1 md:grid-cols-[0.7fr_1.3fr] gap-12">
+<div class="space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="support.title">官方技术支持</h2>
+<div class="flex flex-col gap-2" id="support-tabs">
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left tab-active" data-target="support-scope" data-i18n="support.tab1">支持范围</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-faq" data-i18n="support.tab2">常见问题</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-guide" data-i18n="support.tab3">操作指南</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-ticket" data-i18n="support.tab4">在线支持</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-upgrade" data-i18n="support.tab5">升级与维护公告</button>
+<button class="px-4 py-3 rounded-xl border border-gray-200 text-left" data-target="support-security" data-i18n="support.tab6">数据安全</button>
+</div>
+</div>
+<div class="space-y-4 reveal">
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-scope">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.scope.title">支持范围</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.scope.desc">我们提供全方位官方支持，涵盖数字宠物、AI 健康管理、智能硬件及宠物数据平台的使用、故障排查与咨询服务。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.scope.item1">数字宠物 3D 分身</li>
+<li data-i18n="support.scope.item2">AI 健康管理功能</li>
+<li data-i18n="support.scope.item3">智能硬件（传感器、设备）</li>
+<li data-i18n="support.scope.item4">宠物数据平台</li>
+<li data-i18n="support.scope.item5">宠物商城产品</li>
+<li data-i18n="support.scope.item6">支持类型：功能使用、故障排查、数据问题、账户问题</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-faq">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.faq.title">常见问题（FAQ）</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.faq.desc">查看最常见的问题和解决方案，快速解决使用中遇到的困难。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.faq.item1">如何创建数字宠物？</li>
+<li data-i18n="support.faq.item2">AI 健康分析结果如何查看？</li>
+<li data-i18n="support.faq.item3">智能硬件连接不上怎么办？</li>
+<li data-i18n="support.faq.item4">宠物数据如何上传或同步？</li>
+<li data-i18n="support.faq.item5">如何修改宠物信息或账号设置？</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-guide">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.guide.title">操作指南 / 教程</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.guide.desc">提供详细操作教程和指南，让您轻松上手数字宠物和智能设备。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.guide.item1">使用说明文档（PDF / 网页版）</li>
+<li data-i18n="support.guide.item2">视频操作教程</li>
+<li data-i18n="support.guide.item3">功能示意图或步骤截图</li>
+<li data-i18n="support.guide.item4">新手入门与高级功能指南</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-ticket">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.ticket.title">在线支持 / 工单系统</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.ticket.desc">遇到问题？提交工单或在线咨询，我们的官方技术团队将快速为您解决。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.ticket.item1">在线客服入口（聊天或消息系统）</li>
+<li data-i18n="support.ticket.item2">工单提交系统</li>
+<li data-i18n="support.ticket.item3">用户问题反馈入口</li>
+<li data-i18n="support.ticket.item4">处理时效说明（如 24 小时内响应）</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-upgrade">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.upgrade.title">升级与维护公告</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.upgrade.desc">官方定期发布产品升级和维护公告，确保您的数字宠物和智能设备稳定可靠。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.upgrade.item1">产品更新或功能升级说明</li>
+<li data-i18n="support.upgrade.item2">系统维护或停机公告</li>
+<li data-i18n="support.upgrade.item3">新版本上线提醒</li>
+<li data-i18n="support.upgrade.item4">注意事项或操作指南</li>
+</ul>
+</div>
+<div class="bg-white border border-gray-200 rounded-3xl p-6 hidden-section" id="support-security">
+<h3 class="text-xl font-semibold text-gray-900" data-i18n="support.security.title">数据安全与隐私</h3>
+<p class="text-sm text-gray-600 mt-3" data-i18n="support.security.desc">我们全程保障用户和宠物数据安全，提供数据备份、恢复及隐私保护咨询。</p>
+<ul class="text-sm text-gray-600 mt-4 space-y-2">
+<li data-i18n="support.security.item1">数据加密存储说明</li>
+<li data-i18n="support.security.item2">用户数据控制权</li>
+<li data-i18n="support.security.item3">数据备份与恢复方法</li>
+<li data-i18n="support.security.item4">隐私保护政策链接</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- 技术与能力 -->
+<section class="py-32 px-4 bg-white nav-section" id="tech">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="tech.title">技术与能力</h2>
+<p class="text-lg text-gray-600" data-i18n="tech.subtitle">结合多模态 AI、3D 渲染与智能硬件，为宠物建立可信的数字分身。</p>
+</div>
+</section>
+<!-- 数据与信任 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="trust">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="trust.title">数据与信任</h2>
+<p class="text-lg text-gray-600" data-i18n="trust.subtitle">透明、安全、可控的数据体系，让用户放心把每一次记录交给 PalEcho。</p>
+</div>
+</section>
+<!-- 动物关怀 -->
+<section class="py-32 px-4 bg-white nav-section" id="care">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="care.title">动物关怀</h2>
+<p class="text-lg text-gray-600" data-i18n-html="care.desc">与宠物救助机构合作，支持流浪动物的领养与照护。<br/>提供科学营养和健康管理，守护每一只宠物的生命与活力。</p>
+</div>
+</section>
+<!-- 可持续发展 -->
+<section class="py-32 px-4 bg-[#f5f5f7] nav-section" id="sustain">
+<div class="max-w-[1024px] mx-auto text-center space-y-4 reveal">
+<h2 class="text-3xl md:text-5xl font-bold text-gray-900" data-i18n="sustain.title">可持续发展</h2>
+<p class="text-lg text-gray-600" data-i18n-html="sustain.desc">采用环保、可降解原材料，减少对环境的影响。<br/>工厂生产过程节能减排，降低碳足迹。<br/>推动产品包装回收与循环使用，倡导绿色生活。<br/>支持野生动物保护项目，维护生态平衡。<br/>持续优化产品设计与研发，实现健康与环保双赢。</p>
+</div>
+</section>
+<!-- Mira 大模型介绍 -->
+<section class="py-24 md:py-28 px-5 bg-white" id="meta-claw">
+<div class="max-w-[1120px] mx-auto">
+<div class="max-w-4xl reveal">
+<h2 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight" data-i18n="meta.title">
+                        Mira大模型
+                    </h2>
+<p class="mt-7 text-xl md:text-2xl font-semibold leading-relaxed text-gray-900" data-i18n="meta.lead">
+                        Mira 是 PalEcho 全新打造的新一代 AI 模型，专为理解生命而生。
+                    </p>
+<p class="mt-4 text-base md:text-lg leading-8 text-gray-600 max-w-3xl" data-i18n="meta.desc">
+                        它不只是回答问题，而是通过智能推理、数字生命建模与生命知识体系，持续理解每一只宠物的健康、行为与成长，让科技真正成为生命的长期守护者。
+                    </p>
+</div>
+<div class="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+<article class="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-b from-blue-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 80ms;">
+<div class="w-10 h-1 rounded-full bg-blue-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.core.title">Mira Core</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.core.tagline">让智能真正理解生命。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.core.desc">Mira Core 负责推理、分析与判断，融合多模态信息，理解复杂的健康与行为场景，为每一次交互提供更自然、更可靠的回应。</p>
+</article>
+<article class="relative overflow-hidden rounded-3xl border border-violet-100 bg-gradient-to-b from-violet-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 140ms;">
+<div class="w-10 h-1 rounded-full bg-violet-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.life.title">Mira Life</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.life.tagline">让每一个生命，都拥有数字表达。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.life.desc">Mira Life 为每一只宠物构建持续成长的数字生命模型，记录外观、行为、健康与成长变化，让陪伴不只是被记住，也能够被理解。</p>
+</article>
+<article class="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-b from-emerald-50/80 to-white p-7 md:p-8 min-h-[320px] reveal" style="transition-delay: 200ms;">
+<div class="w-10 h-1 rounded-full bg-emerald-500 mb-8"></div>
+<h3 class="text-2xl font-bold tracking-tight text-gray-900" data-i18n="meta.atlas.title">Mira Atlas</h3>
+<p class="mt-6 text-lg font-semibold leading-7 text-gray-900" data-i18n="meta.atlas.tagline">让知识成为长期守护的基础。</p>
+<p class="mt-4 text-[15px] leading-7 text-gray-600" data-i18n="meta.atlas.desc">Mira Atlas 汇聚宠物医学、生命科学与长期健康数据，持续沉淀专业知识与个体记忆，为 Mira 提供可靠、持续进化的认知基础。</p>
+</article>
+</div>
+</div>
+</section>
+<!-- Life Data -->
+<section class="py-24 md:py-28 px-5 bg-[#f5f5f7]" id="data-chain">
+<div class="max-w-[1280px] mx-auto">
+<div class="max-w-[1120px] mx-auto reveal">
+<h2 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight" data-i18n="chain.title">Life Data</h2>
+<p class="mt-7 text-xl md:text-2xl font-semibold leading-relaxed text-gray-900" data-i18n="chain.tagline">生命，会留下数据。数据，会理解生命。</p>
+<div class="mt-5 max-w-none space-y-3 text-base md:text-lg leading-8 text-gray-600">
+<p data-i18n="chain.intro1">每一次心跳、每一次活动、每一次成长，都会留下属于生命的独特轨迹。</p>
+<p class="lg:whitespace-nowrap" data-i18n="chain.intro2">PalEcho 持续构建真实、长期、高质量的生命数据体系，让 AI 从理解一只宠物，到理解更多生命。</p>
+<p data-i18n="chain.intro3">这些数据不仅构成每一只宠物的个体健康基线，也将在用户授权、匿名化与安全保护的前提下，持续推动 AI 能力演进、生命科学研究，以及未来人与宠物更加自然的交流。</p>
+</div>
+</div>
+<div class="mt-14 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal">
+<div class="text-sm font-semibold tracking-wide text-blue-600" data-i18n="chain.baseline.title">Personal Baseline</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.baseline.subtitle">个体健康基线</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.baseline.desc">每一只宠物都有独特的健康特征与生活习惯。持续积累的生命数据，将帮助 Mira 建立专属健康基线，实现更加精准、个性化的健康理解。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 70ms;">
+<div class="text-sm font-semibold tracking-wide text-violet-600" data-i18n="chain.evolution.title">AI Evolution</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.evolution.subtitle">驱动 AI 持续进化</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.evolution.desc">高质量、长期积累的生命数据，将不断提升 Mira 对健康、行为与情绪的理解能力，让 AI 随着每一次陪伴持续学习、持续成长。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 120ms;">
+<div class="text-sm font-semibold tracking-wide text-emerald-600" data-i18n="chain.research.title">Scientific Research</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.research.subtitle">推动生命科学发展</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.research.desc">在用户授权、匿名化与安全处理的前提下，生命数据将持续推动疾病研究、健康预测及生命科学的发展，让每一份数据创造更广泛的社会价值。</p>
+</article>
+<article class="rounded-3xl bg-white border border-gray-200/80 p-6 md:p-7 min-h-[360px] reveal" style="transition-delay: 170ms;">
+<div class="text-sm font-semibold tracking-wide text-amber-600" data-i18n="chain.privacy.title">Privacy First</div>
+<h3 class="mt-5 text-2xl font-bold text-gray-900" data-i18n="chain.privacy.subtitle">隐私始终优先</h3>
+<p class="mt-5 text-[15px] md:text-base leading-7 text-gray-600" data-i18n="chain.privacy.desc">每一份生命数据都将在用户授权下进行匿名化、脱敏与安全处理，仅用于提升 AI 能力、生命科学研究及用户授权的服务。</p>
+<p class="mt-5 text-base font-semibold leading-7 text-gray-900" data-i18n="chain.privacy.trust">我们珍视每一份生命数据，更珍视每一位用户的信任。</p>
+</article>
+</div>
+<div class="mt-6 md:mt-8 rounded-3xl bg-gray-950 px-7 py-10 md:px-12 md:py-12 reveal">
+<div class="text-xs font-semibold uppercase tracking-[0.2em] text-blue-300" data-i18n="chain.principle.label">Brand Principle</div>
+<p class="mt-5 max-w-none text-xl md:text-2xl lg:text-[26px] font-semibold leading-relaxed tracking-tight text-white lg:whitespace-nowrap" data-i18n="chain.principle.title">真正的生命智能，不仅来自先进的模型，更来自真实、持续且值得信赖的生命数据。</p>
+</div>
+</div>
+</section>
+</main>
+<!-- 简单页脚 -->
+<footer class="bg-white border-t border-gray-200 py-12">
+<div class="max-w-[1024px] mx-auto px-6 text-center">
+<p class="text-gray-400 text-sm" data-i18n="footer.copy">© 2026 PalEcho. All rights reserved.</p>
+<p class="text-gray-300 text-xs mt-2" data-i18n="footer.tagline">让每一次心跳都成为对话</p>
+</div>
+</footer>
+<section aria-hidden="true" aria-label="LifeBase 长期生命数据能力" aria-modal="true" id="lifebase-experience" inert role="dialog" tabindex="-1">
+<div class="lifebase-shell" id="lifebase-shell">
+<div class="lifebase-topbar">
+<span class="lifebase-wordmark">LifeBase</span>
+<button aria-label="返回 PalEcho 首页" class="lifebase-close" id="lifebase-close" type="button"></button>
+</div>
+<div aria-live="polite" class="lifebase-intro" id="lifebase-intro">
+<canvas aria-hidden="true" id="lifebase-particles"></canvas>
+<h1 class="lifebase-visually-hidden">我们为什么如此在意数据</h1>
+<p aria-hidden="true" class="lifebase-intro-fallback">我们为什么如此在意数据</p>
+</div>
+<div class="lifebase-main" id="lifebase-main">
+<div class="lifebase-layout">
+<nav aria-label="LifeBase 内容方向" aria-orientation="vertical" class="lifebase-tabs" data-active="0" role="tablist">
+<span aria-hidden="true" class="lifebase-liquid" id="lifebase-liquid"></span>
+<button aria-controls="lifebase-panel-pet" aria-selected="true" class="lifebase-tab is-active" data-lifebase-tab="pet" id="lifebase-tab-pet" role="tab" tabindex="0" type="button">For Your Pet</button>
+<button aria-controls="lifebase-panel-mira" aria-selected="false" class="lifebase-tab" data-lifebase-tab="mira" id="lifebase-tab-mira" role="tab" tabindex="-1" type="button">For Mira</button>
+</nav>
+<div class="lifebase-content">
+<div class="lifebase-panels">
+<article aria-hidden="false" aria-labelledby="lifebase-tab-pet" class="lifebase-panel is-active" id="lifebase-panel-pet" role="tabpanel" tabindex="0">
+<header class="lifebase-panel-head">
+<p class="lifebase-eyebrow">For Your Pet</p>
+<h2>每一次记录都在守护未来</h2>
+</header>
+<div class="lifebase-lead">
+<p>LifeBase 持续记录宠物的健康、行为与成长变化，为每一只宠物建立属于自己的长期生命档案。一次记录能够帮助了解今天，而长期记录能够帮助看见那些缓慢发生的变化。</p>
+<p>当睡眠、活动、行为和健康状态被放到更长的时间中观察，零散的信息会逐渐形成连续的生命轨迹。它能够帮助用户回顾过去，了解现在，也为未来的健康管理保留更完整的参考。</p>
+<p>真正重要的不是保存更多数字，而是在需要的时候，能够看见变化、理解变化，并更早关注那些值得留意的信号。</p>
+</div>
+<section aria-labelledby="lifebase-pet-values" class="lifebase-values">
+<p class="lifebase-section-label" id="lifebase-pet-values">核心价值</p>
+<div class="lifebase-values-list">
+<div class="lifebase-value">
+<h3>长期健康档案</h3>
+<p>从成长到老年，健康、行为和生活状态的变化都会逐渐沉淀，形成一份连续、可回顾的生命档案。</p>
+</div>
+<div class="lifebase-value">
+<h3>发现变化趋势</h3>
+<p>真正值得关注的，不只是今天的数据，而是它和平时相比发生了什么。长期记录能够让缓慢发生的变化更容易被看见。</p>
+</div>
+<div class="lifebase-value">
+<h3>建立个体基线</h3>
+<p>每一只宠物都有不同的生活习惯、健康状态和成长节奏。长期记录能够逐渐形成属于它自己的生命基线，而不是只与统一平均值比较。</p>
+</div>
+<div class="lifebase-value">
+<h3>健康管理参考</h3>
+<p>连续的生命记录能够为日常健康管理、健康咨询和长期观察提供更完整的背景，但不能替代专业兽医诊断。</p>
+</div>
+</div>
+</section>
+<p class="lifebase-signoff">LifeBase，让每一次记录成为更长久的守护。</p>
+</article>
+<article aria-hidden="true" aria-labelledby="lifebase-tab-mira" class="lifebase-panel" id="lifebase-panel-mira" role="tabpanel" tabindex="-1">
+<header class="lifebase-panel-head">
+<p class="lifebase-eyebrow">For Mira</p>
+<h2>每一次记录都让理解更进一步</h2>
+</header>
+<div class="lifebase-lead">
+<p>LifeBase 持续积累宠物的健康、行为、声音与互动记录，为 Mira 提供长期、连续的生命背景。相比一次数据，长期记录能够帮助 Mira 更全面地理解每一只宠物，让分析不再只建立在某一个瞬间，而能够结合过去的变化、生活习惯与个体差异。</p>
+<p>随着记录不断积累，Mira 可以持续完善对宠物健康、行为和生活状态的理解，让模型的成长建立在更加丰富、真实和连续的生命信息之上。</p>
+</div>
+<section aria-labelledby="lifebase-mira-values" class="lifebase-values">
+<p class="lifebase-section-label" id="lifebase-mira-values">核心价值</p>
+<div class="lifebase-values-list">
+<div class="lifebase-value">
+<h3>持续进化</h3>
+<p>长期积累的数据能够帮助 Mira 持续优化对宠物健康、行为、生活习惯和互动方式的理解，让模型不断成长，而不是只依赖一次对话或一次数据。</p>
+</div>
+<div class="lifebase-value">
+<h3>理解个体差异</h3>
+<p>每一只宠物都有不同的性格、行为方式、生活环境和健康基线。长期记录能够帮助 Mira 建立更加个体化的理解背景，减少只依赖统一标准带来的局限。</p>
+</div>
+<div class="lifebase-value">
+<h3>宠物健康研究价值</h3>
+<p>在用户明确授权并完成必要隐私保护的前提下，经过合规处理的长期数据，有机会为宠物医学、行为研究与健康管理提供更加连续、可靠的数据参考。</p>
+<p>这些数据可以帮助研究人员更深入地理解不同品种、年龄、生活方式和生命阶段中的长期变化规律，但不要将其描述为已经能够直接产生医学结论。</p>
+</div>
+<div class="lifebase-value">
+<h3>推动 Mira 理解宠物</h3>
+<p>健康、行为、声音、环境和长期互动记录相互结合后，能够帮助 Mira 更全面地理解宠物正在经历什么，以及不同表达背后可能对应的状态与需求。</p>
+</div>
+<div class="lifebase-value lifebase-value-wide">
+<h3>探索人宠沟通</h3>
+<p>人与宠物之间长期产生的对话、声音、行为反馈和互动记录，将成为 Mira 持续进化的重要基础。</p>
+<p>长期方向是让 Mira 更深入地理解宠物的状态、行为和表达，并探索人与宠物之间更加自然、更加接近无障碍交流的沟通方式。</p>
+</div>
+</div>
+</section>
+<p class="lifebase-signoff">LifeBase，让每一次记录成为 Mira 理解生命的下一步。</p>
+</article>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-hidden="true" aria-label="Mira 品牌体验" aria-modal="true" id="mira-experience" role="dialog">
+<div class="mira-shell">
+<div class="mira-scroll" id="mira-scroll">
+<div class="mira-story">
+<div class="mira-stage" id="mira-stage">
+<canvas aria-hidden="true" id="mira-particles"></canvas>
+<div class="mira-topbar">
+<span class="mira-wordmark">Mira</span>
+<button aria-label="返回 PalEcho 首页" class="mira-close" id="mira-close" type="button"></button>
+</div>
+<section aria-hidden="false" class="mira-chapter is-visible" id="mira-chapter">
+<div class="mira-scene mira-hero-scene" id="mira-hero-scene">
+<h1 class="mira-hero-title">Mira</h1>
+<p class="mira-hero-subtitle">An AI Companion for Every Pet.</p>
+<p class="mira-hero-statement">Understand Every Life.</p>
+<p class="mira-hero-cn">让数据，看见生命</p>
+<p class="mira-hero-copy">每一次心跳、每一次呼吸、每一次变化，都在讲述生命。<br/>Mira 将数据转化为理解，让守护发生得更早。</p>
+</div>
+<div aria-hidden="true" class="mira-scene mira-reason-scene" id="mira-reason-scene">
+<div aria-label="Mira 的感知、理解、推理与守护过程" class="mira-reason-orbit">
+<h2 class="mira-section-title">Inside Mira</h2>
+<div aria-hidden="true" class="mira-word-system">
+<div class="mira-word-orbit" data-mira-word-orbit="core"></div>
+<div class="mira-word-orbit" data-mira-word-orbit="capability"></div>
+<div class="mira-word-orbit" data-mira-word-orbit="life"></div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="mira-protect-transition" id="mira-protect-transition">Protect</div>
+<div aria-hidden="true" class="mira-scene mira-ask-scene" id="mira-ask-scene">
+<div class="mira-ask-wrap">
+<h2 class="mira-ask-title">Ask Mira</h2>
+<p class="mira-ask-subtitle">Start a conversation with Mira.</p>
+<form class="mira-input-wrap" id="mira-form">
+<input aria-label="向 Mira 提问" autocomplete="off" id="mira-input" placeholder="Ask anything about your pet..." type="text"/>
+<button aria-label="发送问题" class="mira-submit" type="submit"></button>
+</form>
+<div aria-label="上传资料" class="mira-upload-actions">
+<input accept=".pdf,.jpg,.jpeg,.png,.webp" class="mira-upload-input" data-accept=".pdf,.jpg,.jpeg,.png,.webp" id="mira-report-upload" type="file"/>
+<input accept="image/*" class="mira-upload-input" data-accept="image/*" id="mira-photo-upload" type="file"/>
+<input class="mira-upload-input" id="mira-file-upload" type="file"/>
+<button class="mira-upload-button" data-upload-target="mira-report-upload" data-upload-picker="media" type="button"><span aria-hidden="true" class="mira-upload-icon mira-upload-icon-report"></span>上传体检报告</button>
+<button class="mira-upload-button" data-upload-target="mira-photo-upload" data-upload-picker="media" type="button"><span aria-hidden="true" class="mira-upload-icon mira-upload-icon-photo"></span>上传照片</button>
+<button class="mira-upload-button" data-upload-target="mira-file-upload" type="button"><span aria-hidden="true" class="mira-upload-icon mira-upload-icon-file"></span>上传文件</button>
+</div>
+<div aria-label="选择上传方式" class="mira-media-upload-menu" id="mira-media-upload-menu">
+<button data-upload-mode="library" type="button">从相册选择</button>
+<button data-upload-mode="camera" type="button">拍照上传</button>
+</div>
+<p aria-live="polite" class="mira-upload-status" id="mira-upload-status"></p>
+<div class="mira-prompts">
+<button class="mira-prompt" data-question="今天为什么一直睡觉？" type="button">今天为什么一直睡觉？</button>
+<button class="mira-prompt" data-question="最近为什么食欲下降？" type="button">最近为什么食欲下降？</button>
+<button class="mira-prompt" data-question="这份体检报告意味着什么？" type="button">这份体检报告意味着什么？</button>
+<button class="mira-prompt" data-question="最近的健康状况怎么样？" type="button">最近的健康状况怎么样？</button>
+</div>
+</div>
+</div>
+</section>
+<section aria-label="Mira 对话" class="mira-chat">
+<div class="mira-chat-head"><strong>Ask Mira</strong><span>Understanding life</span></div>
+<div aria-live="polite" class="mira-chat-log" id="mira-chat-log"></div>
+<form class="mira-input-wrap mira-chat-compose" id="mira-chat-form">
+<input aria-label="继续向 Mira 提问" autocomplete="off" id="mira-chat-input" placeholder="Ask anything about your pet..." type="text"/>
+<button aria-label="发送问题" class="mira-submit" type="submit"></button>
+</form>
+</section>
+<div aria-hidden="true" class="mira-ending">
+<p>Every Life Has A Story. &nbsp; Every Story Deserves To Be Understood.</p>
+<span>每一个生命，都值得被理解。</span>
+</div>
+<div aria-hidden="true" class="mira-scroll-cue" id="mira-scroll-cue">Scroll to understand</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-hidden="true" aria-label="Echo 品牌体验" aria-modal="true" id="echo-experience" role="dialog">
+<div class="echo-shell">
+<div class="echo-scroll" id="echo-scroll">
+<div class="echo-story">
+<div class="echo-stage" id="echo-stage">
+<canvas aria-hidden="true" id="echo-particles"></canvas>
+<div class="echo-topbar">
+<span class="echo-wordmark">Echo</span>
+<button aria-label="返回 PalEcho 首页" class="echo-close" id="echo-close" type="button"></button>
+</div>
+<section aria-hidden="false" class="echo-poster echo-intro is-visible" id="echo-intro">
+<h1 class="echo-particle-label">距离，不是不爱的理由。</h1>
+<div aria-hidden="true" class="echo-bubbles" id="echo-bubbles"></div>
+</section>
+<section aria-hidden="true" class="echo-poster echo-create" id="echo-create">
+<div class="echo-create-inner">
+<div class="echo-create-head">
+<h2 class="echo-create-title">Create Your Echo.</h2>
+<p class="echo-create-subtitle">为你的伙伴建立数字生命。</p>
+</div>
+<div class="echo-upload-card">
+<span class="echo-step-index" id="echo-step-index">01 / 03</span>
+<h3 class="echo-step-title" id="echo-step-title">正面</h3>
+<p class="echo-step-copy" id="echo-step-copy">记录它最熟悉的模样。</p>
+<button aria-haspopup="dialog" class="echo-upload-zone" id="echo-upload-zone" type="button">
+<span aria-hidden="true" class="echo-upload-plus"></span>
+<span>轻触上传照片</span>
+</button>
+<input accept="image/*" hidden id="echo-upload-input" type="file"/>
+<p aria-live="polite" class="echo-upload-complete" id="echo-upload-complete"></p>
+</div>
+</div>
+</section>
+<section aria-hidden="true" class="echo-analysis" id="echo-analysis">
+<div class="echo-process-copy">
+<div aria-hidden="true" class="echo-process-particles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<p>正在分析外观特征……</p>
+<p>正在建立数字生命……</p>
+</div>
+</section>
+<section aria-hidden="true" class="echo-ready" id="echo-ready">
+<div class="echo-ready-content">
+<h2>Your Echo is Ready.</h2>
+<p>你的 Echo 已准备就绪。</p>
+<button class="echo-wake" id="echo-wake" type="button">唤醒伙伴</button>
+</div>
+</section>
+<section aria-hidden="true" class="echo-connection" id="echo-connection">
+<div class="echo-connection-lines">
+<p class="echo-connection-line">正在同步它今天的状态……</p>
+<p class="echo-connection-line">正在建立连接……</p>
+</div>
+</section>
+<section aria-hidden="true" class="echo-home" id="echo-home">
+<div class="echo-home-inner">
+<div class="echo-home-pet">
+<div class="echo-puppy-wrap" aria-label="已唤醒的 Echo 数字伙伴">
+<img alt="已唤醒的幼年萨摩耶 Echo 数字伙伴" class="echo-puppy" src="/echo-samoyed.png"/>
+<i aria-hidden="true" class="echo-eye echo-eye-left"></i>
+<i aria-hidden="true" class="echo-eye echo-eye-right"></i>
+</div>
+</div>
+<div class="echo-home-copy">
+<p class="echo-home-brand">Echo</p>
+<h2 class="echo-welcome">欢迎回来。<span>今天，它很好。</span></h2>
+<div class="echo-home-sections">
+<div class="echo-home-row"><strong>健康状态</strong><span>一切正常</span></div>
+<div class="echo-home-row"><strong>成长记录</strong><span>持续成长中</span></div>
+<div class="echo-home-row"><strong>今日变化</strong><span>活动状态良好</span></div>
+<div class="echo-home-row"><strong>AI 分析</strong><span>情绪平稳</span></div>
+</div>
+</div>
+</div>
+</section>
+<div aria-hidden="true" class="echo-scroll-cue" id="echo-scroll-cue">Scroll to create</div>
+<div class="echo-sheet-backdrop" id="echo-sheet-backdrop"></div>
+<div aria-hidden="true" aria-label="选择上传方式" class="echo-sheet" id="echo-sheet" role="dialog">
+<div class="echo-sheet-group">
+<button id="echo-sheet-camera" type="button">拍一张照片</button>
+<button id="echo-sheet-library" type="button">从相册选择</button>
+</div>
+<button class="echo-sheet-cancel" id="echo-sheet-cancel" type="button">取消</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-hidden="true" aria-label="Pulse 健康守护品牌体验" aria-modal="true" id="pulse-experience" role="dialog" tabindex="-1">
+  <canvas aria-hidden="true" id="pulse-particles"></canvas><div aria-hidden="true" class="pulse-ambient"></div>
+  <div class="pulse-shell"><div class="pulse-scroll" id="pulse-scroll">
+    <div class="pulse-topbar"><span class="pulse-wordmark">Pulse</span><button aria-label="返回 PalEcho 首页" class="pulse-close" id="pulse-close" type="button"></button></div>
+    <section aria-hidden="false" class="pulse-opening" id="pulse-opening"><div class="pulse-opening-glow"></div><p>让健康，一目了然</p></section>
+    <main class="pulse-content" id="pulse-content">
+      <section class="pulse-score-section pulse-reveal is-visible" data-pulse-reveal><p class="pulse-kicker">PULSE · DAILY LIFE REPORT</p><div class="pulse-score-stage" id="pulse-score-stage"><div aria-hidden="true" class="pulse-life-wave"></div><strong aria-label="健康评分 98" class="pulse-score" id="pulse-score">0</strong><div class="pulse-score-copy"><strong>优秀</strong><span>Health Score</span></div></div><div aria-live="polite" class="pulse-live-status" id="pulse-live-status"><span aria-hidden="true">●</span><p>今天状态稳定</p></div><p class="pulse-score-note">未发现异常变化</p></section>
+      <section aria-label="六大健康指标" class="pulse-metrics-section pulse-reveal" data-pulse-reveal><div class="pulse-section-head"><p>今日信号</p><h2>生命在安静地诉说</h2></div><div class="pulse-metrics" id="pulse-metrics">
+        <article class="pulse-metric" data-metric="heart" style="--metric-color:#d26a69"><div class="pulse-metric-top"><span class="pulse-metric-icon">♥</span><span>心率</span></div><div class="pulse-metric-reading"><strong>78</strong><span>bpm</span></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="heart"></canvas><p>Mira 观察到心率保持稳定，未发现异常波动</p></div></article>
+        <article class="pulse-metric" data-metric="breath" style="--metric-color:#80a5ad"><div class="pulse-metric-top"><span class="pulse-metric-icon">◌</span><span>呼吸</span></div><div class="pulse-metric-reading"><strong>22</strong><span>次/分</span></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="breath"></canvas><p>呼吸节律平缓，处于舒适状态</p></div></article>
+        <article class="pulse-metric" data-metric="temp" style="--metric-color:#c99972"><div class="pulse-metric-top"><span class="pulse-metric-icon">∿</span><span>体温</span></div><div class="pulse-metric-reading"><strong>38.3</strong><span>°C</span></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="temp"></canvas><p>体温在个人健康基线内，自然稳定</p></div></article>
+        <article class="pulse-metric" data-metric="sleep" style="--metric-color:#9696b4"><div class="pulse-metric-top"><span class="pulse-metric-icon">☾</span><span>睡眠</span></div><div class="pulse-metric-reading"><strong>8.3</strong><span>小时</span></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="sleep"></canvas><p>深度睡眠充足，今天的恢复状态良好</p></div></article>
+        <article class="pulse-metric" data-metric="activity" style="--metric-color:#8ba58c"><div class="pulse-metric-top"><span class="pulse-metric-icon">⌁</span><span>活动</span></div><div class="pulse-metric-reading"><strong>正常</strong></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="activity"></canvas><p>活动量略高于平均水平，节律自然</p></div></article>
+        <article class="pulse-metric" data-metric="location" style="--metric-color:#8da5a2"><div class="pulse-metric-top"><span class="pulse-metric-icon">⌖</span><span>定位</span></div><div class="pulse-metric-reading"><strong>家中</strong></div><div class="pulse-metric-detail"><canvas class="pulse-mini-chart" data-chart="location"></canvas><p>已安全回到熟悉的环境，位置状态正常</p></div></article>
+      </div></section>
+      <section aria-label="今日生命时间轴" class="pulse-timeline-section pulse-reveal" data-pulse-reveal><div class="pulse-section-head"><p>今日生命时间轴</p></div><div class="pulse-timeline" id="pulse-timeline"><div class="pulse-timeline-line"></div><div aria-hidden="true" class="pulse-timeline-dot" id="pulse-timeline-dot"></div><button class="pulse-event" style="--event-position:14%" data-time="03:26" data-title="进入深度睡眠" data-copy="恢复状态优秀"><i>☾</i><span>深度睡眠</span></button><button class="pulse-event" style="--event-position:35%" data-time="08:14" data-title="心率恢复稳定" data-copy="平稳醒来，身体状态舒适"><i>♥</i><span>恢复稳定</span></button><button class="pulse-event" style="--event-position:57%" data-time="13:08" data-title="外出活动" data-copy="活动量自然上升"><i>⌁</i><span>外出活动</span></button><button class="pulse-event" style="--event-position:72%" data-time="16:42" data-title="靠近饮水区域" data-copy="已完成规律补水"><i>◌</i><span>饮水</span></button><button class="pulse-event" style="--event-position:90%" data-time="20:26" data-title="回到家中" data-copy="定位状态安全、稳定"><i>⌖</i><span>回到家中</span></button></div><div class="pulse-event-card" id="pulse-event-card" aria-live="polite"><time>03:26</time><strong>进入深度睡眠</strong><span>恢复状态优秀</span></div><div class="pulse-timeline-labels"><span>00:00</span><span>12:00</span><span>24:00</span></div></section>
+      <section aria-label="Mira 今日分析" class="pulse-analysis-section pulse-reveal" data-pulse-reveal><article class="pulse-analysis-card" id="pulse-analysis-card"><p>Mira Analysis</p><div aria-live="polite" class="pulse-analysis-copy" id="pulse-analysis-copy">今天整体状态优秀<br>生命体征稳定<br>没有发现异常变化</div><span>由 Mira 持续理解</span></article></section>
+      <section aria-label="过去30天健康趋势" class="pulse-trend-section pulse-reveal" data-pulse-reveal><div class="pulse-section-head"><p>过去 30 天健康趋势</p><h2>每一个平常的日子，都在成为理解的依据</h2></div><div class="pulse-trend-card" id="pulse-trend-card"><canvas aria-label="过去30天健康评分曲线" id="pulse-trend-chart" role="img"></canvas><div class="pulse-trend-tooltip" id="pulse-trend-tooltip"><time>7月30日</time><strong>健康评分 <b>98</b></strong><span>睡眠优秀 · 活动正常 · 心率稳定</span></div></div></section>
+      <footer class="pulse-lifebase pulse-reveal" data-pulse-reveal><p>LifeBase</p><div aria-label="健康基线 67%" class="pulse-life-ring"><div><strong>健康基线</strong><span>67%</span></div></div><span class="pulse-life-caption">Learning From Every Moment.</span></footer>
+    </main>
+  </div></div>
+</section>
+<!-- JavaScript 逻辑 -->
+    <script src="/hero-background.js?v=20260731-4"></script>
+    <script>
+        // Normalize legacy empty fragments saved in browser history (e.g. /#).
+        if (window.location.href.endsWith('#')) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+
+        const I18N = {
+            "zh-CN": {
+                "brand.tagline": "让每一次心跳都成为对话",
+                "nav.home": "主页",
+                "nav.products": "产品与服务",
+                "nav.digitalPet": "数字宠物",
+                "nav.aiHealth": "AI健康管理",
+                "nav.petData": "宠物数据平台",
+                "nav.hardware": "智能硬件",
+                "nav.petShop": "宠物商城",
+                "nav.communitySupport": "社区与支持",
+                "nav.support": "官方技术支持",
+                "nav.community": "用户社区互动",
+                "nav.about": "关于我们",
+                "nav.aboutUs": "我们是谁",
+                "nav.tech": "技术与能力",
+                "nav.trust": "数据与信任",
+                "nav.joinUs": "加入我们",
+                "nav.responsibility": "社会责任",
+                "nav.login": "登录",
+                "nav.cta": "立即创建宠物",
+                "hero.title": "一家让 AI 理解生命的科技公司",
+                "hero.subtitle": "PalEcho 正在构建数字生命生态，连接 AI、智能硬件与生命数据，让健康管理从被动响应，走向持续理解与主动守护。",
+                "hero.primary": "了解我们的理念",
+                "hero.secondary": "开始体验",
+                "hero.more": "了解更多",
+                "lang.label": "语言",
+                "digital.title": "现在，让宠物数字化",
+                "digital.subtitle": "将真实宠物转化为3D数字形象，实时同步健康与状态变化",
+                "digital.howto": "如何操作",
+                "digital.step1.label": "步骤 1",
+                "digital.step1.text": "上传宠物信息",
+                "digital.step2.label": "步骤 2",
+                "digital.step2.text": "生成3D数字宠物",
+                "digital.step3.label": "步骤 3",
+                "digital.step3.text": "连接设备，实时同步",
+                "digital.cta": "立即生成数字宠物",
+                "digital.ctaHint": "生成后即可在当前页面查看 3D 分身与健康状态。",
+                "digital.card1.label": "身体状况",
+                "digital.card1.status": "状态良好",
+                "digital.card1.meta": "心率 92 | 活动 68%",
+                "digital.card2.label": "虚拟互动",
+                "digital.card2.status": "陪伴中",
+                "digital.card2.meta": "今日互动 3 次",
+                "digital.scenes.title": "数字宠物使用场景",
+                "digital.scene1.title": "外出也能随时了解宠物状态",
+                "digital.scene1.desc": "实时查看宠物活动与健康数据，即使不在家也能安心",
+                "digital.scene2.title": "宠物健康，一目了然",
+                "digital.scene2.desc": "通过数据可视化，及时掌握饮食、运动与身体变化",
+                "digital.scene3.title": "异常变化，提前发现",
+                "digital.scene3.desc": "系统自动识别异常状态，帮助你更早发现潜在健康问题",
+                "digital.scene4.title": "记录宠物的每一个成长瞬间",
+                "digital.scene4.desc": "保存宠物的行为轨迹与变化，见证陪伴的每一刻",
+                "digital.scene5.title": "不在身边，也能陪伴",
+                "digital.scene5.desc": "通过数字宠物，随时查看状态，拉近与宠物的距离",
+                "ai.label": "AI健康管理",
+                "ai.chat1": "你好，我可以帮你分析宠物的健康状态。",
+                "ai.chat2": "请上传照片或描述症状。",
+                "ai.input.label": "健康问题描述",
+                "ai.input.placeholder": "例如：近两天食欲下降，精神不佳，偶尔打喷嚏。",
+                "ai.status": "点击深度分析后，将由 AI 返回健康建议。",
+                "ai.upload": "上传图片",
+                "ai.analyze": "深度分析",
+                "ai.result.title": "健康分析结果",
+                "ai.followup.label": "继续向 AI 询问",
+                "ai.followup.example": "可以给我定制宠物饮食建议吗？",
+                "ai.card1": "健康评估",
+                "ai.card2": "风险预警",
+                "ai.card3": "AI建议",
+                "ai.card4": "趋势分析",
+                "ai.feed": "AI定制宠粮",
+                "ai.badge": "健康场景",
+                "ai.title": "AI守护宠物健康",
+                "ai.subtitle": "基于数据分析与智能算法，为宠物提供实时健康评估与科学建议",
+                "ai.scene1": "宠物精神不好，不知道原因",
+                "ai.scene2": "饮食是否合理",
+                "ai.scene3": "是否需要看医生",
+                "ai.scene4": "日常健康管理",
+                "ai.trust.title": "让用户信任大模型的方式",
+                "ai.trust.item1": "基于数据模型分析",
+                "ai.trust.item2": "结合宠物健康知识库",
+                "ai.trust.item3": "持续优化算法"
+            },
+            "zh-TW": {
+                "brand.tagline": "讓每一次心跳都成為對話",
+                "nav.home": "首頁",
+                "nav.products": "產品與服務",
+                "nav.digitalPet": "數位寵物",
+                "nav.aiHealth": "AI 健康管理",
+                "nav.petData": "寵物數據平台",
+                "nav.hardware": "智慧硬體",
+                "nav.petShop": "寵物商城",
+                "nav.communitySupport": "社群與支援",
+                "nav.support": "官方技術支援",
+                "nav.community": "用戶社群互動",
+                "nav.about": "關於我們",
+                "nav.aboutUs": "我們是誰",
+                "nav.tech": "技術與能力",
+                "nav.trust": "數據與信任",
+                "nav.joinUs": "加入我們",
+                "nav.responsibility": "社會責任",
+                "nav.login": "登入",
+                "nav.cta": "立即建立寵物",
+                "hero.title": "一家讓 AI 理解生命的科技公司",
+                "hero.subtitle": "PalEcho 正在構建數位生命生態，連結 AI、智慧硬體與生命數據，讓健康管理從被動回應，走向持續理解與主動守護。",
+                "hero.primary": "了解我們的理念",
+                "hero.secondary": "開始體驗",
+                "hero.more": "了解更多",
+                "lang.label": "語言",
+                "digital.title": "現在，讓寵物數位化",
+                "digital.subtitle": "把真實寵物轉化為 3D 數位形象，健康與狀態即時同步",
+                "digital.howto": "如何操作",
+                "digital.step1.label": "步驟 1",
+                "digital.step1.text": "上傳寵物資訊",
+                "digital.step2.label": "步驟 2",
+                "digital.step2.text": "生成 3D 數位寵物",
+                "digital.step3.label": "步驟 3",
+                "digital.step3.text": "連接裝置，即時同步",
+                "digital.cta": "立即生成數位寵物",
+                "digital.ctaHint": "生成後即可在本頁查看 3D 分身與健康狀態。",
+                "digital.card1.label": "身體狀況",
+                "digital.card1.status": "狀態良好",
+                "digital.card1.meta": "心率 92 | 活動 68%",
+                "digital.card2.label": "虛擬互動",
+                "digital.card2.status": "陪伴中",
+                "digital.card2.meta": "今日互動 3 次",
+                "digital.scenes.title": "數位寵物使用情境",
+                "digital.scene1.title": "外出也能隨時掌握狀態",
+                "digital.scene1.desc": "即時查看活動與健康數據，不在家也安心",
+                "digital.scene2.title": "健康一目了然",
+                "digital.scene2.desc": "以數據可視化掌握飲食、運動與身體變化",
+                "digital.scene3.title": "異常變化，提前發現",
+                "digital.scene3.desc": "系統自動辨識異常，及早發現潛在問題",
+                "digital.scene4.title": "記錄每個成長瞬間",
+                "digital.scene4.desc": "保存行為軌跡與變化，見證陪伴的每一刻",
+                "digital.scene5.title": "不在身邊，也能陪伴",
+                "digital.scene5.desc": "透過數位寵物隨時查看狀態，拉近距離",
+                "ai.label": "AI 健康管理",
+                "ai.chat1": "你好，我可以幫你分析寵物的健康狀態。",
+                "ai.chat2": "請上傳照片或描述症狀。",
+                "ai.input.label": "健康問題描述",
+                "ai.input.placeholder": "例如：近兩天食慾下降、精神不佳，偶爾打噴嚏。",
+                "ai.status": "點擊深度分析後，AI 會回傳健康建議。",
+                "ai.upload": "上傳圖片",
+                "ai.analyze": "深度分析",
+                "ai.result.title": "健康分析結果",
+                "ai.followup.label": "繼續向 AI 詢問",
+                "ai.followup.example": "可以幫我訂製寵物飲食建議嗎？",
+                "ai.card1": "健康評估",
+                "ai.card2": "風險預警",
+                "ai.card3": "AI 建議",
+                "ai.card4": "趨勢分析",
+                "ai.feed": "AI 客製寵糧",
+                "ai.badge": "健康情境",
+                "ai.title": "AI 守護寵物健康",
+                "ai.subtitle": "以數據分析與智慧演算法，提供即時健康評估與科學建議",
+                "ai.scene1": "精神不佳，不知道原因",
+                "ai.scene2": "飲食是否合理",
+                "ai.scene3": "是否需要看醫生",
+                "ai.scene4": "日常健康管理",
+                "ai.trust.title": "讓使用者信任大模型的方式",
+                "ai.trust.item1": "基於數據模型分析",
+                "ai.trust.item2": "結合寵物健康知識庫",
+                "ai.trust.item3": "持續優化演算法"
+            },
+            "en": {
+                "brand.tagline": "Make every heartbeat a conversation",
+                "nav.home": "Home",
+                "nav.products": "Products & Services",
+                "nav.digitalPet": "Digital Pet",
+                "nav.aiHealth": "AI Health",
+                "nav.petData": "Pet Data Platform",
+                "nav.hardware": "Smart Hardware",
+                "nav.petShop": "Pet Store",
+                "nav.communitySupport": "Community & Support",
+                "nav.support": "Official Support",
+                "nav.community": "Community",
+                "nav.about": "About",
+                "nav.aboutUs": "Who We Are",
+                "nav.tech": "Technology",
+                "nav.trust": "Data & Trust",
+                "nav.joinUs": "Join Us",
+                "nav.responsibility": "Social Impact",
+                "nav.login": "Sign in",
+                "nav.cta": "Create Pet Now",
+                "hero.title": "A technology company helping AI understand life",
+                "hero.subtitle": "PalEcho is building a digital life ecosystem that connects AI, smart hardware, and life data—moving health management from reactive response to continuous understanding and proactive care.",
+                "hero.primary": "Our Philosophy",
+                "hero.secondary": "Get Started",
+                "hero.more": "Learn More",
+                "lang.label": "Language",
+                "digital.title": "Make pets digital, starting now",
+                "digital.subtitle": "Turn real pets into 3D digital avatars with live health and status sync.",
+                "digital.howto": "How it works",
+                "digital.step1.label": "Step 1",
+                "digital.step1.text": "Upload pet info",
+                "digital.step2.label": "Step 2",
+                "digital.step2.text": "Generate a 3D digital pet",
+                "digital.step3.label": "Step 3",
+                "digital.step3.text": "Connect devices and sync in real time",
+                "digital.cta": "Create a digital pet now",
+                "digital.ctaHint": "View the 3D avatar and health status on this page after creation.",
+                "digital.card1.label": "Physical status",
+                "digital.card1.status": "All good",
+                "digital.card1.meta": "HR 92 | Activity 68%",
+                "digital.card2.label": "Virtual interaction",
+                "digital.card2.status": "Companion mode",
+                "digital.card2.meta": "3 interactions today",
+                "digital.scenes.title": "Digital pet use cases",
+                "digital.scene1.title": "Check pet status anywhere",
+                "digital.scene1.desc": "See activity and health data in real time, even when you’re away.",
+                "digital.scene2.title": "Health at a glance",
+                "digital.scene2.desc": "Visualize data to track diet, exercise, and body changes.",
+                "digital.scene3.title": "Spot anomalies early",
+                "digital.scene3.desc": "Automatic detection helps identify potential issues sooner.",
+                "digital.scene4.title": "Capture every growth moment",
+                "digital.scene4.desc": "Save behavior trails and changes, and relive each moment.",
+                "digital.scene5.title": "Stay close from anywhere",
+                "digital.scene5.desc": "Check status anytime and feel closer through the digital pet.",
+                "ai.label": "AI Health Management",
+                "ai.chat1": "Hi, I can help analyze your pet’s health status.",
+                "ai.chat2": "Please upload a photo or describe the symptoms.",
+                "ai.input.label": "Health Issue Description",
+                "ai.input.placeholder": "Example: Appetite down for 2 days, low energy, occasional sneezing.",
+                "ai.status": "Click Deep Analysis and AI will return health insights.",
+                "ai.upload": "Upload Image",
+                "ai.analyze": "Deep Analysis",
+                "ai.result.title": "Health Analysis Result",
+                "ai.followup.label": "Ask AI a follow-up",
+                "ai.followup.example": "Can you tailor a diet plan for my pet?",
+                "ai.card1": "Health Assessment",
+                "ai.card2": "Risk Alerts",
+                "ai.card3": "AI Suggestions",
+                "ai.card4": "Trend Analysis",
+                "ai.feed": "AI Custom Pet Food",
+                "ai.badge": "Health Scenarios",
+                "ai.title": "AI Guarding Pet Health",
+                "ai.subtitle": "Real-time health assessments and scientific advice powered by data and intelligent algorithms.",
+                "ai.scene1": "Low energy, not sure why",
+                "ai.scene2": "Is the diet balanced?",
+                "ai.scene3": "Do we need a vet visit?",
+                "ai.scene4": "Everyday health management",
+                "ai.trust.title": "How we build trust in AI",
+                "ai.trust.item1": "Data-driven model analysis",
+                "ai.trust.item2": "Pet health knowledge base",
+                "ai.trust.item3": "Continuous algorithm improvement"
+            },
+            "ja": {
+                "brand.tagline": "心拍を、対話に",
+                "nav.home": "ホーム",
+                "nav.products": "製品・サービス",
+                "nav.digitalPet": "デジタルペット",
+                "nav.aiHealth": "AI 健康管理",
+                "nav.petData": "ペットデータ基盤",
+                "nav.hardware": "スマートハードウェア",
+                "nav.petShop": "ペットショップ",
+                "nav.communitySupport": "コミュニティ＆サポート",
+                "nav.support": "公式サポート",
+                "nav.community": "ユーザーコミュニティ",
+                "nav.about": "私たちについて",
+                "nav.aboutUs": "私たちは誰か",
+                "nav.tech": "技術と能力",
+                "nav.trust": "データと信頼",
+                "nav.joinUs": "採用情報",
+                "nav.responsibility": "社会的責任",
+                "nav.login": "ログイン",
+                "nav.cta": "今すぐペットを作成",
+                "hero.title": "AIが生命を理解するためのテクノロジー企業",
+                "hero.subtitle": "PalEcho は AI、スマートハードウェア、生命データをつなぐデジタル生命エコシステムを構築し、健康管理を受動的な対応から継続的な理解と先回りのケアへ進化させます。",
+                "hero.primary": "私たちの理念を知る",
+                "hero.secondary": "体験を始める",
+                "hero.more": "もっと見る",
+                "lang.label": "言語",
+                "digital.title": "今こそ、ペットをデジタル化",
+                "digital.subtitle": "実際のペットを 3D デジタルアバターに変換し、健康と状態をリアルタイム同期。",
+                "digital.howto": "手順",
+                "digital.step1.label": "ステップ 1",
+                "digital.step1.text": "ペット情報をアップロード",
+                "digital.step2.label": "ステップ 2",
+                "digital.step2.text": "3D デジタルペットを生成",
+                "digital.step3.label": "ステップ 3",
+                "digital.step3.text": "デバイス接続でリアルタイム同期",
+                "digital.cta": "今すぐデジタルペットを作成",
+                "digital.ctaHint": "生成後、このページで 3D 分身と健康状態を確認できます。",
+                "digital.card1.label": "身体の状態",
+                "digital.card1.status": "良好",
+                "digital.card1.meta": "心拍 92 | 活動 68%",
+                "digital.card2.label": "バーチャル交流",
+                "digital.card2.status": "同伴中",
+                "digital.card2.meta": "本日 3 回の交流",
+                "digital.scenes.title": "デジタルペット活用シーン",
+                "digital.scene1.title": "外出先でも状態を把握",
+                "digital.scene1.desc": "活動と健康データをリアルタイムで確認。",
+                "digital.scene2.title": "健康がひと目で分かる",
+                "digital.scene2.desc": "可視化データで食事・運動・変化を把握。",
+                "digital.scene3.title": "異常を早期検知",
+                "digital.scene3.desc": "自動検知で潜在的リスクを早めに察知。",
+                "digital.scene4.title": "成長の瞬間を記録",
+                "digital.scene4.desc": "行動と変化を保存し、毎日の記録に。",
+                "digital.scene5.title": "離れていても寄り添う",
+                "digital.scene5.desc": "デジタルペットで距離を縮めます。",
+                "ai.label": "AI 健康管理",
+                "ai.chat1": "こんにちは。ペットの健康状態を分析します。",
+                "ai.chat2": "写真のアップロード、または症状の説明をお願いします。",
+                "ai.input.label": "健康状態の説明",
+                "ai.input.placeholder": "例：食欲が2日ほど低下、元気がなく、時々くしゃみ。",
+                "ai.status": "「深度分析」を押すと AI が健康アドバイスを返します。",
+                "ai.upload": "画像をアップロード",
+                "ai.analyze": "深度分析",
+                "ai.result.title": "健康分析結果",
+                "ai.followup.label": "AI に追加で質問",
+                "ai.followup.example": "食事の提案をしてもらえますか？",
+                "ai.card1": "健康評価",
+                "ai.card2": "リスク警告",
+                "ai.card3": "AI 提案",
+                "ai.card4": "トレンド分析",
+                "ai.feed": "AI カスタムフード",
+                "ai.badge": "健康シーン",
+                "ai.title": "AI がペットの健康を守る",
+                "ai.subtitle": "データと智能アルゴリズムでリアルタイムの健康評価と提案を提供。",
+                "ai.scene1": "元気がない原因がわからない",
+                "ai.scene2": "食事は適切？",
+                "ai.scene3": "病院に行くべき？",
+                "ai.scene4": "日常の健康管理",
+                "ai.trust.title": "AI を信頼するために",
+                "ai.trust.item1": "データモデル分析",
+                "ai.trust.item2": "ペット健康ナレッジベース",
+                "ai.trust.item3": "継続的な改善"
+            },
+            "ko": {
+                "brand.tagline": "심장을, 대화로",
+                "nav.home": "홈",
+                "nav.products": "제품 및 서비스",
+                "nav.digitalPet": "디지털 반려동물",
+                "nav.aiHealth": "AI 건강관리",
+                "nav.petData": "반려동물 데이터 플랫폼",
+                "nav.hardware": "스마트 하드웨어",
+                "nav.petShop": "펫 스토어",
+                "nav.communitySupport": "커뮤니티 & 지원",
+                "nav.support": "공식 기술 지원",
+                "nav.community": "사용자 커뮤니티",
+                "nav.about": "소개",
+                "nav.aboutUs": "우리는 누구인가",
+                "nav.tech": "기술과 역량",
+                "nav.trust": "데이터와 신뢰",
+                "nav.joinUs": "채용",
+                "nav.responsibility": "사회적 책임",
+                "nav.login": "로그인",
+                "nav.cta": "지금 반려동물 생성",
+                "hero.title": "AI가 생명을 이해하도록 돕는 기술 기업",
+                "hero.subtitle": "PalEcho는 AI, 스마트 하드웨어, 생명 데이터를 연결하는 디지털 생명 생태계를 구축해 건강 관리를 사후 대응에서 지속적인 이해와 능동적인 보호로 전환합니다.",
+                "hero.primary": "우리의 철학 알아보기",
+                "hero.secondary": "체험 시작",
+                "hero.more": "더 알아보기",
+                "lang.label": "언어",
+                "digital.title": "지금, 반려동물을 디지털화",
+                "digital.subtitle": "실제 반려동물을 3D 디지털 아바타로 전환하고 건강과 상태를 실시간 동기화합니다.",
+                "digital.howto": "이용 방법",
+                "digital.step1.label": "단계 1",
+                "digital.step1.text": "반려동물 정보 업로드",
+                "digital.step2.label": "단계 2",
+                "digital.step2.text": "3D 디지털 반려동물 생성",
+                "digital.step3.label": "단계 3",
+                "digital.step3.text": "기기 연결 및 실시간 동기화",
+                "digital.cta": "지금 디지털 반려동물 생성",
+                "digital.ctaHint": "생성 후 이 페이지에서 3D 아바타와 건강 상태를 확인할 수 있습니다.",
+                "digital.card1.label": "신체 상태",
+                "digital.card1.status": "상태 양호",
+                "digital.card1.meta": "심박 92 | 활동 68%",
+                "digital.card2.label": "가상 상호작용",
+                "digital.card2.status": "함께함",
+                "digital.card2.meta": "오늘 3회 상호작용",
+                "digital.scenes.title": "디지털 반려동물 활용",
+                "digital.scene1.title": "외출 중에도 상태 확인",
+                "digital.scene1.desc": "활동과 건강 데이터를 실시간으로 확인합니다.",
+                "digital.scene2.title": "건강 상태 한눈에",
+                "digital.scene2.desc": "데이터 시각화로 식이·운동·변화를 파악.",
+                "digital.scene3.title": "이상 징후 조기 발견",
+                "digital.scene3.desc": "자동 감지로 잠재 문제를 빠르게 확인.",
+                "digital.scene4.title": "성장 순간 기록",
+                "digital.scene4.desc": "행동 궤적과 변화를 저장해 함께한 시간을 남깁니다.",
+                "digital.scene5.title": "떨어져 있어도 함께",
+                "digital.scene5.desc": "디지털 반려동물로 거리를 좁힙니다.",
+                "ai.label": "AI 건강관리",
+                "ai.chat1": "반려동물의 건강 상태를 분석해 드릴게요.",
+                "ai.chat2": "사진을 업로드하거나 증상을 설명해 주세요.",
+                "ai.input.label": "건강 문제 설명",
+                "ai.input.placeholder": "예: 이틀째 식욕 저하, 기운 없음, 가끔 재채기.",
+                "ai.status": "심층 분석을 누르면 AI가 건강 조언을 제공합니다.",
+                "ai.upload": "이미지 업로드",
+                "ai.analyze": "심층 분석",
+                "ai.result.title": "건강 분석 결과",
+                "ai.followup.label": "AI에 추가 질문",
+                "ai.followup.example": "식단을 맞춤으로 추천해 줄 수 있나요?",
+                "ai.card1": "건강 평가",
+                "ai.card2": "위험 경고",
+                "ai.card3": "AI 제안",
+                "ai.card4": "추세 분석",
+                "ai.feed": "AI 맞춤 사료",
+                "ai.badge": "건강 시나리오",
+                "ai.title": "AI가 지키는 반려동물 건강",
+                "ai.subtitle": "데이터 분석과 지능형 알고리즘으로 실시간 건강 평가와 과학적 제안을 제공합니다.",
+                "ai.scene1": "기운이 없는데 원인을 모를 때",
+                "ai.scene2": "식단이 적절한지",
+                "ai.scene3": "병원 방문이 필요할지",
+                "ai.scene4": "일상 건강 관리",
+                "ai.trust.title": "AI 신뢰를 만드는 방법",
+                "ai.trust.item1": "데이터 모델 분석 기반",
+                "ai.trust.item2": "반려동물 건강 지식베이스 결합",
+                "ai.trust.item3": "지속적 알고리즘 개선"
+            }
+        };
+
+        const I18N_EXT = {
+            "zh-CN": {
+                "data.title": "数据上链，安全可靠",
+                "data.subtitle": "宠物数据全程加密传输与存储，确保每一次记录都可信。",
+                "data.vault": "Encrypted Data Vault",
+                "data.overview": "宠物数据一览",
+                "data.card1.label": "基础信息",
+                "data.card1.text": "年龄 / 体重 / 疫苗",
+                "data.card2.label": "健康数据",
+                "data.card2.text": "心率 / 饮食 / 活动",
+                "data.card3.label": "医疗记录",
+                "data.card3.text": "报告 / 诊断",
+                "data.card4.label": "行为数据",
+                "data.card4.text": "作息 / 异常",
+                "data.decentral.title": "去中心化上传与回报",
+                "data.decentral.desc": "将宠物数据上传到去中心化数据中心，获得数据回报与更强的模型服务能力。",
+                "data.security.title": "数据安全与隐私",
+                "data.security.item1": "加密存储，确保数据不可篡改",
+                "data.security.item2": "用户数据控制权，授权可随时管理",
+                "data.security.item3": "去中心化存储，降低单点风险",
+                "data.security.item4": "加密货币、代币化等需法规合规后适时上线",
+                "hardware.title": "即将上线",
+                "hardware.subtitle": "我们同样期待产品与您见面",
+                "shop.title": "宠物商城",
+                "shop.tab1": "AI定制宠粮",
+                "shop.tab2": "健康宠物零食",
+                "shop.tab3": "甄好宠物用品",
+                "shop.tab4": "标准宠物系列",
+                "shop.soon": "即将上线",
+                "shop.soonDesc": "我们的产品，期待与您见面",
+                "support.title": "官方技术支持",
+                "support.tab1": "支持范围",
+                "support.tab2": "常见问题",
+                "support.tab3": "操作指南",
+                "support.tab4": "在线支持",
+                "support.tab5": "升级与维护公告",
+                "support.tab6": "数据安全",
+                "support.scope.title": "支持范围",
+                "support.scope.desc": "我们提供全方位官方支持，涵盖数字宠物、AI 健康管理、智能硬件及宠物数据平台的使用、故障排查与咨询服务。",
+                "support.scope.item1": "数字宠物 3D 分身",
+                "support.scope.item2": "AI 健康管理功能",
+                "support.scope.item3": "智能硬件（传感器、设备）",
+                "support.scope.item4": "宠物数据平台",
+                "support.scope.item5": "宠物商城产品",
+                "support.scope.item6": "支持类型：功能使用、故障排查、数据问题、账户问题",
+                "support.faq.title": "常见问题（FAQ）",
+                "support.faq.desc": "查看最常见的问题和解决方案，快速解决使用中遇到的困难。",
+                "support.faq.item1": "如何创建数字宠物？",
+                "support.faq.item2": "AI 健康分析结果如何查看？",
+                "support.faq.item3": "智能硬件连接不上怎么办？",
+                "support.faq.item4": "宠物数据如何上传或同步？",
+                "support.faq.item5": "如何修改宠物信息或账号设置？",
+                "support.guide.title": "操作指南 / 教程",
+                "support.guide.desc": "提供详细操作教程和指南，让您轻松上手数字宠物和智能设备。",
+                "support.guide.item1": "使用说明文档（PDF / 网页版）",
+                "support.guide.item2": "视频操作教程",
+                "support.guide.item3": "功能示意图或步骤截图",
+                "support.guide.item4": "新手入门与高级功能指南",
+                "support.ticket.title": "在线支持 / 工单系统",
+                "support.ticket.desc": "遇到问题？提交工单或在线咨询，我们的官方技术团队将快速为您解决。",
+                "support.ticket.item1": "在线客服入口（聊天或消息系统）",
+                "support.ticket.item2": "工单提交系统",
+                "support.ticket.item3": "用户问题反馈入口",
+                "support.ticket.item4": "处理时效说明（如 24 小时内响应）",
+                "support.upgrade.title": "升级与维护公告",
+                "support.upgrade.desc": "官方定期发布产品升级和维护公告，确保您的数字宠物和智能设备稳定可靠。",
+                "support.upgrade.item1": "产品更新或功能升级说明",
+                "support.upgrade.item2": "系统维护或停机公告",
+                "support.upgrade.item3": "新版本上线提醒",
+                "support.upgrade.item4": "注意事项或操作指南",
+                "support.security.title": "数据安全与隐私",
+                "support.security.desc": "我们全程保障用户和宠物数据安全，提供数据备份、恢复及隐私保护咨询。",
+                "support.security.item1": "数据加密存储说明",
+                "support.security.item2": "用户数据控制权",
+                "support.security.item3": "数据备份与恢复方法",
+                "support.security.item4": "隐私保护政策链接",
+                "community.title": "用户社区互动",
+                "community.subtitle": "分享宠物日常、交流养护经验、发现更多好内容。",
+                "community.post1": "今天用数字宠物记录了小猫的新动作，真的太可爱了。",
+                "community.post2": "AI 健康管理给了饮食建议，感觉比我自己更懂它。",
+                "about.title": "我们是谁",
+                "about.desc": "PalEcho 是一家致力于科技与宠物生活融合的创新品牌。<br/>我们通过 AI 和智能硬件，将现实宠物数字化为 3D 分身，并实时监测健康与行为数据。<br/>我们相信，每一只宠物都值得被更好地关怀，而每一位主人都值得获得科学、贴心的养宠体验。",
+                "tech.title": "技术与能力",
+                "tech.subtitle": "结合多模态 AI、3D 渲染与智能硬件，为宠物建立可信的数字分身。",
+                "trust.title": "数据与信任",
+                "trust.subtitle": "透明、安全、可控的数据体系，让用户放心把每一次记录交给 PalEcho。",
+                "join.title": "加入 PalEcho，让科技与宠物生活同行",
+                "join.desc": "在 PalEcho，我们相信科技的力量可以让宠物生活更健康、更安全，也让主人体验更贴心的陪伴。<br/>我们正在寻找热爱宠物、热爱科技、有创新精神的朋友，一起推动数字宠物、AI 健康管理和宠物数据平台的发展。<br/>这里有自由、开放的创新空间，有充满挑战的项目，也有成就感满满的使命——让每一次科技应用都向善而行，为宠物和主人创造真正的价值。",
+                "join.jobs": "查看岗位",
+                "join.apply": "投递简历",
+                "join.work": "工作内容",
+                "join.role1.title": "AI系统架构师",
+                "join.role1.item1": "设计并实现宠物健康分析的大模型和数据处理系统",
+                "join.role1.item2": "搭建后端数据平台，管理用户、宠物和健康数据",
+                "join.role1.item3": "实现实时/准实时健康状态分析和异常预警",
+                "join.role1.item4": "解析体检报告并生成健康建议",
+                "join.role1.item5": "与平台和硬件负责人协作，保证数据流畅传输与分析",
+                "join.role2.title": "产品与体验设计师",
+                "join.role2.item1": "负责 PalEcho 平台前端界面与用户交互设计",
+                "join.role2.item2": "实现健康数据可视化和异常提醒功能",
+                "join.role2.item3": "设计数据上传和查看流程（体检报告、健康分析）",
+                "join.role2.item4": "与 AI 和硬件负责人协作，实现功能对接与优化",
+                "join.role2.item5": "优化用户体验，确保产品易用",
+                "join.role3.title": "智能硬件集成师",
+                "join.role3.item1": "对接现成智能宠物设备，完成数据采集和传输",
+                "join.role3.item2": "设计数据传输流程（蓝牙/WiFi → 平台）",
+                "join.role3.item3": "保证数据采集稳定性与准确性",
+                "join.role3.item4": "协助硬件选型和方案优化，实现高效集成",
+                "join.role3.item5": "与 AI 和前端负责人协作，确保数据可用",
+                "care.title": "动物关怀",
+                "care.desc": "与宠物救助机构合作，支持流浪动物的领养与照护。<br/>提供科学营养和健康管理，守护每一只宠物的生命与活力。",
+                "sustain.title": "可持续发展",
+                "sustain.desc": "采用环保、可降解原材料，减少对环境的影响。<br/>工厂生产过程节能减排，降低碳足迹。<br/>推动产品包装回收与循环使用，倡导绿色生活。<br/>支持野生动物保护项目，维护生态平衡。<br/>持续优化产品设计与研发，实现健康与环保双赢。",
+                "progress.title": "行业进步",
+                "progress.desc": "AI 正在改变世界，也正在重新定义人与生命之间的连接方式。我们希望持续推动 AI 在宠物领域的创新与应用，让更多先进技术真正走进日常生活，与行业伙伴共同探索更加智能的产品、更加科学的健康管理以及更加开放的技术生态。我们相信，当技术不断进步，整个行业也将因此变得更加值得期待。",
+                "meta.title": "Mira大模型",
+                "meta.lead": "Mira 是 PalEcho 全新打造的新一代 AI 模型，专为理解生命而生。",
+                "meta.desc": "它不只是回答问题，而是通过智能推理、数字生命建模与生命知识体系，持续理解每一只宠物的健康、行为与成长，让科技真正成为生命的长期守护者。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "让智能真正理解生命。",
+                "meta.core.desc": "Mira Core 负责推理、分析与判断，融合多模态信息，理解复杂的健康与行为场景，为每一次交互提供更自然、更可靠的回应。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "让每一个生命，都拥有数字表达。",
+                "meta.life.desc": "Mira Life 为每一只宠物构建持续成长的数字生命模型，记录外观、行为、健康与成长变化，让陪伴不只是被记住，也能够被理解。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "让知识成为长期守护的基础。",
+                "meta.atlas.desc": "Mira Atlas 汇聚宠物医学、生命科学与长期健康数据，持续沉淀专业知识与个体记忆，为 Mira 提供可靠、持续进化的认知基础。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命，会留下数据。数据，会理解生命。",
+                "chain.intro1": "每一次心跳、每一次活动、每一次成长，都会留下属于生命的独特轨迹。",
+                "chain.intro2": "PalEcho 持续构建真实、长期、高质量的生命数据体系，让 AI 从理解一只宠物，到理解更多生命。",
+                "chain.intro3": "这些数据不仅构成每一只宠物的个体健康基线，也将在用户授权、匿名化与安全保护的前提下，持续推动 AI 能力演进、生命科学研究，以及未来人与宠物更加自然的交流。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "个体健康基线",
+                "chain.baseline.desc": "每一只宠物都有独特的健康特征与生活习惯。持续积累的生命数据，将帮助 Mira 建立专属健康基线，实现更加精准、个性化的健康理解。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "驱动 AI 持续进化",
+                "chain.evolution.desc": "高质量、长期积累的生命数据，将不断提升 Mira 对健康、行为与情绪的理解能力，让 AI 随着每一次陪伴持续学习、持续成长。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "推动生命科学发展",
+                "chain.research.desc": "在用户授权、匿名化与安全处理的前提下，生命数据将持续推动疾病研究、健康预测及生命科学的发展，让每一份数据创造更广泛的社会价值。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "隐私始终优先",
+                "chain.privacy.desc": "每一份生命数据都将在用户授权下进行匿名化、脱敏与安全处理，仅用于提升 AI 能力、生命科学研究及用户授权的服务。",
+                "chain.privacy.trust": "我们珍视每一份生命数据，更珍视每一位用户的信任。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真正的生命智能，不仅来自先进的模型，更来自真实、持续且值得信赖的生命数据。",
+                "footer.copy": "© 2026 PalEcho. All rights reserved.",
+                "footer.tagline": "让每一次心跳都成为对话"
+            },
+            "zh-TW": {
+                "data.title": "數據上鏈，安全可靠",
+                "data.subtitle": "寵物數據全程加密傳輸與存儲，確保每一次記錄可信。",
+                "data.vault": "Encrypted Data Vault",
+                "data.overview": "寵物數據一覽",
+                "data.card1.label": "基礎資訊",
+                "data.card1.text": "年齡 / 體重 / 疫苗",
+                "data.card2.label": "健康數據",
+                "data.card2.text": "心率 / 飲食 / 活動",
+                "data.card3.label": "醫療紀錄",
+                "data.card3.text": "報告 / 診斷",
+                "data.card4.label": "行為數據",
+                "data.card4.text": "作息 / 異常",
+                "data.decentral.title": "去中心化上傳與回饋",
+                "data.decentral.desc": "將寵物數據上傳至去中心化資料中心，獲得回饋與更強模型服務能力。",
+                "data.security.title": "資料安全與隱私",
+                "data.security.item1": "加密儲存，確保資料不可竄改",
+                "data.security.item2": "使用者資料控制權，授權可隨時管理",
+                "data.security.item3": "去中心化儲存，降低單點風險",
+                "data.security.item4": "加密貨幣、代幣化需合規後適時上線",
+                "hardware.title": "即將上線",
+                "hardware.subtitle": "我們同樣期待產品與您見面",
+                "shop.title": "寵物商城",
+                "shop.tab1": "AI 客製寵糧",
+                "shop.tab2": "健康寵物零食",
+                "shop.tab3": "甄好寵物用品",
+                "shop.tab4": "標準寵物系列",
+                "shop.soon": "即將上線",
+                "shop.soonDesc": "我們的產品，期待與您見面",
+                "support.title": "官方技術支援",
+                "support.tab1": "支援範圍",
+                "support.tab2": "常見問題",
+                "support.tab3": "操作指南",
+                "support.tab4": "線上支援",
+                "support.tab5": "升級與維護公告",
+                "support.tab6": "資料安全",
+                "support.scope.title": "支援範圍",
+                "support.scope.desc": "提供全方位官方支援，涵蓋數位寵物、AI 健康管理、智慧硬體與數據平台。",
+                "support.scope.item1": "數位寵物 3D 分身",
+                "support.scope.item2": "AI 健康管理功能",
+                "support.scope.item3": "智慧硬體（感測器、設備）",
+                "support.scope.item4": "寵物數據平台",
+                "support.scope.item5": "寵物商城產品",
+                "support.scope.item6": "支援類型：功能使用、故障排除、資料問題、帳號問題",
+                "support.faq.title": "常見問題（FAQ）",
+                "support.faq.desc": "整理最常見問題與解法，快速排除使用障礙。",
+                "support.faq.item1": "如何建立數位寵物？",
+                "support.faq.item2": "AI 健康分析結果如何查看？",
+                "support.faq.item3": "智慧硬體連不上怎麼辦？",
+                "support.faq.item4": "寵物數據如何上傳或同步？",
+                "support.faq.item5": "如何修改寵物資訊或帳號設定？",
+                "support.guide.title": "操作指南 / 教學",
+                "support.guide.desc": "提供完整操作教學，讓你輕鬆上手數位寵物與智慧設備。",
+                "support.guide.item1": "使用說明文件（PDF / 網頁版）",
+                "support.guide.item2": "影片操作教學",
+                "support.guide.item3": "功能示意圖或步驟截圖",
+                "support.guide.item4": "新手入門與進階功能指南",
+                "support.ticket.title": "線上支援 / 工單系統",
+                "support.ticket.desc": "遇到問題？提交工單或線上諮詢，技術團隊將快速協助。",
+                "support.ticket.item1": "線上客服入口（聊天或訊息）",
+                "support.ticket.item2": "工單提交系統",
+                "support.ticket.item3": "用戶問題回饋入口",
+                "support.ticket.item4": "處理時效說明（如 24 小時內回覆）",
+                "support.upgrade.title": "升級與維護公告",
+                "support.upgrade.desc": "定期發布升級與維護公告，確保系統穩定可靠。",
+                "support.upgrade.item1": "功能更新或升級說明",
+                "support.upgrade.item2": "系統維護或停機公告",
+                "support.upgrade.item3": "新版本上線提醒",
+                "support.upgrade.item4": "注意事項與操作指南",
+                "support.security.title": "資料安全與隱私",
+                "support.security.desc": "全程保障資料安全，提供備份、恢復與隱私諮詢。",
+                "support.security.item1": "資料加密存放說明",
+                "support.security.item2": "使用者資料控制權",
+                "support.security.item3": "備份與恢復方式",
+                "support.security.item4": "隱私保護政策連結",
+                "community.title": "用戶社群互動",
+                "community.subtitle": "分享日常、交流經驗、發現更多好內容。",
+                "community.post1": "今天用數位寵物記錄了小貓的新動作，真的太可愛了。",
+                "community.post2": "AI 健康管理的飲食建議很到位，比我更懂牠。",
+                "about.title": "我們是誰",
+                "about.desc": "PalEcho 專注於科技與寵物生活的融合。<br/>透過 AI 與智慧硬體，將真實寵物數位化為 3D 分身並即時監測健康與行為。<br/>我們相信，每一隻寵物都值得更好的關懷，每一位主人都值得科學而溫暖的陪伴。",
+                "tech.title": "技術與能力",
+                "tech.subtitle": "結合多模態 AI、3D 渲染與智慧硬體，打造可信的數位分身。",
+                "trust.title": "數據與信任",
+                "trust.subtitle": "透明、安全、可控的數據體系，放心交付每一筆記錄。",
+                "join.title": "加入 PalEcho，與科技同行",
+                "join.desc": "在 PalEcho，我們相信科技能讓寵物更健康、更安全，也讓主人感到更溫暖。<br/>我們正在尋找熱愛寵物與科技的夥伴，一起推進數位寵物、AI 健康管理與數據平台。<br/>在這裡，有自由開放的空間、有具挑戰的專案、有滿滿使命感。",
+                "join.jobs": "查看職缺",
+                "join.apply": "投遞履歷",
+                "join.work": "工作內容",
+                "join.role1.title": "AI 系統架構師",
+                "join.role1.item1": "設計並實作寵物健康分析的大模型與資料處理系統",
+                "join.role1.item2": "搭建後端數據平台，管理使用者、寵物與健康資料",
+                "join.role1.item3": "實現即時/準即時健康分析與異常預警",
+                "join.role1.item4": "解析體檢報告並生成健康建議",
+                "join.role1.item5": "與平台與硬體負責人協作，確保資料流暢傳輸",
+                "join.role2.title": "產品與體驗設計師",
+                "join.role2.item1": "負責 PalEcho 平台前端與互動設計",
+                "join.role2.item2": "實作健康數據可視化與異常提醒",
+                "join.role2.item3": "設計資料上傳與查看流程（體檢報告、健康分析）",
+                "join.role2.item4": "與 AI/硬體負責人協作優化整合",
+                "join.role2.item5": "優化使用者體驗，確保易用性",
+                "join.role3.title": "智慧硬體整合師",
+                "join.role3.item1": "對接現成寵物設備，完成資料採集與傳輸",
+                "join.role3.item2": "設計資料傳輸流程（藍牙/WiFi → 平台）",
+                "join.role3.item3": "確保資料採集穩定與準確",
+                "join.role3.item4": "協助硬體選型與方案優化",
+                "join.role3.item5": "與 AI/前端協作確保資料可用",
+                "care.title": "動物關懷",
+                "care.desc": "與救助機構合作，支持流浪動物領養與照護。<br/>提供科學營養與健康管理，守護每一條生命。",
+                "sustain.title": "永續發展",
+                "sustain.desc": "採用環保可降解材料降低影響。<br/>工廠節能減排，降低碳足跡。<br/>推動包裝回收與循環使用。<br/>支持野生動物保護計畫。<br/>持續研發，實現健康與環保雙贏。",
+                "progress.title": "行業進步",
+                "progress.desc": "Mira 大模型以多模態理解與高精度分析，推動 AI 寵物產業走向數據驅動。",
+                "meta.title": "Mira 大模型",
+                "meta.lead": "Mira 是 PalEcho 全新打造的新一代 AI 模型，專為理解生命而生。",
+                "meta.desc": "它不只回答問題，更透過智慧推理、數位生命建模與生命知識體系，持續理解每一隻寵物的健康、行為與成長，讓科技真正成為生命的長期守護者。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "讓智慧真正理解生命。",
+                "meta.core.desc": "Mira Core 負責推理、分析與判斷，融合多模態資訊，理解複雜的健康與行為情境，為每一次互動提供更自然、更可靠的回應。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "讓每一個生命，都擁有數位表達。",
+                "meta.life.desc": "Mira Life 為每一隻寵物建立持續成長的數位生命模型，記錄外觀、行為、健康與成長變化，讓陪伴不只被記住，也能被理解。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "讓知識成為長期守護的基礎。",
+                "meta.atlas.desc": "Mira Atlas 匯聚寵物醫學、生命科學與長期健康數據，持續沉澱專業知識與個體記憶，為 Mira 提供可靠、持續進化的認知基礎。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命，會留下數據。數據，會理解生命。",
+                "chain.intro1": "每一次心跳、每一次活動、每一次成長，都會留下屬於生命的獨特軌跡。",
+                "chain.intro2": "PalEcho 持續構建真實、長期、高品質的生命數據體系，讓 AI 從理解一隻寵物，到理解更多生命。",
+                "chain.intro3": "這些數據不僅構成每一隻寵物的個體健康基線，也將在使用者授權、匿名化與安全保護的前提下，持續推動 AI 能力演進、生命科學研究，以及未來人與寵物更自然的交流。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "個體健康基線",
+                "chain.baseline.desc": "每一隻寵物都有獨特的健康特徵與生活習慣。持續累積的生命數據，將協助 Mira 建立專屬健康基線，實現更精準、個人化的健康理解。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "驅動 AI 持續進化",
+                "chain.evolution.desc": "高品質、長期累積的生命數據，將不斷提升 Mira 對健康、行為與情緒的理解能力，讓 AI 隨著每一次陪伴持續學習、持續成長。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "推動生命科學發展",
+                "chain.research.desc": "在使用者授權、匿名化與安全處理的前提下，生命數據將持續推動疾病研究、健康預測及生命科學發展，讓每一份數據創造更廣泛的社會價值。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "隱私始終優先",
+                "chain.privacy.desc": "每一份生命數據都將在使用者授權下進行匿名化、去識別化與安全處理，僅用於提升 AI 能力、生命科學研究及使用者授權的服務。",
+                "chain.privacy.trust": "我們珍視每一份生命數據，更珍視每一位使用者的信任。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真正的生命智慧，不僅來自先進的模型，更來自真實、持續且值得信賴的生命數據。",
+                "footer.copy": "© 2026 PalEcho. All rights reserved.",
+                "footer.tagline": "讓每一次心跳都成為對話"
+            },
+            "en": {
+                "data.title": "On-chain data, secure and trusted",
+                "data.subtitle": "Pet data is encrypted in transit and at rest to keep every record trustworthy.",
+                "data.vault": "Encrypted Data Vault",
+                "data.overview": "Pet data at a glance",
+                "data.card1.label": "Basics",
+                "data.card1.text": "Age / Weight / Vaccines",
+                "data.card2.label": "Health data",
+                "data.card2.text": "HR / Diet / Activity",
+                "data.card3.label": "Medical records",
+                "data.card3.text": "Reports / Diagnosis",
+                "data.card4.label": "Behavior data",
+                "data.card4.text": "Routine / Anomalies",
+                "data.decentral.title": "Decentralized upload & rewards",
+                "data.decentral.desc": "Upload pet data to a decentralized hub and unlock stronger model services.",
+                "data.security.title": "Data security & privacy",
+                "data.security.item1": "Encrypted storage to prevent tampering",
+                "data.security.item2": "User-controlled data permissions",
+                "data.security.item3": "Decentralized storage reduces single-point risk",
+                "data.security.item4": "Tokenization features will launch after compliance",
+                "hardware.title": "Coming soon",
+                "hardware.subtitle": "We can’t wait to meet you with our products",
+                "shop.title": "Pet Store",
+                "shop.tab1": "AI Custom Pet Food",
+                "shop.tab2": "Healthy Pet Snacks",
+                "shop.tab3": "Curated Pet Supplies",
+                "shop.tab4": "Standard Pet Series",
+                "shop.soon": "Coming soon",
+                "shop.soonDesc": "Our products are on the way",
+                "support.title": "Official Support",
+                "support.tab1": "Scope",
+                "support.tab2": "FAQ",
+                "support.tab3": "Guides",
+                "support.tab4": "Online Support",
+                "support.tab5": "Updates & Maintenance",
+                "support.tab6": "Data Security",
+                "support.scope.title": "Support scope",
+                "support.scope.desc": "Full official support covering Digital Pet, AI Health, smart hardware, and the data platform.",
+                "support.scope.item1": "Digital pet 3D avatar",
+                "support.scope.item2": "AI health features",
+                "support.scope.item3": "Smart hardware (sensors, devices)",
+                "support.scope.item4": "Pet data platform",
+                "support.scope.item5": "Pet store products",
+                "support.scope.item6": "Issues covered: usage, troubleshooting, data, account",
+                "support.faq.title": "FAQ",
+                "support.faq.desc": "Common questions and quick solutions.",
+                "support.faq.item1": "How do I create a digital pet?",
+                "support.faq.item2": "How to view AI health results?",
+                "support.faq.item3": "What if the device won’t connect?",
+                "support.faq.item4": "How to upload or sync data?",
+                "support.faq.item5": "How to edit pet or account settings?",
+                "support.guide.title": "Guides / Tutorials",
+                "support.guide.desc": "Step-by-step guidance to get started fast.",
+                "support.guide.item1": "User manuals (PDF / web)",
+                "support.guide.item2": "Video tutorials",
+                "support.guide.item3": "Feature visuals or step screenshots",
+                "support.guide.item4": "Beginner and advanced guides",
+                "support.ticket.title": "Online support / Tickets",
+                "support.ticket.desc": "Submit a ticket or chat online for fast help.",
+                "support.ticket.item1": "Live support (chat / messages)",
+                "support.ticket.item2": "Ticket submission system",
+                "support.ticket.item3": "User feedback",
+                "support.ticket.item4": "Response SLA (e.g., within 24 hours)",
+                "support.upgrade.title": "Updates & Maintenance",
+                "support.upgrade.desc": "Regular updates and maintenance announcements.",
+                "support.upgrade.item1": "Feature update notes",
+                "support.upgrade.item2": "Maintenance or downtime notices",
+                "support.upgrade.item3": "New version reminders",
+                "support.upgrade.item4": "Notes or operating guidance",
+                "support.security.title": "Data security & privacy",
+                "support.security.desc": "We safeguard user and pet data with backups and privacy guidance.",
+                "support.security.item1": "Encryption and storage",
+                "support.security.item2": "User data control",
+                "support.security.item3": "Backup & recovery",
+                "support.security.item4": "Privacy policy link",
+                "community.title": "Community",
+                "community.subtitle": "Share moments, exchange tips, and discover more.",
+                "community.post1": "Logged my cat’s new trick with the digital pet—so cute.",
+                "community.post2": "AI health tips on diet felt more precise than mine.",
+                "about.title": "Who We Are",
+                "about.desc": "PalEcho bridges technology and pet life. <br/>With AI and smart hardware, we digitize real pets into 3D avatars and monitor health and behavior in real time.<br/>We believe every pet deserves better care and every owner deserves trustworthy guidance.",
+                "tech.title": "Technology & Capabilities",
+                "tech.subtitle": "Multi-modal AI, 3D rendering, and smart hardware create trusted digital twins.",
+                "trust.title": "Data & Trust",
+                "trust.subtitle": "Transparent, secure, and controllable data so every record is trustworthy.",
+                "join.title": "Join PalEcho",
+                "join.desc": "We believe technology can make pets healthier and owners feel more connected.<br/>We’re looking for people who love pets and technology to build Digital Pet, AI Health, and the data platform together.<br/>Open culture, challenging projects, and a mission that creates real value.",
+                "join.jobs": "View Roles",
+                "join.apply": "Apply Now",
+                "join.work": "Responsibilities",
+                "join.role1.title": "AI Systems Architect",
+                "join.role1.item1": "Design large-model and data processing systems for pet health",
+                "join.role1.item2": "Build backend data platforms for users, pets, and health data",
+                "join.role1.item3": "Deliver real-time or near-real-time analysis and alerts",
+                "join.role1.item4": "Parse exam reports and generate health advice",
+                "join.role1.item5": "Work with platform and hardware leads for smooth data flow",
+                "join.role2.title": "Product & Experience Designer",
+                "join.role2.item1": "Own UI and interaction design for PalEcho",
+                "join.role2.item2": "Build health data visualization and alerts",
+                "join.role2.item3": "Design upload and viewing flows (reports, analysis)",
+                "join.role2.item4": "Collaborate with AI/hardware teams for integration",
+                "join.role2.item5": "Improve UX for ease of use",
+                "join.role3.title": "Smart Hardware Integrator",
+                "join.role3.item1": "Integrate pet devices and data collection",
+                "join.role3.item2": "Design data transfer flows (Bluetooth/WiFi → platform)",
+                "join.role3.item3": "Ensure stable and accurate data capture",
+                "join.role3.item4": "Support hardware selection and solution optimization",
+                "join.role3.item5": "Collaborate with AI/front-end for usable data",
+                "care.title": "Animal Care",
+                "care.desc": "Partner with rescue organizations to support adoption and care.<br/>Provide scientific nutrition and health management for every pet.",
+                "sustain.title": "Sustainability",
+                "sustain.desc": "Use eco-friendly, biodegradable materials. <br/>Reduce carbon in manufacturing. <br/>Promote recycling and circular packaging. <br/>Support wildlife protection. <br/>Optimize R&D for health and sustainability.",
+                "progress.title": "Industry Progress",
+                "progress.desc": "The Mira model drives AI pet care from experience-based to data-driven with stronger interpretability.",
+                "meta.title": "Mira Model",
+                "meta.lead": "Mira is PalEcho’s next-generation AI model, created to understand life.",
+                "meta.desc": "It goes beyond answering questions. Through intelligent reasoning, digital-life modeling, and a life-science knowledge system, Mira continuously understands each pet’s health, behavior, and growth—so technology can become a lifelong guardian of life.",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "Intelligence that truly understands life.",
+                "meta.core.desc": "Mira Core handles reasoning, analysis, and judgment. It brings together multimodal information to understand complex health and behavior scenarios, delivering more natural and reliable responses in every interaction.",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "A digital expression for every life.",
+                "meta.life.desc": "Mira Life builds an evolving digital-life model for every pet, capturing appearance, behavior, health, and growth so companionship is not only remembered, but understood.",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "Knowledge as the foundation of lifelong care.",
+                "meta.atlas.desc": "Mira Atlas brings together veterinary medicine, life science, and long-term health data, building professional knowledge and individual memory into a reliable, continuously evolving cognitive foundation for Mira.",
+                "chain.title": "Life Data",
+                "chain.tagline": "Life leaves data. Data learns to understand life.",
+                "chain.intro1": "Every heartbeat, every activity, and every stage of growth leaves a unique trace of life.",
+                "chain.intro2": "PalEcho is building a real, long-term, high-quality life-data system that helps AI move from understanding one pet to understanding more forms of life.",
+                "chain.intro3": "This data forms each pet’s individual health baseline and, with user consent, anonymization, and strong safeguards, advances AI capabilities, life-science research, and more natural communication between people and pets.",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "An individual health baseline",
+                "chain.baseline.desc": "Every pet has unique health characteristics and daily habits. Accumulated life data helps Mira establish a dedicated health baseline for more precise, personalized understanding.",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "Driving continuous AI evolution",
+                "chain.evolution.desc": "High-quality, long-term life data continually improves Mira’s understanding of health, behavior, and emotion, allowing AI to keep learning and growing through every moment of companionship.",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "Advancing life science",
+                "chain.research.desc": "With user consent, anonymization, and secure processing, life data can advance disease research, health prediction, and the life sciences—giving every data point broader social value.",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "Privacy always comes first",
+                "chain.privacy.desc": "Every piece of life data is anonymized, de-identified, and securely processed with user authorization, and used only to improve AI, support life-science research, and provide authorized services.",
+                "chain.privacy.trust": "We value every piece of life data—and we value every user’s trust even more.",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "True life intelligence comes not only from advanced models, but from life data that is real, continuous, and worthy of trust.",
+                "footer.copy": "© 2026 PalEcho. All rights reserved.",
+                "footer.tagline": "Make every heartbeat a conversation"
+            },
+            "ja": {
+                "data.title": "データを安全にチェーン化",
+                "data.subtitle": "ペットデータは暗号化され、すべての記録を信頼できる形で保管します。",
+                "data.vault": "Encrypted Data Vault",
+                "data.overview": "ペットデータ一覧",
+                "data.card1.label": "基本情報",
+                "data.card1.text": "年齢 / 体重 / ワクチン",
+                "data.card2.label": "健康データ",
+                "data.card2.text": "心拍 / 食事 / 活動",
+                "data.card3.label": "医療記録",
+                "data.card3.text": "レポート / 診断",
+                "data.card4.label": "行動データ",
+                "data.card4.text": "生活リズム / 異常",
+                "data.decentral.title": "分散アップロードと報酬",
+                "data.decentral.desc": "分散データセンターにアップロードし、より強力なモデル機能を解放。",
+                "data.security.title": "データ安全とプライバシー",
+                "data.security.item1": "暗号化保管で改ざん防止",
+                "data.security.item2": "ユーザーが権限を管理",
+                "data.security.item3": "分散保管で単一障害を低減",
+                "data.security.item4": "トークン化は法規制に準拠後に提供",
+                "hardware.title": "近日公開",
+                "hardware.subtitle": "製品との出会いをお楽しみに",
+                "shop.title": "ペットショップ",
+                "shop.tab1": "AI カスタムフード",
+                "shop.tab2": "ヘルシーおやつ",
+                "shop.tab3": "厳選ペット用品",
+                "shop.tab4": "スタンダードシリーズ",
+                "shop.soon": "近日公開",
+                "shop.soonDesc": "製品はまもなく登場",
+                "support.title": "公式サポート",
+                "support.tab1": "サポート範囲",
+                "support.tab2": "FAQ",
+                "support.tab3": "操作ガイド",
+                "support.tab4": "オンラインサポート",
+                "support.tab5": "更新・メンテナンス",
+                "support.tab6": "データ安全",
+                "support.scope.title": "サポート範囲",
+                "support.scope.desc": "デジタルペット、AI 健康管理、スマートハードウェア、データ基盤を包括的にサポート。",
+                "support.scope.item1": "デジタルペット 3D アバター",
+                "support.scope.item2": "AI 健康管理機能",
+                "support.scope.item3": "スマートハードウェア（センサー、機器）",
+                "support.scope.item4": "ペットデータ基盤",
+                "support.scope.item5": "ペットショップ製品",
+                "support.scope.item6": "対応範囲：使い方、故障調査、データ、アカウント",
+                "support.faq.title": "よくある質問",
+                "support.faq.desc": "よくある課題と解決策をまとめています。",
+                "support.faq.item1": "デジタルペットの作成方法は？",
+                "support.faq.item2": "AI 健康結果の確認方法は？",
+                "support.faq.item3": "機器が接続できない場合は？",
+                "support.faq.item4": "データのアップロードや同期は？",
+                "support.faq.item5": "ペット情報や設定の変更方法は？",
+                "support.guide.title": "操作ガイド / チュートリアル",
+                "support.guide.desc": "手順を分かりやすく案内します。",
+                "support.guide.item1": "利用マニュアル（PDF / Web）",
+                "support.guide.item2": "動画チュートリアル",
+                "support.guide.item3": "機能図・手順画像",
+                "support.guide.item4": "初心者・上級者ガイド",
+                "support.ticket.title": "オンラインサポート / チケット",
+                "support.ticket.desc": "お問い合わせはチケットやチャットで対応します。",
+                "support.ticket.item1": "オンライン窓口（チャット / メッセージ）",
+                "support.ticket.item2": "チケット送信",
+                "support.ticket.item3": "フィードバック窓口",
+                "support.ticket.item4": "対応時間（例：24 時間以内）",
+                "support.upgrade.title": "更新・メンテナンス",
+                "support.upgrade.desc": "定期的に更新情報をお知らせします。",
+                "support.upgrade.item1": "機能更新の案内",
+                "support.upgrade.item2": "メンテナンス告知",
+                "support.upgrade.item3": "新バージョン告知",
+                "support.upgrade.item4": "注意事項 / 手順",
+                "support.security.title": "データ安全とプライバシー",
+                "support.security.desc": "安全性とプライバシーを徹底します。",
+                "support.security.item1": "暗号化保存の説明",
+                "support.security.item2": "ユーザー権限管理",
+                "support.security.item3": "バックアップと復元",
+                "support.security.item4": "プライバシーポリシー",
+                "community.title": "コミュニティ",
+                "community.subtitle": "日常を共有し、知見を交換しよう。",
+                "community.post1": "デジタルペットで子猫の新しい動きを記録。かわいすぎる。",
+                "community.post2": "AI の食事提案が的確で驚いた。",
+                "about.title": "私たちは誰か",
+                "about.desc": "PalEcho はテクノロジーとペットの暮らしをつなぐブランドです。<br/>AI とスマートハードウェアで 3D 分身化し、健康と行動をリアルタイムにモニタリングします。<br/>すべてのペットにより良いケアを、すべての飼い主に安心を。",
+                "tech.title": "技術と能力",
+                "tech.subtitle": "マルチモーダル AI と 3D、スマートハードで信頼できる分身を。",
+                "trust.title": "データと信頼",
+                "trust.subtitle": "透明・安全・制御可能なデータで安心を提供。",
+                "join.title": "PalEcho で一緒に働く",
+                "join.desc": "テクノロジーでペットの健康と飼い主の安心を実現します。<br/>デジタルペット、AI 健康、データ基盤を共に作る仲間を募集。<br/>自由でオープンな文化と挑戦的なプロジェクト。",
+                "join.jobs": "募集職種",
+                "join.apply": "応募する",
+                "join.work": "業務内容",
+                "join.role1.title": "AI システムアーキテクト",
+                "join.role1.item1": "健康分析の大規模モデルとデータ処理設計",
+                "join.role1.item2": "ユーザー・ペット・健康データの基盤構築",
+                "join.role1.item3": "リアルタイム分析と異常検知",
+                "join.role1.item4": "検査レポート解析と提案生成",
+                "join.role1.item5": "プラットフォーム・ハード連携",
+                "join.role2.title": "プロダクト＆体験デザイナー",
+                "join.role2.item1": "UI/UX 設計と体験設計",
+                "join.role2.item2": "健康データの可視化と通知",
+                "join.role2.item3": "アップロードと閲覧フロー設計",
+                "join.role2.item4": "AI/ハードと連携最適化",
+                "join.role2.item5": "使いやすさの改善",
+                "join.role3.title": "スマートハード統合エンジニア",
+                "join.role3.item1": "ペット機器の接続とデータ収集",
+                "join.role3.item2": "Bluetooth/WiFi → プラットフォーム設計",
+                "join.role3.item3": "安定性と精度の担保",
+                "join.role3.item4": "ハード選定と最適化",
+                "join.role3.item5": "AI/フロントと連携",
+                "care.title": "動物ケア",
+                "care.desc": "保護団体と連携し、里親支援とケアを提供。<br/>科学的栄養と健康管理で命を守ります。",
+                "sustain.title": "サステナビリティ",
+                "sustain.desc": "環境配慮素材を採用。<br/>製造の省エネで排出削減。<br/>包装の回収・循環を推進。<br/>野生動物保護を支援。<br/>研究開発で健康と環境の両立を実現。",
+                "progress.title": "業界の前進",
+                "progress.desc": "Mira モデルが AI ペット業界をデータ駆動へ進化させます。",
+                "meta.title": "Mira モデル",
+                "meta.lead": "Mira は、生命を理解するために PalEcho が新たに開発した次世代 AI モデルです。",
+                "meta.desc": "質問に答えるだけでなく、知的推論、デジタル生命モデリング、生命知識体系を通じて、一匹一匹の健康・行動・成長を継続的に理解し、テクノロジーを生命の長期的な守り手へと進化させます。",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "知能が、本当に生命を理解する。",
+                "meta.core.desc": "Mira Core は推論・分析・判断を担い、マルチモーダル情報を統合して複雑な健康・行動シーンを理解し、より自然で信頼できる応答を提供します。",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "すべての生命に、デジタルな表現を。",
+                "meta.life.desc": "Mira Life はペットごとに成長し続けるデジタル生命モデルを構築し、外見、行動、健康、成長の変化を記録。共に過ごした時間を、記憶するだけでなく理解します。",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "知識を、長期的な見守りの基盤に。",
+                "meta.atlas.desc": "Mira Atlas は獣医学、生命科学、長期健康データを集約し、専門知識と個体の記憶を蓄積。Mira に信頼できる、進化し続ける認知基盤を提供します。",
+                "chain.title": "Life Data",
+                "chain.tagline": "生命はデータを残し、データは生命を理解する。",
+                "chain.intro1": "一つひとつの鼓動、活動、成長が、生命固有の軌跡を残します。",
+                "chain.intro2": "PalEcho は、リアルで長期的かつ高品質な生命データ基盤を構築し、AI が一匹のペットから、より多くの生命を理解できるようにします。",
+                "chain.intro3": "データは個体ごとの健康基準を形成し、利用者の同意、匿名化、安全保護のもとで、AI の進化、生命科学研究、そして人とペットのより自然な交流を支えます。",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "個体別の健康基準",
+                "chain.baseline.desc": "すべてのペットには固有の健康特性と生活習慣があります。継続的な生命データにより、Mira は専用の健康基準を構築し、より精密で個別化された理解を実現します。",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "AI の継続的な進化を促す",
+                "chain.evolution.desc": "高品質で長期的な生命データが、健康・行動・感情に対する Mira の理解を深め、AI が共に過ごすたびに学び、成長できるようにします。",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "生命科学の発展を支える",
+                "chain.research.desc": "利用者の同意、匿名化、安全な処理を前提に、生命データは疾病研究、健康予測、生命科学を前進させ、より広い社会的価値を生み出します。",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "プライバシーを常に最優先に",
+                "chain.privacy.desc": "すべての生命データは利用者の許可のもとで匿名化・識別情報除去・安全処理を行い、AI の向上、生命科学研究、許可されたサービスにのみ使用します。",
+                "chain.privacy.trust": "私たちは一つひとつの生命データを大切にし、それ以上に利用者の信頼を大切にします。",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "真の生命知能は、先進的なモデルだけでなく、リアルで継続的、そして信頼に値する生命データから生まれます。",
+                "footer.copy": "© 2026 PalEcho. All rights reserved.",
+                "footer.tagline": "心拍を、対話に"
+            },
+            "ko": {
+                "data.title": "데이터 온체인, 안전하고 신뢰",
+                "data.subtitle": "데이터를 암호화해 전송·저장하고 모든 기록을 신뢰 가능하게 유지합니다.",
+                "data.vault": "Encrypted Data Vault",
+                "data.overview": "반려동물 데이터 한눈에",
+                "data.card1.label": "기본 정보",
+                "data.card1.text": "나이 / 체중 / 백신",
+                "data.card2.label": "건강 데이터",
+                "data.card2.text": "심박 / 식이 / 활동",
+                "data.card3.label": "의료 기록",
+                "data.card3.text": "리포트 / 진단",
+                "data.card4.label": "행동 데이터",
+                "data.card4.text": "생활 리듬 / 이상",
+                "data.decentral.title": "분산 업로드와 보상",
+                "data.decentral.desc": "분산 데이터 센터에 업로드해 더 강력한 모델 서비스를 제공합니다.",
+                "data.security.title": "데이터 보안 및 프라이버시",
+                "data.security.item1": "암호화 저장으로 변조 방지",
+                "data.security.item2": "사용자 권한 관리",
+                "data.security.item3": "분산 저장으로 단일 장애 최소화",
+                "data.security.item4": "토큰화 기능은 규제 준수 후 제공",
+                "hardware.title": "출시 예정",
+                "hardware.subtitle": "제품으로 곧 찾아뵙겠습니다",
+                "shop.title": "펫 스토어",
+                "shop.tab1": "AI 맞춤 사료",
+                "shop.tab2": "건강 간식",
+                "shop.tab3": "엄선 펫 용품",
+                "shop.tab4": "스탠다드 시리즈",
+                "shop.soon": "출시 예정",
+                "shop.soonDesc": "제품이 곧 공개됩니다",
+                "support.title": "공식 기술 지원",
+                "support.tab1": "지원 범위",
+                "support.tab2": "자주 묻는 질문",
+                "support.tab3": "사용 가이드",
+                "support.tab4": "온라인 지원",
+                "support.tab5": "업데이트 및 유지보수",
+                "support.tab6": "데이터 보안",
+                "support.scope.title": "지원 범위",
+                "support.scope.desc": "디지털 반려동물, AI 건강관리, 스마트 하드웨어, 데이터 플랫폼을 포괄 지원합니다.",
+                "support.scope.item1": "디지털 반려동물 3D 아바타",
+                "support.scope.item2": "AI 건강관리 기능",
+                "support.scope.item3": "스마트 하드웨어(센서, 장비)",
+                "support.scope.item4": "반려동물 데이터 플랫폼",
+                "support.scope.item5": "펫 스토어 제품",
+                "support.scope.item6": "지원 유형: 사용법, 문제 해결, 데이터, 계정",
+                "support.faq.title": "FAQ",
+                "support.faq.desc": "자주 묻는 질문과 해결책을 모았습니다.",
+                "support.faq.item1": "디지털 반려동물은 어떻게 만들나요?",
+                "support.faq.item2": "AI 건강 결과는 어떻게 보나요?",
+                "support.faq.item3": "기기가 연결되지 않을 때는?",
+                "support.faq.item4": "데이터 업로드/동기화 방법은?",
+                "support.faq.item5": "정보/계정 설정 변경은?",
+                "support.guide.title": "사용 가이드 / 튜토리얼",
+                "support.guide.desc": "쉽게 시작할 수 있도록 단계별 안내를 제공합니다.",
+                "support.guide.item1": "사용 설명서 (PDF / 웹)",
+                "support.guide.item2": "영상 튜토리얼",
+                "support.guide.item3": "기능 안내 이미지/단계 캡처",
+                "support.guide.item4": "초보/고급 기능 가이드",
+                "support.ticket.title": "온라인 지원 / 티켓",
+                "support.ticket.desc": "문의는 티켓이나 채팅으로 빠르게 해결합니다.",
+                "support.ticket.item1": "온라인 상담入口 (채팅/메시지)",
+                "support.ticket.item2": "티켓 제출",
+                "support.ticket.item3": "사용자 피드백入口",
+                "support.ticket.item4": "응답 시간 안내 (예: 24시간)",
+                "support.upgrade.title": "업데이트 및 유지보수",
+                "support.upgrade.desc": "정기 업데이트와 유지보수 공지를 제공합니다.",
+                "support.upgrade.item1": "기능 업데이트 안내",
+                "support.upgrade.item2": "시스템 점검/중단 공지",
+                "support.upgrade.item3": "신버전 알림",
+                "support.upgrade.item4": "주의사항/가이드",
+                "support.security.title": "데이터 보안 및 프라이버시",
+                "support.security.desc": "데이터 보호와 백업, 프라이버시 상담을 제공합니다.",
+                "support.security.item1": "암호화 저장 안내",
+                "support.security.item2": "사용자 데이터 제어권",
+                "support.security.item3": "백업/복구 방법",
+                "support.security.item4": "프라이버시 정책 링크",
+                "community.title": "커뮤니티",
+                "community.subtitle": "일상 공유, 경험 교류, 더 많은 콘텐츠 발견.",
+                "community.post1": "디지털 반려동물로 고양이의 새 움직임을 기록했어요. 너무 귀여워요.",
+                "community.post2": "AI 건강관리의 식단 조언이 정말 도움이 됐어요.",
+                "about.title": "우리는 누구인가",
+                "about.desc": "PalEcho는 기술과 반려동물의 삶을 연결하는 브랜드입니다.<br/>AI와 스마트 하드웨어로 3D 디지털 분신을 만들고 건강·행동을 실시간 모니터링합니다.<br/>모든 반려동물에 더 나은 케어를, 모든 보호자에 더 큰 안심을.",
+                "tech.title": "기술과 역량",
+                "tech.subtitle": "멀티모달 AI와 3D, 스마트 하드웨어로 신뢰할 수 있는 디지털 분신을 만듭니다.",
+                "trust.title": "데이터와 신뢰",
+                "trust.subtitle": "투명·안전·통제 가능한 데이터 체계로 매 기록을 안심하게.",
+                "join.title": "PalEcho와 함께하세요",
+                "join.desc": "기술로 반려동물의 건강과 보호자의 안심을 만듭니다.<br/>디지털 반려동물, AI 건강관리, 데이터 플랫폼을 함께 만들 동료를 찾습니다.<br/>자유로운 문화, 도전적인 프로젝트, 분명한 사명감.",
+                "join.jobs": "채용 공고",
+                "join.apply": "지원하기",
+                "join.work": "업무 내용",
+                "join.role1.title": "AI 시스템 아키텍트",
+                "join.role1.item1": "건강 분석 모델과 데이터 처리 시스템 설계",
+                "join.role1.item2": "사용자·반려동물·건강 데이터 플랫폼 구축",
+                "join.role1.item3": "실시간/준실시간 분석 및 경보",
+                "join.role1.item4": "검진 보고서 파싱 및 건강 제안",
+                "join.role1.item5": "플랫폼·하드웨어 협업으로 데이터 흐름 보장",
+                "join.role2.title": "제품·경험 디자이너",
+                "join.role2.item1": "PalEcho UI/UX 및 상호작용 디자인",
+                "join.role2.item2": "건강 데이터 시각화·알림 구현",
+                "join.role2.item3": "업로드·조회 플로우 설계",
+                "join.role2.item4": "AI/하드웨어 협업 및 최적화",
+                "join.role2.item5": "사용성 개선",
+                "join.role3.title": "스마트 하드웨어 통합 엔지니어",
+                "join.role3.item1": "기기 연동 및 데이터 수집",
+                "join.role3.item2": "Bluetooth/WiFi → 플랫폼 전송 설계",
+                "join.role3.item3": "수집 안정성·정확성 보장",
+                "join.role3.item4": "하드웨어 선택 및 최적화",
+                "join.role3.item5": "AI/프론트 협업으로 데이터 활용 보장",
+                "care.title": "동물 케어",
+                "care.desc": "구조 기관과 협력해 입양과 보호를 지원합니다.<br/>과학적 영양과 건강 관리로 생명을 지킵니다.",
+                "sustain.title": "지속가능성",
+                "sustain.desc": "친환경 소재 사용. <br/>제조 과정의 탄소 감축. <br/>포장 회수·재활용. <br/>야생동물 보호 지원. <br/>R&D로 건강과 환경의 균형.",
+                "progress.title": "산업 발전",
+                "progress.desc": "Mira 모델은 AI 펫 산업을 데이터 기반으로 진화시킵니다.",
+                "meta.title": "Mira 모델",
+                "meta.lead": "Mira는 생명을 이해하기 위해 PalEcho가 새롭게 만든 차세대 AI 모델입니다.",
+                "meta.desc": "단순히 질문에 답하는 것을 넘어 지능형 추론, 디지털 생명 모델링, 생명 지식 체계를 통해 반려동물 한 마리 한 마리의 건강과 행동, 성장을 지속적으로 이해하며 기술을 생명의 장기적인 보호자로 만듭니다.",
+                "meta.core.title": "Mira Core",
+                "meta.core.tagline": "지능이 진정으로 생명을 이해하도록.",
+                "meta.core.desc": "Mira Core는 추론, 분석, 판단을 담당합니다. 멀티모달 정보를 융합해 복잡한 건강 및 행동 상황을 이해하고 모든 상호작용에 더 자연스럽고 신뢰할 수 있는 응답을 제공합니다.",
+                "meta.life.title": "Mira Life",
+                "meta.life.tagline": "모든 생명에게 디지털 표현을.",
+                "meta.life.desc": "Mira Life는 반려동물마다 계속 성장하는 디지털 생명 모델을 구축하고 외형, 행동, 건강, 성장 변화를 기록해 동행이 기억되는 것을 넘어 이해되도록 합니다.",
+                "meta.atlas.title": "Mira Atlas",
+                "meta.atlas.tagline": "지식을 장기적인 보호의 기반으로.",
+                "meta.atlas.desc": "Mira Atlas는 수의학, 생명과학, 장기 건강 데이터를 모아 전문 지식과 개체 기억을 축적하고 Mira에 신뢰할 수 있으며 지속적으로 진화하는 인지 기반을 제공합니다.",
+                "chain.title": "Life Data",
+                "chain.tagline": "생명은 데이터를 남기고, 데이터는 생명을 이해합니다.",
+                "chain.intro1": "모든 심장 박동과 활동, 성장의 순간은 생명만의 고유한 궤적을 남깁니다.",
+                "chain.intro2": "PalEcho는 실제적이고 장기적이며 고품질인 생명 데이터 체계를 구축해 AI가 한 마리의 반려동물에서 더 많은 생명을 이해하도록 합니다.",
+                "chain.intro3": "이 데이터는 각 반려동물의 개별 건강 기준을 형성하며, 사용자 동의와 익명화, 안전 보호를 전제로 AI 역량의 진화, 생명과학 연구, 사람과 반려동물의 더 자연스러운 소통을 지원합니다.",
+                "chain.baseline.title": "Personal Baseline",
+                "chain.baseline.subtitle": "개별 건강 기준",
+                "chain.baseline.desc": "모든 반려동물은 고유한 건강 특성과 생활 습관을 지닙니다. 지속적으로 축적된 생명 데이터는 Mira가 전용 건강 기준을 구축해 더 정밀하고 개인화된 이해를 제공하도록 합니다.",
+                "chain.evolution.title": "AI Evolution",
+                "chain.evolution.subtitle": "AI의 지속적인 진화를 이끌다",
+                "chain.evolution.desc": "고품질의 장기 생명 데이터는 건강, 행동, 감정에 대한 Mira의 이해를 높여 AI가 매 순간의 동행을 통해 계속 배우고 성장하도록 합니다.",
+                "chain.research.title": "Scientific Research",
+                "chain.research.subtitle": "생명과학의 발전을 촉진하다",
+                "chain.research.desc": "사용자 동의, 익명화, 안전한 처리를 전제로 생명 데이터는 질병 연구, 건강 예측, 생명과학 발전을 지원하며 모든 데이터에 더 넓은 사회적 가치를 부여합니다.",
+                "chain.privacy.title": "Privacy First",
+                "chain.privacy.subtitle": "개인정보 보호를 항상 최우선으로",
+                "chain.privacy.desc": "모든 생명 데이터는 사용자 승인 아래 익명화, 비식별화, 안전 처리를 거치며 AI 향상, 생명과학 연구, 사용자가 승인한 서비스에만 활용됩니다.",
+                "chain.privacy.trust": "우리는 모든 생명 데이터를 소중히 여기며, 모든 사용자의 신뢰를 더욱 소중히 여깁니다.",
+                "chain.principle.label": "Brand Principle",
+                "chain.principle.title": "진정한 생명 지능은 첨단 모델뿐 아니라 실제적이고 지속적이며 신뢰할 수 있는 생명 데이터에서 나옵니다.",
+                "footer.copy": "© 2026 PalEcho. All rights reserved.",
+                "footer.tagline": "심장을, 대화로"
+            }
+        };
+
+        const I18N_NAV = {
+            "zh-CN": {
+                "nav.lifeBase": "健康档案", "nav.help": "帮助中心", "nav.care": "动物关怀",
+                "nav.sustainability": "可持续发展", "nav.progress": "创新向善",
+                "nav.sub.mira": "健康助手", "nav.sub.echo": "数字宠物", "nav.sub.pulse": "健康守护", "nav.sub.lifeBase": "健康档案", "nav.sub.store": "宠物商城",
+                "nav.sub.assist": "技术支持", "nav.sub.circle": "用户社区",
+                "nav.sub.origin": "我们是谁", "nav.sub.core": "技术与能力", "nav.sub.trust": "数据与信任", "nav.sub.careers": "加入我们",
+                "nav.sub.compassion": "动物关怀", "nav.sub.tomorrow": "可持续发展", "nav.sub.impact": "创新向善"
+            },
+            "zh-TW": {
+                "nav.lifeBase": "健康檔案", "nav.help": "幫助中心", "nav.care": "動物關懷",
+                "nav.sustainability": "永續發展", "nav.progress": "創新向善",
+                "nav.sub.mira": "健康助理", "nav.sub.echo": "數位寵物", "nav.sub.pulse": "健康守護", "nav.sub.lifeBase": "健康檔案", "nav.sub.store": "寵物商城",
+                "nav.sub.assist": "技術支援", "nav.sub.circle": "用戶社群",
+                "nav.sub.origin": "我們是誰", "nav.sub.core": "技術與能力", "nav.sub.trust": "數據與信任", "nav.sub.careers": "加入我們",
+                "nav.sub.compassion": "動物關懷", "nav.sub.tomorrow": "永續發展", "nav.sub.impact": "創新向善"
+            },
+            "en": {
+                "nav.lifeBase": "Health Records", "nav.help": "Help Center", "nav.care": "Animal Care",
+                "nav.sustainability": "Sustainability", "nav.progress": "Innovation for Good",
+                "nav.sub.mira": "Mira", "nav.sub.echo": "Echo", "nav.sub.pulse": "Pulse", "nav.sub.lifeBase": "LifeBase", "nav.sub.store": "Store",
+                "nav.sub.assist": "Assist", "nav.sub.circle": "Circle",
+                "nav.sub.origin": "Origin", "nav.sub.core": "Core", "nav.sub.trust": "Trust", "nav.sub.careers": "Careers",
+                "nav.sub.compassion": "Compassion", "nav.sub.tomorrow": "Tomorrow", "nav.sub.impact": "Impact"
+            },
+            "ja": {
+                "nav.lifeBase": "健康記録", "nav.help": "ヘルプセンター", "nav.care": "動物ケア",
+                "nav.sustainability": "サステナビリティ", "nav.progress": "善のイノベーション",
+                "nav.sub.mira": "ヘルスアシスタント", "nav.sub.echo": "デジタルペット", "nav.sub.pulse": "健康を守る", "nav.sub.lifeBase": "健康記録", "nav.sub.store": "ペットショップ",
+                "nav.sub.assist": "テクニカルサポート", "nav.sub.circle": "ユーザーコミュニティ",
+                "nav.sub.origin": "私たちについて", "nav.sub.core": "技術と能力", "nav.sub.trust": "データと信頼", "nav.sub.careers": "採用情報",
+                "nav.sub.compassion": "動物ケア", "nav.sub.tomorrow": "サステナビリティ", "nav.sub.impact": "善のイノベーション"
+            },
+            "ko": {
+                "nav.lifeBase": "건강 기록", "nav.help": "도움말 센터", "nav.care": "동물 케어",
+                "nav.sustainability": "지속가능성", "nav.progress": "선을 위한 혁신",
+                "nav.sub.mira": "건강 도우미", "nav.sub.echo": "디지털 반려동물", "nav.sub.pulse": "건강 지킴이", "nav.sub.lifeBase": "건강 기록", "nav.sub.store": "펫 스토어",
+                "nav.sub.assist": "기술 지원", "nav.sub.circle": "사용자 커뮤니티",
+                "nav.sub.origin": "우리는 누구인가", "nav.sub.core": "기술과 역량", "nav.sub.trust": "데이터와 신뢰", "nav.sub.careers": "채용",
+                "nav.sub.compassion": "동물 케어", "nav.sub.tomorrow": "지속가능성", "nav.sub.impact": "선을 위한 혁신"
+            }
+        };
+
+        const I18N_CORRECTIONS = {
+            "en": {
+                "shop.tab3": "Curated Pet Supplies",
+                "support.ticket.item1": "Live support (chat / messages)",
+                "support.ticket.item3": "User feedback",
+                "support.upgrade.item4": "Notes or operating guidance",
+                "support.security.item1": "Encryption and storage",
+                "trust.subtitle": "Transparent, secure, and controllable data so every record is trustworthy.",
+                "join.desc": "We believe technology can make pets healthier and owners feel more connected.<br/>We’re looking for people who love pets and technology to build Digital Pet, AI Health, and the data platform together.<br/>Open culture, challenging projects, and a mission that creates real value.",
+                "join.role3.item4": "Support hardware selection and solution optimization"
+            }
+        };
+
+        const STATIC_COPY = {
+            "#pet-shop .pal-store-tool:nth-child(1) span:last-child": {
+                "zh-CN": "收货地址", "zh-TW": "收貨地址", en: "Shipping address", ja: "お届け先", ko: "배송지"
+            },
+            "#pet-shop .pal-store-tool:nth-child(2) span:last-child": {
+                "zh-CN": "购物车", "zh-TW": "購物車", en: "Cart", ja: "カート", ko: "장바구니"
+            },
+            "#pal-store-tab-food .pal-store-tab-label-en, #pal-store-tab-food .pal-store-tab-label-cn": {
+                "zh-CN": "主粮", "zh-TW": "主食", en: "Food", ja: "主食", ko: "주식"
+            },
+            "#pal-store-tab-nutrition .pal-store-tab-label-en, #pal-store-tab-nutrition .pal-store-tab-label-cn": {
+                "zh-CN": "营养", "zh-TW": "營養", en: "Nutrition", ja: "栄養", ko: "영양"
+            },
+            "#pal-store-tab-custom .pal-store-tab-label-en, #pal-store-tab-custom .pal-store-tab-label-cn": {
+                "zh-CN": "定制", "zh-TW": "客製", en: "Custom", ja: "カスタム", ko: "맞춤"
+            },
+            "#pal-store-tab-devices .pal-store-tab-label-en, #pal-store-tab-devices .pal-store-tab-label-cn": {
+                "zh-CN": "设备", "zh-TW": "裝置", en: "Devices", ja: "デバイス", ko: "기기"
+            },
+            "#pal-store-panel-food .pal-store-heading": {
+                "zh-CN": "两条系列线", "zh-TW": "兩大系列", en: "Two collections", ja: "2つのシリーズ", ko: "두 가지 컬렉션"
+            },
+            "#pal-store-panel-nutrition .pal-store-heading": {
+                "zh-CN": "6款营养补充", "zh-TW": "6款營養補充", en: "6 daily supplements", ja: "6つの栄養サポート", ko: "6가지 영양 보충"
+            },
+            "#pal-store-panel-custom .pal-store-heading": {
+                "zh-CN": "根据体检报告推荐", "zh-TW": "依體檢報告推薦", en: "From health report to care", ja: "健康レポートから提案", ko: "건강 리포트 추천"
+            },
+            "#pal-store-panel-devices .pal-store-heading": {
+                "zh-CN": "三款设备", "zh-TW": "三款裝置", en: "Three devices", ja: "3つのデバイス", ko: "세 가지 기기"
+            },
+            "#pal-store-panel-food .pal-detail-link": {
+                "zh-CN": "查看详情", "zh-TW": "查看詳情", en: "View details", ja: "詳細を見る", ko: "자세히 보기"
+            },
+            "#pal-store-panel-custom .pal-custom-step:nth-child(1) strong": {
+                "zh-CN": "上传体检报告", "zh-TW": "上傳體檢報告", en: "Upload health report", ja: "健康レポートをアップロード", ko: "건강 리포트 업로드"
+            },
+            "#pal-store-panel-custom .pal-custom-step:nth-child(2) strong": {
+                "zh-CN": "结合宠物档案分析", "zh-TW": "結合寵物檔案分析", en: "Analyze with the pet profile", ja: "ペットプロフィールと分析", ko: "반려동물 프로필과 분석"
+            },
+            "#pal-store-panel-custom .pal-custom-step:nth-child(3) strong": {
+                "zh-CN": "推荐营养方案", "zh-TW": "推薦營養方案", en: "Recommend a nutrition plan", ja: "栄養プランを提案", ko: "영양 플랜 추천"
+            },
+            "#pal-store-panel-custom .pal-custom-cta": {
+                "zh-CN": "立即开始", "zh-TW": "立即開始", en: "Get started", ja: "今すぐ始める", ko: "지금 시작"
+            },
+            "#community .community-eyebrow": {
+                "zh-CN": "PalEcho 官方社区生态", "zh-TW": "PalEcho 官方社群生態", en: "The PalEcho community ecosystem", ja: "PalEcho 公式コミュニティ", ko: "PalEcho 공식 커뮤니티 생태계"
+            },
+            "#community .community-hero h1": {
+                "zh-CN": "社区与公益", "zh-TW": "社群與公益", en: "Community & Care", ja: "コミュニティと公益", ko: "커뮤니티와 공익"
+            },
+            "#community .community-hero-title": {
+                "zh-CN": "分享每一次成长，<br/>守护每一个生命。", "zh-TW": "分享每一次成長，<br/>守護每一個生命。", en: "Share every moment of growth,<br/>care for every life.", ja: "成長のすべてを分かち合い、<br/>すべての命を守る。", ko: "모든 성장의 순간을 나누고,<br/>모든 생명을 돌봅니다."
+            },
+            "#community .community-hero-copy": {
+                "zh-CN": "连接每一位宠物主人，<br/>让经验、公益与专业共同守护生命。", "zh-TW": "連結每一位寵物主人，<br/>讓經驗、公益與專業共同守護生命。", en: "Connect every pet parent,<br/>and let experience, care, and expertise protect life together.", ja: "すべての飼い主をつなぎ、<br/>経験・公益・専門性で命を守る。", ko: "모든 반려동물 보호자를 연결해<br/>경험과 전문성으로 생명을 함께 지킵니다."
+            },
+            "#community .community-keywords > span": {
+                "zh-CN": "热门搜索", "zh-TW": "熱門搜尋", en: "Trending searches", ja: "人気の検索", ko: "인기 검색"
+            },
+            "#community [data-open-publish]": {
+                "zh-CN": "发布分享", "zh-TW": "發布分享", en: "Share a story", ja: "投稿する", ko: "공유하기"
+            },
+            "#community [data-switch-module='ecosystem']": {
+                "zh-CN": "浏览公益与生态 <span aria-hidden='true'>→</span>", "zh-TW": "瀏覽公益與生態 <span aria-hidden='true'>→</span>", en: "Explore care & impact <span aria-hidden='true'>→</span>", ja: "公益とエコシステムを見る <span aria-hidden='true'>→</span>", ko: "공익과 생태계 보기 <span aria-hidden='true'>→</span>"
+            }
+        };
+
+        const STATIC_ATTRIBUTES = {
+            "#community-search-input": {
+                placeholder: {
+                    "zh-CN": "搜索养宠经验、公益活动、合作医院……", "zh-TW": "搜尋養寵經驗、公益活動、合作醫院……", en: "Search pet care tips, events, partner hospitals…", ja: "飼育のヒント、イベント、提携病院を検索…", ko: "반려동물 팁, 행사, 협력 병원 검색…"
+                },
+                "aria-label": {
+                    "zh-CN": "搜索社区与公益内容", "zh-TW": "搜尋社群與公益內容", en: "Search community and care", ja: "コミュニティと公益を検索", ko: "커뮤니티와 공익 검색"
+                }
+            }
+        };
+
+        const applyStaticCopy = (lang) => {
+            Object.entries(STATIC_COPY).forEach(([selector, values]) => {
+                document.querySelectorAll(selector).forEach((element) => {
+                    if (!element.dataset.i18nOriginal) element.dataset.i18nOriginal = element.innerHTML;
+                    element.innerHTML = values[lang] || element.dataset.i18nOriginal;
+                });
+            });
+            Object.entries(STATIC_ATTRIBUTES).forEach(([selector, attrs]) => {
+                document.querySelectorAll(selector).forEach((element) => Object.entries(attrs).forEach(([attribute, values]) => {
+                    element.setAttribute(attribute, values[lang] || element.getAttribute(attribute) || "");
+                }));
+            });
+        };
+
+        const mergeI18n = () => {
+            Object.keys(I18N_EXT).forEach((lang) => {
+                I18N[lang] = { ...I18N[lang], ...I18N_EXT[lang], ...I18N_NAV[lang], ...I18N_CORRECTIONS[lang] };
+            });
+        };
+
+        const applyDesktopNavHoverLabels = (navDict) => {
+            document.querySelectorAll("#desktop-nav [data-nav-hover] .nav-hover-label-localized[data-nav-default]").forEach((element) => {
+                const key = element.getAttribute("data-i18n");
+                element.textContent = (key && navDict[key]) || element.dataset.navDefault || "";
+            });
+        };
+
+        const applyLanguage = (lang) => {
+            const dict = I18N[lang] || I18N["zh-CN"];
+            const navDict = I18N[lang] || {};
+            document.documentElement.lang = lang;
+            document.documentElement.dataset.lang = lang;
+            document.querySelectorAll("#desktop-nav [data-nav-hover].is-localized").forEach((el) => el.classList.remove("is-localized"));
+            document.querySelectorAll("[data-i18n]").forEach((el) => {
+                const key = el.getAttribute("data-i18n");
+                if (dict[key]) {
+                    el.textContent = dict[key];
+                }
+            });
+            document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+                const key = el.getAttribute("data-i18n-placeholder");
+                if (dict[key]) {
+                    el.setAttribute("placeholder", dict[key]);
+                }
+            });
+            document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+                const key = el.getAttribute("data-i18n-html");
+                if (dict[key]) {
+                    el.innerHTML = dict[key];
+                }
+            });
+            applyDesktopNavHoverLabels(navDict);
+            applyStaticCopy(lang);
+            const label = document.getElementById("lang-label");
+            if (label) label.textContent = dict["lang.label"] || "Language";
+        };
+
+        const initDesktopNavHover = () => {
+            document.querySelectorAll("#desktop-nav [data-nav-hover]").forEach((item) => {
+                const showLocalized = () => item.classList.add("is-localized");
+                const showEnglish = () => item.classList.remove("is-localized");
+                item.addEventListener("pointerenter", showLocalized);
+                item.addEventListener("pointerleave", showEnglish);
+                item.addEventListener("focusin", showLocalized);
+                item.addEventListener("focusout", showEnglish);
+            });
+        };
+
+        // --- 1. 滚动显现动画 ---
+        const initScrollReveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach((element) => {
+                observer.observe(element);
+            });
+        };
+
+        const initTabs = (tabsContainerId, defaultTargetId) => {
+            const container = document.getElementById(tabsContainerId);
+            if (!container) return;
+            const buttons = Array.from(container.querySelectorAll('button[data-target]'));
+            const panels = buttons.map((btn) => document.getElementById(btn.dataset.target)).filter(Boolean);
+
+            const activate = (btn) => {
+                buttons.forEach((b) => b.classList.remove('tab-active'));
+                btn.classList.add('tab-active');
+                panels.forEach((panel) => panel.classList.add('hidden-section'));
+                const target = document.getElementById(btn.dataset.target);
+                if (target) target.classList.remove('hidden-section');
+            };
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => activate(btn));
+            });
+
+            const defaultBtn = buttons.find((btn) => btn.dataset.target === defaultTargetId) || buttons[0];
+            if (defaultBtn) activate(defaultBtn);
+        };
+
+        const initMobileMenu = () => {
+            const button = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!button || !menu || !icon) return;
+
+            const setMenuOpen = (open) => {
+                menu.classList.toggle('hidden', !open);
+                menu.setAttribute('aria-hidden', String(!open));
+                button.setAttribute('aria-expanded', String(open));
+                button.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+                icon.classList.toggle('fa-bars', !open);
+                icon.classList.toggle('fa-xmark', open);
+                document.body.classList.toggle('mobile-menu-open', open);
+            };
+
+            button.addEventListener('click', () => {
+                setMenuOpen(button.getAttribute('aria-expanded') !== 'true');
+            });
+
+            menu.querySelectorAll('a[href^="#"]').forEach((link) => {
+                link.addEventListener('click', () => setMenuOpen(false));
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+                    setMenuOpen(false);
+                    button.focus();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) setMenuOpen(false);
+            });
+        };
+
+        const initNavRouting = () => {
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            const navSections = Array.from(document.querySelectorAll('.nav-section'));
+
+            const showSection = (target) => {
+                navSections.forEach((section) => section.classList.remove('visible'));
+                target.classList.add('visible');
+                target.classList.add('pop-in');
+                setTimeout(() => target.classList.remove('pop-in'), 400);
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            navLinks.forEach((link) => {
+                link.addEventListener('click', (event) => {
+                    const targetId = link.getAttribute('href')?.slice(1);
+                    if (!targetId) return;
+                    const target = document.getElementById(targetId);
+                    if (target && target.classList.contains('nav-section')) {
+                        event.preventDefault();
+                        showSection(target);
+                    }
+                });
+            });
+        };
+
+        const initSimpleToggles = () => {
+            const petBtn = document.getElementById('generate-pet-btn');
+            const petResult = document.getElementById('digital-pet-result');
+            if (petBtn && petResult) {
+                petBtn.addEventListener('click', () => {
+                    petResult.classList.remove('hidden-section');
+                    petResult.classList.add('pop-in');
+                    setTimeout(() => petResult.classList.remove('pop-in'), 400);
+                });
+            }
+
+            const analysisBtn = document.getElementById('deep-analysis-btn');
+            const analysisPanel = document.getElementById('analysis-panel');
+            if (analysisBtn && analysisPanel) {
+                const questionInput = document.getElementById('ai-health-question');
+                const statusEl = document.getElementById('ai-health-status');
+                const replyEl = document.getElementById('ai-health-reply');
+                const metric1 = document.getElementById('ai-health-metric-1');
+                const metric2 = document.getElementById('ai-health-metric-2');
+                const metric3 = document.getElementById('ai-health-metric-3');
+                const metric4 = document.getElementById('ai-health-metric-4');
+                const uploadBtn = document.getElementById('ai-health-upload-btn');
+                const uploadInput = document.getElementById('ai-health-upload-input');
+                const normalizeApiBase = (value) => {
+                    if (!value) return '';
+                    let base = String(value).trim();
+                    if (!base) return '';
+                    if (base.startsWith('//')) {
+                        base = `${window.location.protocol}${base}`;
+                    } else if (!/^https?:\/\//i.test(base)) {
+                        base = `http://${base}`;
+                    }
+                    return base.replace(/\/+$/, '');
+                };
+                const isLocalHost =
+                    window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1';
+                const defaultLocalBase =
+                    isLocalHost && window.location.port === '5173'
+                        ? 'http://localhost:3001'
+                        : '';
+                const apiBase = normalizeApiBase(window.PALECHO_API_BASE) || defaultLocalBase;
+                let uploadedImageUrl = '';
+
+                if (uploadBtn && uploadInput) {
+                    uploadBtn.addEventListener('click', () => {
+                        uploadInput.click();
+                    });
+                    uploadInput.addEventListener('change', async () => {
+                        const file = uploadInput.files?.[0];
+                        if (!file) return;
+                        if (statusEl) statusEl.textContent = '图片上传中...';
+                        uploadBtn.disabled = true;
+                        uploadBtn.classList.add('opacity-70');
+                        try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            const resp = await fetch(`${apiBase}/api/public/ai-health/upload`, {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const data = await resp.json();
+                            if (!resp.ok) {
+                                throw new Error(data?.error || '上传失败');
+                            }
+                            uploadedImageUrl = data?.url || '';
+                            if (statusEl) statusEl.textContent = uploadedImageUrl ? '图片上传成功。' : '图片上传完成。';
+                        } catch (err) {
+                            if (statusEl) statusEl.textContent = `上传失败：${err?.message || err}`;
+                        } finally {
+                            uploadBtn.disabled = false;
+                            uploadBtn.classList.remove('opacity-70');
+                            uploadInput.value = '';
+                        }
+                    });
+                }
+
+                analysisBtn.addEventListener('click', async () => {
+                    const question = questionInput ? questionInput.value.trim() : '';
+                    if (!question) {
+                        if (statusEl) statusEl.textContent = '请先输入健康问题描述。';
+                        return;
+                    }
+                    if (statusEl) statusEl.textContent = 'AI 正在分析，请稍候...';
+                    analysisBtn.disabled = true;
+                    analysisBtn.classList.add('opacity-70');
+
+                    try {
+                        const resp = await fetch(`${apiBase}/api/ai-health`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                question,
+                                context: uploadedImageUrl ? `image_url: ${uploadedImageUrl}` : undefined
+                            })
+                        });
+                        const data = await resp.json();
+                        if (!resp.ok) {
+                            throw new Error(data?.error || '请求失败');
+                        }
+                        if (replyEl) replyEl.textContent = data?.reply || '暂无回复。';
+                        if (metric1) metric1.textContent = '心率区间：待评估';
+                        if (metric2) metric2.textContent = '活动趋势：待评估';
+                        if (metric3) metric3.textContent = '饮食评估：待评估';
+                        if (metric4) metric4.textContent = '睡眠状态：待评估';
+                        if (statusEl) statusEl.textContent = '分析完成。';
+                    } catch (err) {
+                        if (statusEl) statusEl.textContent = `分析失败：${err?.message || err}`;
+                    } finally {
+                        analysisBtn.disabled = false;
+                        analysisBtn.classList.remove('opacity-70');
+                    }
+
+                    analysisPanel.classList.remove('hidden-section');
+                    analysisPanel.classList.add('pop-in');
+                    setTimeout(() => analysisPanel.classList.remove('pop-in'), 400);
+                });
+            }
+
+            const aiFeedBtn = document.getElementById('ai-feed-btn');
+            if (aiFeedBtn) {
+                aiFeedBtn.addEventListener('click', () => {
+                    const shopSection = document.getElementById('pet-shop');
+                    if (shopSection) shopSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            const jobBtn = document.getElementById('job-btn');
+            const jobPanel = document.getElementById('job-panel');
+            if (jobBtn && jobPanel) {
+                jobBtn.addEventListener('click', () => {
+                    jobPanel.classList.remove('hidden-section');
+                    jobPanel.classList.add('pop-in');
+                    setTimeout(() => jobPanel.classList.remove('pop-in'), 400);
+                });
+            }
+
+            // Resume link now opens a dedicated page.
+        };
+
+        // --- 初始化执行 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            mergeI18n();
+            initDesktopNavHover();
+            const langBtn = document.getElementById("lang-btn");
+            const langMenu = document.getElementById("lang-menu");
+            const langSwitcher = document.getElementById("lang-switcher");
+            if (langBtn && langMenu && langSwitcher) {
+                langBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const isOpen = langSwitcher.classList.toggle("is-open");
+                    langBtn.setAttribute("aria-expanded", String(isOpen));
+                });
+                document.addEventListener("click", () => {
+                    langSwitcher.classList.remove("is-open");
+                    langBtn.setAttribute("aria-expanded", "false");
+                });
+                langMenu.querySelectorAll("button[data-lang]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        const lang = btn.getAttribute("data-lang") || "zh-CN";
+                        localStorage.setItem("palecho_lang", lang);
+                        applyLanguage(lang);
+                        langSwitcher.classList.remove("is-open");
+                        langBtn.setAttribute("aria-expanded", "false");
+                    });
+                });
+            }
+            applyLanguage(localStorage.getItem("palecho_lang") || "zh-CN");
+            window.PalEchoHeroBackground?.init();
+            initScrollReveal();
+            initTabs('shop-tabs', 'shop-feed');
+            initTabs('support-tabs', 'support-scope');
+            initMobileMenu();
+            initNavRouting();
+            initSimpleToggles();
+        });
+
+    </script>
+<script src="/mira-experience.js?v=20260731-10"></script>
+<script src="/lifebase-experience.js?v=20260731-4"></script>
+<script src="/echo-experience.js?v=20260731-2"></script>
+<script src="/pulse-experience.js?v=20260731-2"></script>
+<script src="/pal-store.js?v=20260731-1"></script>
+<script src="/community-experience.js?v=20260731-1"></script>
+</body>
+</html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Community | PalEcho</title>
+<meta name="description" content="PalEcho 官方社区生态：分享养宠经验、参与公益行动，找到值得信赖的专业支持。" />
+<meta property="og:title" content="加入我们 | PalEcho" />
+<meta property="og:description" content="加入 PalEcho，让科技与宠物生活同行。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://palecho.com/join-us.html" />
+<meta property="og:site_name" content="PalEcho" />
+<meta property="og:image" content="https://palecho.com/og-join-us.png" />
+<meta property="og:image:width" content="1731" />
+<meta property="og:image:height" content="909" />
+<meta property="og:image:alt" content="加入 PalEcho，让科技与宠物生活同行" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="加入我们 | PalEcho" />
+<meta name="twitter:description" content="加入 PalEcho，让科技与宠物生活同行。" />
+<meta name="twitter:image" content="https://palecho.com/og-join-us.png" />
+<link rel="icon" href="/favicon.ico?v=20260729-2" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20260729-2" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260729-2" />
+<link rel="manifest" href="/site.webmanifest?v=20260729-2" />
+<meta name="theme-color" content="#f5f5f1" />
+<!-- 引入 Tailwind CSS -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/0915/3.4.17.js"></script>
+<!-- 引入 Font Awesome 图标库 -->
+<script src="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/js/all.min.js"></script>
+<link href="https://image.uc.cn/s/uae/g/3n/mos-production/fontawesome-free-7.1.0-web/css/fontawesome.min.css" rel="stylesheet"/>
+<!-- 引入 Google Fonts (Quicksand 用于圆润字体) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Quicksand:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="/mira-experience.css?v=20260731-9" rel="stylesheet"/>
+<link href="/lifebase-experience.css?v=20260731-3" rel="stylesheet"/>
+<link href="/echo-experience.css?v=20260731-2" rel="stylesheet"/>
+<link href="/pulse-experience.css?v=20260731-2" rel="stylesheet"/>
+<link href="/pal-store.css?v=20260731-1" rel="stylesheet"/>
+<link href="/community-experience.css?v=20260731-1" rel="stylesheet"/>
+<style>
+        :root {
+            --site-header-height: 3.5rem;
+        }
+
+        /* 全局字体设置 */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff url('/home-liquid-glass-white.png') center top / cover fixed no-repeat;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* 品牌名称圆润字体 */
+        .brand-font {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* 玻璃拟态导航栏 */
+        .glass-nav {
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-bottom: 0;
+            box-shadow: none;
+        }
+
+        .brand-liquid {
+            color: #07090d;
+            background: linear-gradient(180deg, #343942 0%, #05070a 42%, #000000 68%, #2f3540 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
+            filter: drop-shadow(0 5px 10px rgba(20, 24, 31, 0.12));
+        }
+
+        .nav-liquid-control {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            min-height: 2.1rem;
+            padding: 0.42rem 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.78);
+            border-radius: 999px;
+            color: #4b5563;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2) 52%, rgba(255, 255, 255, 0.48));
+            backdrop-filter: blur(16px) saturate(125%);
+            -webkit-backdrop-filter: blur(16px) saturate(125%);
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.96),
+                inset -1px -1px 0 rgba(31, 41, 55, 0.08),
+                0 5px 14px rgba(31, 41, 55, 0.08);
+            transition: color 180ms ease, transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+        }
+
+        .nav-liquid-control::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            inset: 1px 12% 52%;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0));
+            opacity: 0.74;
+            pointer-events: none;
+        }
+
+        .nav-liquid-control:hover,
+        .nav-liquid-control:focus-visible {
+            color: #111827;
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.3) 52%, rgba(255, 255, 255, 0.6));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 1),
+                inset -1px -1px 0 rgba(31, 41, 55, 0.08),
+                0 8px 20px rgba(31, 41, 55, 0.12);
+        }
+
+        .nav-liquid-control:active {
+            transform: translateY(0) scale(0.97);
+        }
+
+        .nav-liquid-primary {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.68);
+            background: linear-gradient(135deg, rgba(54, 125, 246, 0.9), rgba(28, 92, 224, 0.82) 52%, rgba(72, 139, 255, 0.92));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.52),
+                inset -1px -1px 0 rgba(12, 55, 149, 0.28),
+                0 7px 18px rgba(35, 94, 211, 0.25);
+        }
+
+        .nav-liquid-primary:hover,
+        .nav-liquid-primary:focus-visible {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(72, 139, 255, 0.96), rgba(28, 92, 224, 0.86) 52%, rgba(87, 149, 255, 0.96));
+            box-shadow:
+                inset 1px 1px 0 rgba(255, 255, 255, 0.62),
+                inset -1px -1px 0 rgba(12, 55, 149, 0.28),
+                0 10px 24px rgba(35, 94, 211, 0.32);
+        }
+
+        /* 导航下拉菜单始终保持固定命中区域，避免 Safari 在模糊层与位移动画之间丢失 hover。 */
+        .group > .nav-dropdown {
+            display: block;
+            top: calc(100% - 4px);
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%);
+            transition:
+                opacity 180ms ease,
+                visibility 0s linear 180ms;
+        }
+
+        .group:hover > .nav-dropdown,
+        .group:focus-within > .nav-dropdown {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                opacity 180ms ease,
+                visibility 0s;
+        }
+
+        /* 语言菜单同样在悬停标题时展开，并保留键盘聚焦与触控点击支持。 */
+        #lang-menu {
+            display: flex;
+            top: calc(100% - 4px);
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition:
+                opacity 180ms ease,
+                visibility 0s linear 180ms;
+        }
+
+        #lang-switcher:hover #lang-menu,
+        #lang-switcher:focus-within #lang-menu,
+        #lang-switcher.is-open #lang-menu {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition:
+                opacity 180ms ease,
+                visibility 0s;
+        }
+
+        /* 二级导航在默认状态保持英文，仅在当前条目悬停时显示本地化标题。 */
+        .product-name-switch,
+        .nav-label-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            min-height: 1.25rem;
+            white-space: nowrap;
+        }
+
+        #mobile-menu .grid > a:not(.nav-label-switch) {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+
+        #mobile-menu .grid > a:not(.nav-label-switch) small {
+            color: #6b7280;
+            font-size: .72rem;
+            line-height: 1.2;
+        }
+
+        /* 两个标题占用同一网格单元，以最长文本稳定下拉菜单的宽度与行高。 */
+        #desktop-nav [data-nav-hover] {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: center;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-en,
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            grid-area: 1 / 1;
+            transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-en {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #desktop-nav [data-nav-hover] .nav-hover-label-localized {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-en {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #desktop-nav [data-nav-hover].is-localized .nav-hover-label-localized {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 180ms ease-in-out, visibility 0s;
+        }
+
+        .locale-fit,
+        [data-i18n] {
+            overflow-wrap: anywhere;
+        }
+
+        /* 简短标题、按钮和导航在各语言中保持单行；正文保留自然换行。 */
+        [data-i18n].locale-nowrap,
+        .product-name-switch,
+        .nav-label-switch,
+        #lang-label,
+        [data-i18n="hero.title"],
+        [data-i18n="digital.title"],
+        [data-i18n="ai.title"],
+        [data-i18n="data.title"],
+        [data-i18n="hardware.title"],
+        [data-i18n="shop.title"],
+        [data-i18n="support.title"] {
+            white-space: nowrap;
+            overflow-wrap: normal;
+        }
+
+        html[data-lang="en"] [data-i18n="hero.title"],
+        html[data-lang="ja"] [data-i18n="hero.title"] {
+            letter-spacing: -.055em;
+        }
+
+        @media (max-width: 767px) {
+            [data-i18n="hero.title"],
+            [data-i18n="digital.title"],
+            [data-i18n="ai.title"],
+            [data-i18n="data.title"],
+            [data-i18n="hardware.title"],
+            [data-i18n="shop.title"],
+            [data-i18n="support.title"] {
+                white-space: normal;
+                text-wrap: balance;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .product-name-switch > span,
+            .nav-label-switch > span {
+                transition-duration: 1ms;
+            }
+        }
+
+        /* 滚动显现动画类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 首页独立生命感背景层 */
+        #canvas-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background: transparent;
+            isolation: isolate;
+        }
+
+        #canvas-container::before,
+        #canvas-container::after {
+            display: none;
+        }
+
+        #canvas-container .hero-living-canvas {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-subtitle {
+            display: inline-block;
+            width: max-content;
+            max-width: none !important;
+            margin-inline: auto;
+            text-align: center;
+            white-space: nowrap;
+            overflow-wrap: normal;
+        }
+
+        @media (max-width: 1023px) {
+            .hero-subtitle {
+                display: block;
+                width: auto;
+                max-width: 42rem !important;
+                white-space: normal;
+                text-wrap: balance;
+            }
+        }
+
+        /* 文本阴影增强可读性 */
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .flow-step::after {
+            content: '';
+            position: absolute;
+            right: -28px;
+            top: 50%;
+            width: 24px;
+            height: 2px;
+            background: #d1d5db;
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .chat-bubble {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+
+        .tab-active {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .nav-section {
+            display: none;
+            min-height: calc(100vh - var(--site-header-height));
+            min-height: calc(100dvh - var(--site-header-height));
+            scroll-margin-top: var(--site-header-height);
+        }
+
+        .nav-section.visible {
+            display: block;
+            animation: sectionFadeUp 0.45s ease-out;
+        }
+
+        .hero-section {
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        #mobile-menu {
+            max-height: calc(100vh - var(--site-header-height));
+            max-height: calc(100dvh - var(--site-header-height));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body.mobile-menu-open {
+            overflow: hidden;
+        }
+
+        .pop-in {
+            animation: popIn 0.35s ease-out;
+        }
+
+        @keyframes sectionFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 767px) {
+            body {
+                background-attachment: scroll;
+                background-position: center top;
+                background-size: auto max(100svh, 37rem);
+            }
+
+            .glass-nav > div:first-child {
+                gap: 0.5rem;
+                padding-left: max(0.875rem, env(safe-area-inset-left, 0px));
+                padding-right: max(0.875rem, env(safe-area-inset-right, 0px));
+            }
+
+            .brand-liquid {
+                flex-shrink: 0;
+                font-size: 1.25rem !important;
+                line-height: 1;
+            }
+
+            #lang-btn,
+            #mobile-menu-btn {
+                width: 2.75rem;
+                min-width: 2.75rem;
+                min-height: 2.75rem;
+                padding: 0;
+                touch-action: manipulation;
+            }
+
+            #lang-btn {
+                gap: 0;
+            }
+
+            #mobile-menu {
+                max-height: calc(100svh - var(--site-header-height));
+                scrollbar-width: thin;
+            }
+
+            #mobile-menu > nav {
+                padding-left: max(1rem, env(safe-area-inset-left, 0px));
+                padding-right: max(1rem, env(safe-area-inset-right, 0px));
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+            }
+
+            #mobile-menu a,
+            #mobile-menu button {
+                min-height: 2.75rem;
+                touch-action: manipulation;
+            }
+
+            .hero-section {
+                height: 100svh;
+                min-height: 37rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero-section [data-i18n="hero.title"] {
+                max-width: calc(100vw - 2rem);
+                margin-inline: auto;
+                font-size: clamp(2rem, 10.2vw, 2.55rem) !important;
+                line-height: 1.12;
+                letter-spacing: -0.045em;
+            }
+
+            html[data-lang="en"] .hero-section [data-i18n="hero.title"],
+            html[data-lang="ja"] .hero-section [data-i18n="hero.title"],
+            html[data-lang="ko"] .hero-section [data-i18n="hero.title"] {
+                font-size: clamp(1.8rem, 8.8vw, 2.25rem) !important;
+                line-height: 1.15;
+            }
+
+            .hero-subtitle {
+                width: 100%;
+                max-width: 34rem !important;
+                padding-inline: 0.5rem;
+                font-size: 0.95rem !important;
+                line-height: 1.72;
+            }
+
+            .hero-section a[data-i18n="hero.primary"] {
+                min-height: 2.9rem;
+                min-width: min(11.25rem, calc(100vw - 2rem));
+                touch-action: manipulation;
+            }
+
+            .nav-section {
+                padding-top: 4.5rem !important;
+                padding-bottom: 4.5rem !important;
+            }
+
+            .nav-section .space-y-16 > :not([hidden]) ~ :not([hidden]) {
+                margin-top: 2.5rem;
+            }
+
+            .flow-step::after {
+                display: none;
+            }
+
+            #meta-claw article,
+            #data-chain article {
+                min-height: auto;
+            }
+
+            #pet-data .w-24 {
+                width: 4.5rem;
+                flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 374px) {
+            .hero-section [data-i18n="hero.title"] {
+                font-size: 1.9rem !important;
+            }
+
+            .hero-subtitle {
+                padding-inline: 0.25rem;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        @media (max-width: 767px) and (orientation: landscape) {
+            .hero-section {
+                height: 36rem;
+                min-height: 36rem;
+            }
+
+            .hero-section [data-i18n="hero.title"] {
+                font-size: 2rem !important;
+            }
+
+            .hero-subtitle {
+                max-width: 38rem !important;
+                font-size: 0.9rem !important;
+                line-height: 1.55;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+<style>
+  :root {
+    --join-ink: #151515;
+    --join-muted: #777772;
+    --join-paper: #f5f5f1;
+    --join-line: rgba(21, 21, 21, 0.12);
+    --join-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .join-page {
+    min-height: 100vh;
+    background: var(--join-paper);
+    color: var(--join-ink);
+    padding: clamp(110px, 15vh, 164px) 24px 72px;
+  }
+
+  .join-return {
+    position: fixed;
+    z-index: 20;
+    top: clamp(20px, 3vw, 30px);
+    right: clamp(20px, 4vw, 60px);
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--join-line);
+    border-radius: 50%;
+    background: rgba(245, 245, 241, 0.8);
+    color: var(--join-ink);
+    transition: transform 300ms var(--join-ease), background-color 300ms ease;
+  }
+
+  .join-return::before,
+  .join-return::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .join-return::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .join-return::after { transform: translate(-50%, -50%) rotate(-45deg); }
+  .join-return:hover { background: #fff; transform: scale(1.04); }
+  .join-return:focus-visible { outline: 2px solid var(--join-ink); outline-offset: 3px; }
+
+  .join-shell {
+    width: min(1080px, 100%);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .join-title {
+    max-width: none;
+    margin: 0 auto;
+    font-family: "Quicksand", "Inter", sans-serif;
+    font-size: clamp(28px, 3.5vw, 52px);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+  }
+
+  .join-description {
+    max-width: 860px;
+    margin: 34px auto 0;
+    color: #5f6268;
+    font-size: clamp(16px, 1.55vw, 20px);
+    line-height: 1.8;
+    letter-spacing: -0.025em;
+  }
+
+  .join-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 44px;
+  }
+
+  .join-button {
+    min-width: 142px;
+    min-height: 52px;
+    padding: 0 24px;
+    border: 1px solid var(--join-line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--join-ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 240ms var(--join-ease), background-color 240ms ease, color 240ms ease;
+  }
+
+  .join-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .join-button--primary {
+    border-color: var(--join-ink);
+    background: var(--join-ink);
+    color: #fff;
+  }
+
+  .join-button--secondary:hover {
+    background: #fff;
+  }
+
+  .join-button:focus-visible,
+  .join-dialog-close:focus-visible,
+  .join-email:focus-visible {
+    outline: 2px solid var(--join-ink);
+    outline-offset: 3px;
+  }
+
+  .join-note {
+    margin: 70px auto 0;
+    width: min(720px, 100%);
+    height: 1px;
+    background: var(--join-line);
+  }
+
+  .join-dialog {
+    width: min(1080px, calc(100% - 32px));
+    max-height: min(760px, calc(100vh - 40px));
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(21, 21, 21, 0.1);
+    border-radius: 28px;
+    background: #fff;
+    color: var(--join-ink);
+    box-shadow: 0 24px 90px rgba(21, 21, 21, 0.18);
+  }
+
+  .join-dialog::backdrop {
+    background: rgba(21, 21, 21, 0.36);
+    backdrop-filter: blur(7px);
+  }
+
+  .join-dialog-inner {
+    position: relative;
+    padding: clamp(28px, 5vw, 56px);
+    overflow: auto;
+    max-height: inherit;
+  }
+
+  .join-dialog-heading {
+    margin: 0 52px 30px 0;
+    font-family: "Quicksand", "Inter", sans-serif;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+  }
+
+  .join-dialog-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--join-line);
+    border-radius: 50%;
+    background: var(--join-paper);
+    color: var(--join-ink);
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 220ms var(--join-ease), background-color 220ms ease;
+  }
+
+  .join-dialog-close:hover {
+    transform: rotate(90deg);
+    background: #fff;
+  }
+
+  .join-role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .join-role {
+    padding: 26px 24px;
+    border: 1px solid var(--join-line);
+    border-radius: 20px;
+    background: var(--join-paper);
+    text-align: left;
+  }
+
+  .join-role h3 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 650;
+    letter-spacing: -0.04em;
+  }
+
+  .join-role-label {
+    margin: 28px 0 13px;
+    color: var(--join-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .join-role ul {
+    display: grid;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #5f6268;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .join-role li {
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .join-role li::before {
+    content: "";
+    position: absolute;
+    top: 0.65em;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--join-ink);
+  }
+
+  .join-email-dialog {
+    width: min(510px, calc(100% - 32px));
+  }
+
+  .join-email-dialog .join-dialog-inner {
+    padding: clamp(36px, 7vw, 64px);
+    text-align: center;
+  }
+
+  .join-email-dialog .join-dialog-heading {
+    margin: 0 44px 18px 0;
+    text-align: left;
+  }
+
+  .join-email {
+    display: inline-block;
+    margin-top: 22px;
+    color: var(--join-ink);
+    font-size: clamp(18px, 3.5vw, 23px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--join-ink);
+  }
+
+  @media (max-width: 820px) {
+    .join-role-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .join-page {
+      padding: 104px 18px 56px;
+    }
+
+    .join-description {
+      margin-top: 26px;
+      line-height: 1.75;
+    }
+
+    .join-description br {
+      display: none;
+    }
+
+    .join-title {
+      font-size: clamp(20px, 5.5vw, 28px);
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    .join-actions {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 34px;
+    }
+
+    .join-button {
+      width: min(100%, 300px);
+    }
+
+    .join-note {
+      margin-top: 52px;
+    }
+
+    .join-dialog {
+      width: min(100% - 20px, 1080px);
+      border-radius: 22px;
+    }
+
+    .join-dialog-inner {
+      padding: 30px 22px;
+    }
+
+    .join-dialog-close {
+      top: 15px;
+      right: 15px;
+    }
+
+    .join-role {
+      padding: 22px 20px;
+    }
+  }
+</style>
+
+<a class="join-return" href="/" aria-label="返回 PalEcho 首页"></a>
+<main class="join-page">
+  <section class="join-shell" aria-labelledby="join-title">
+    <h1 class="join-title" id="join-title">加入 PalEcho，让科技与宠物生活同行</h1>
+    <p class="join-description">在 PalEcho，我们相信科技的力量可以让宠物生活更健康、更安全，也让主人体验更贴心的陪伴。<br/>我们正在寻找热爱宠物、热爱科技、有创新精神的朋友，一起推动数字宠物、AI 健康管理和宠物数据平台的发展。<br/>这里有自由、开放的创新空间，有充满挑战的项目，也有成就感满满的使命——让每一次科技应用都向善而行，为宠物和主人创造真正的价值。</p>
+    <div class="join-actions">
+      <button class="join-button join-button--primary" id="job-btn" type="button">查看岗位</button>
+      <button class="join-button join-button--secondary" id="resume-btn" type="button">投递简历</button>
+    </div>
+    <div class="join-note" aria-hidden="true"></div>
+  </section>
+</main>
+
+<dialog class="join-dialog" id="job-dialog" aria-labelledby="job-dialog-title">
+  <div class="join-dialog-inner">
+    <button class="join-dialog-close" type="button" aria-label="关闭岗位列表" data-close-dialog>×</button>
+    <h2 class="join-dialog-heading" id="job-dialog-title">查看岗位</h2>
+    <div class="join-role-grid">
+      <article class="join-role">
+        <h3>AI系统架构师</h3>
+        <p class="join-role-label">工作内容</p>
+        <ul>
+          <li>设计并实现宠物健康分析的大模型和数据处理系统</li>
+          <li>搭建后端数据平台，管理用户、宠物和健康数据</li>
+          <li>实现实时/准实时健康状态分析和异常预警</li>
+          <li>解析体检报告并生成健康建议</li>
+          <li>与平台和硬件负责人协作，保证数据流畅传输与分析</li>
+        </ul>
+      </article>
+      <article class="join-role">
+        <h3>产品与体验设计师</h3>
+        <p class="join-role-label">工作内容</p>
+        <ul>
+          <li>负责 PalEcho 平台前端界面与用户交互设计</li>
+          <li>实现健康数据可视化和异常提醒功能</li>
+          <li>设计数据上传和查看流程（体检报告、健康分析）</li>
+          <li>与 AI 和硬件负责人协作，实现功能对接与优化</li>
+          <li>优化用户体验，确保产品易用</li>
+        </ul>
+      </article>
+      <article class="join-role">
+        <h3>智能硬件集成师</h3>
+        <p class="join-role-label">工作内容</p>
+        <ul>
+          <li>对接现成智能宠物设备，完成数据采集和传输</li>
+          <li>设计数据传输流程（蓝牙/WiFi → 平台）</li>
+          <li>保证数据采集稳定性与准确性</li>
+          <li>协助硬件选型和方案优化，实现高效集成</li>
+          <li>与 AI 和前端负责人协作，确保数据可用</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="join-dialog join-email-dialog" id="resume-dialog" aria-labelledby="resume-dialog-title">
+  <div class="join-dialog-inner">
+    <button class="join-dialog-close" type="button" aria-label="关闭投递邮箱" data-close-dialog>×</button>
+    <h2 class="join-dialog-heading" id="resume-dialog-title">投递邮箱</h2>
+    <a class="join-email" href="mailto:wangsong423258@gmail.com">wangsong423258@gmail.com</a>
+  </div>
+</dialog>
+
+<script>
+  (() => {
+    const jobButton = document.getElementById('job-btn');
+    const resumeButton = document.getElementById('resume-btn');
+    const jobDialog = document.getElementById('job-dialog');
+    const resumeDialog = document.getElementById('resume-dialog');
+    const dialogs = [jobDialog, resumeDialog].filter(Boolean);
+
+    jobButton?.addEventListener('click', () => jobDialog?.showModal());
+    resumeButton?.addEventListener('click', () => resumeDialog?.showModal());
+
+    dialogs.forEach((dialog) => {
+      dialog.querySelectorAll('[data-close-dialog]').forEach((button) => {
+        button.addEventListener('click', () => dialog.close());
+      });
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

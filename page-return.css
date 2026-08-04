@@ -1,0 +1,29 @@
+.page-return {
+  position: fixed;
+  z-index: 50;
+  top: clamp(20px, 3vw, 30px);
+  right: clamp(20px, 4vw, 60px);
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(23, 23, 22, .12);
+  border-radius: 50%;
+  background: rgba(245, 245, 241, .84);
+  color: #171716;
+  transition: transform 300ms ease, background-color 300ms ease;
+}
+
+.page-return::before,
+.page-return::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+}
+
+.page-return::before { transform: translate(-50%, -50%) rotate(45deg); }
+.page-return::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.page-return:hover { background: #fff; transform: scale(1.04); }
+.page-return:focus-visible { outline: 2px solid rgba(23, 23, 22, .55); outline-offset: 3px; }

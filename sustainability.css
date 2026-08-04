@@ -1,0 +1,252 @@
+:root {
+  --sustainability-paper: #f5f5f1;
+  --sustainability-ink: #151515;
+  --sustainability-body: #656560;
+  --sustainability-quiet: #8e8e93;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--sustainability-paper);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--sustainability-paper);
+  color: var(--sustainability-ink);
+  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, p { margin: 0; }
+
+.page-return {
+  position: fixed;
+  z-index: 20;
+  top: 30px;
+  right: clamp(24px, 4vw, 60px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(21, 21, 21, 0.12);
+  border-radius: 50%;
+  background: rgba(245, 245, 241, 0.8);
+  color: var(--sustainability-ink);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), background-color 300ms ease;
+}
+
+.page-return::before,
+.page-return::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+}
+
+.page-return::before { transform: translate(-50%, -50%) rotate(45deg); }
+.page-return::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.page-return:hover { background: #fff; transform: scale(1.04); }
+.page-return:focus-visible { outline: 2px solid rgba(21, 21, 21, .55); outline-offset: 3px; }
+
+.sustainability-page { min-height: 100vh; }
+
+.sustainability-story {
+  height: 600vh;
+  position: relative;
+}
+
+.sustainability-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.sustainability-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent 32%), var(--sustainability-paper);
+}
+
+.sustainability-heading {
+  position: absolute;
+  z-index: 2;
+  top: var(--title-top, 36vh);
+  left: 50%;
+  width: min(100% - 48px, 1040px);
+  text-align: center;
+  transform: translateX(-50%) scale(var(--title-scale, 1));
+  transform-origin: top center;
+  will-change: top, transform;
+}
+
+.sustainability-heading h1 {
+  font-size: clamp(48px, 7.5vw, 96px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.082em;
+}
+
+.sustainability-heading p {
+  margin-top: clamp(10px, 1.2vw, 15px);
+  color: var(--sustainability-quiet);
+  font-size: clamp(13px, 1.35vw, 18px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  opacity: var(--title-subtitle-opacity, 1);
+}
+
+.sustainability-scroll-prompt {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(36px, 5vh, 58px);
+  left: 50%;
+  margin: 0;
+  color: var(--sustainability-quiet);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: var(--scroll-prompt-opacity, 0.72);
+  transform: translateX(-50%) translateY(var(--scroll-prompt-y, 0px));
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.sustainability-reading {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  width: min(100% - 48px, 680px);
+  height: min(42vh, 390px);
+  transform: translate(-50%, -50%);
+}
+
+.sustainability-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+  opacity: var(--item-opacity, 0);
+  transform: translateY(var(--item-y, 30px)) scale(var(--item-scale, 0.985));
+  transform-origin: center center;
+  will-change: opacity, transform;
+}
+
+.sustainability-item h2 {
+  font-size: clamp(31px, 3.5vw, 46px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.07em;
+}
+
+.sustainability-item p {
+  max-width: 620px;
+  margin-top: clamp(21px, 2.4vw, 30px);
+  color: var(--sustainability-body);
+  font-size: clamp(17px, 1.55vw, 21px);
+  font-weight: 400;
+  line-height: 1.76;
+  letter-spacing: -0.035em;
+}
+
+.sustainability-progress {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: clamp(20px, 4vw, 60px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #b8b8b8;
+  font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  opacity: var(--progress-opacity, 0);
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.sustainability-progress-line {
+  position: relative;
+  width: 2px;
+  height: 80px;
+  overflow: hidden;
+  background: rgba(213, 213, 213, 0.3);
+}
+
+.sustainability-progress-line i {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--progress-fill, 0%);
+  background: rgba(129, 129, 124, 0.55);
+}
+
+.sustainability-ending {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  width: min(100% - 48px, 920px);
+  text-align: center;
+  opacity: var(--ending-opacity, 0);
+  transform: translate(-50%, calc(-50% + var(--ending-y, 24px))) scale(var(--ending-scale, 0.985));
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.sustainability-ending p {
+  color: var(--sustainability-ink);
+  font-size: clamp(29px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.23;
+  letter-spacing: -0.075em;
+}
+
+.sustainability-ending p + p { margin-top: clamp(28px, 3vw, 40px); }
+
+.sustainability-ending small {
+  display: block;
+  max-width: 520px;
+  margin: 140px auto 0;
+  color: var(--sustainability-quiet);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: -0.015em;
+}
+
+@media (max-width: 720px) {
+  .sustainability-heading { width: calc(100% - 40px); }
+  .sustainability-heading h1 { letter-spacing: -0.09em; }
+  .sustainability-reading { width: calc(100% - 72px); height: min(48vh, 390px); }
+  .sustainability-scroll-prompt { bottom: 34px; font-size: 10px; }
+  .sustainability-item h2 { font-size: clamp(28px, 8.8vw, 38px); }
+  .sustainability-item p { font-size: 17px; line-height: 1.72; }
+  .sustainability-progress { right: 18px; gap: 10px; }
+  .sustainability-progress-line { height: 68px; }
+  .sustainability-ending { width: calc(100% - 44px); }
+  .sustainability-ending p { font-size: clamp(26px, 7.7vw, 36px); line-height: 1.26; }
+  .sustainability-ending small { margin-top: 100px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sustainability-progress { transition: none; }
+}
