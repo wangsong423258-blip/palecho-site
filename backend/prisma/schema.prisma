@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Section {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  subtitle    String?
+  description String?
+  content     String?
+  order       Int           @default(0)
+  status      String        @default("PUBLISHED")
+  blocks      Block[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  section   Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String
+  type      String
+  title     String?
+  body      String?
+  data      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  alt       String?
+  mime      String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+model Faq {
+  id          String        @id @default(cuid())
+  sectionSlug String?
+  question    String
+  answer      String
+  order       Int           @default(0)
+  status      String        @default("PUBLISHED")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Job {
+  id          String        @id @default(cuid())
+  title       String
+  location    String?
+  type        String?
+  description String
+  order       Int           @default(0)
+  status      String        @default("PUBLISHED")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  year        String
+  title       String
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Announcement {
+  id        String        @id @default(cuid())
+  title     String
+  body      String
+  startAt   DateTime?
+  endAt     DateTime?
+  order     Int           @default(0)
+  status    String        @default("PUBLISHED")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model ContactLead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+}
